@@ -1,0 +1,62 @@
+//
+//  ProductService.swift
+//  SwiftUI_0325
+//
+//  Created by hongnhan on 26/3/25.
+//
+
+
+import Foundation
+
+class ProductService {
+    static let shared = ProductService()
+    private init() {}
+    
+    private static let cache = NSCache<NSString, NSData>()
+    
+    func fetchProducts(completion: @escaping (Result<[Product], Error>) -> Void) {
+        let cacheKey = "cachedProducts"
+        
+        // ✅ Check cache first
+        if let cachedData = ProductService.cache.object(forKey: cacheKey as NSString) {
+            do {
+                let products = try JSONDecoder().decode([Product].self, from: cachedData as Data)
+                print("✅ Returning cached data")
+                DispatchQueue.main.async {
+                    completion(.success(products))
+                }
+                return
+            } catch {
+                print("❌ Cache decoding failed:", error)
+            }
+        }
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            sleep(2) // Simulate network delay
+            
+            let mockData = """
+            [
+                { "id": 1, "name": "iPhone 15", "price": 999.99, "imageURL": "https://picsum.photos/id/237/200/300" },
+                { "id": 2, "name": "MacBook Pro", "price": 1999.99, "imageURL": "https://picsum.photos/id/238/200/300" },
+                { "id": 3, "name": "Apple Watch", "price": 399.99, "imageURL": "https://picsum.photos/id/239/200/300" }
+            ]
+            """.data(using: .utf8)!
+            
+            do {
+                let products = try JSONDecoder().decode([Product].self, from: mockData)
+                
+                // ✅ Cache data
+                ProductService.cache.setObject(mockData as NSData, forKey: cacheKey as NSString)
+                
+                DispatchQueue.main.async {
+                    completion(.success(products))
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+}
+
