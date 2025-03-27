@@ -18,7 +18,6 @@ class ImageLoader: ObservableObject {
         // ✅ Check if image is already cached
         if let cachedImage = ImageLoader.cache.object(forKey: cacheKey) {
             self.image = cachedImage
-            print("✅ Returning cached image")
             return
         }
         

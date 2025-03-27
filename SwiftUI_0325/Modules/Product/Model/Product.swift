@@ -7,9 +7,14 @@
 
 import Foundation
 
-struct Product: Identifiable, Decodable {
+struct Product: Identifiable, Decodable, Hashable {
     let id: Int
     let name: String
     let price: Double
     let imageURL: String
+
+    // ✅ Hash only `id`
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
