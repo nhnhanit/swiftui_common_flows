@@ -16,6 +16,6 @@ final class SettingsCoordinator: Coordinator {
     }
     
     func logout() {
-        appCoordinator.logout()
+        appCoordinator.popToRoot()
     }
 }

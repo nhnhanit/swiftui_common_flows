@@ -36,9 +36,9 @@ class ProductService {
 
             let mockData = """
             [
-                { "id": 1, "name": "iPhone 15", "price": 999.99, "imageURL": "https://picsum.photos/id/237/200/300" },
-                { "id": 2, "name": "MacBook Pro", "price": 1999.99, "imageURL": "https://picsum.photos/id/238/200/300" },
-                { "id": 3, "name": "Apple Watch", "price": 399.99, "imageURL": "https://picsum.photos/id/239/200/300" }
+                { "id": "1", "name": "iPhone 15", "price": 999.99, "imageURL": "https://picsum.photos/id/237/200/300" },
+                { "id": "2", "name": "MacBook Pro", "price": 1999.99, "imageURL": "https://picsum.photos/id/238/200/300" },
+                { "id": "3", "name": "Apple Watch", "price": 399.99, "imageURL": "https://picsum.photos/id/239/200/300" }
             ]
             """.data(using: .utf8)!
 

@@ -8,6 +8,7 @@
 final class SplashModule {
     static func build(coordinator: AppCoordinator) -> SplashView {
         let viewModel = SplashViewModel(coordinator: coordinator)
+        
         return SplashView(viewModel: viewModel)
     }
 }

@@ -6,8 +6,9 @@
 //
 
 final class HomeModule {
-    static func build(coordinator: HomeCoordinator) -> HomeView {
+    static func build(coordinator: AppCoordinator) -> HomeView {
         let viewModel = HomeViewModel(coordinator: coordinator)
+        
         return HomeView(viewModel: viewModel)
     }
 }

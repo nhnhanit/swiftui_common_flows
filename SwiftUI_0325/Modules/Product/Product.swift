@@ -8,7 +8,7 @@
 import Foundation
 
 struct Product: Identifiable, Decodable, Hashable {
-    let id: Int
+    let id: String
     let name: String
     let price: Double
     let imageURL: String

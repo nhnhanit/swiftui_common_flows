@@ -8,18 +8,40 @@
 
 import SwiftUI
 
-final class AppCoordinator: Coordinator {
-    @Published var navigationPath = NavigationPath()
+final class AppCoordinator: ObservableObject {
+    @Published var path = NavigationPath()
 
+    // Điều hướng đến bất kỳ module nào
     func navigate(to route: AppRoute) {
-        navigationPath.append(route)
+        path.append(route)
     }
 
-    func logout() {
-        navigationPath = NavigationPath() // Xóa hết stack để quay về Splash
+    func pop() {
+        path.removeLast()
+    }
+
+    func popToRoot() {
+        path.removeLast(path.count)
     }
 }
 
 enum AppRoute: Hashable {
-    case splash, login, home
+    case splash
+    case login
+    case home
+    case product(ProductRoute)  // 📌 Module A
+    case settings(SettingsRoute) // 📌 Module B
 }
+
+enum ProductRoute: Hashable {
+    case productList
+    case productDetail(productID: String)
+    case cart
+}
+
+enum SettingsRoute: Hashable {
+    case profile
+    case logout
+}
+
+

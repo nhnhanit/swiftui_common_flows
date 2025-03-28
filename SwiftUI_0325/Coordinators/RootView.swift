@@ -9,9 +9,9 @@ import SwiftUI
 
 struct RootView: View {
     @StateObject private var coordinator = AppCoordinator()
-    
+        
     var body: some View {
-        NavigationStack(path: $coordinator.navigationPath) {
+        NavigationStack(path: $coordinator.path) { // ✅ Chỉ có 1 NavigationStack
             SplashModule.build(coordinator: coordinator)
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
@@ -20,9 +20,21 @@ struct RootView: View {
                     case .login:
                         LoginModule.build(coordinator: coordinator)
                     case .home:
-                        HomeModule.build(coordinator: HomeCoordinator(appCoordinator: coordinator))
+                        HomeModule.build(coordinator: coordinator)
+                    case .product(.productDetail(let productId)):
+                        ProductDetailModule.build(productId: productId, coordinator: coordinator)
+                    case .settings:
+                        EmptyView()
+                    case .product(.productList):
+                        EmptyView()
+                    case .product(.cart):
+                        EmptyView()
                     }
                 }
         }
     }
+}
+
+#Preview {
+    return RootView()
 }

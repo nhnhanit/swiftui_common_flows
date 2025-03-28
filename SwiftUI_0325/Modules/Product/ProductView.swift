@@ -8,63 +8,55 @@
 import SwiftUI
 
 struct ProductView: View {
-    @ObservedObject var viewModel: ProductViewModel
+    @StateObject var viewModel: ProductViewModel
     
     var body: some View {
+        VStack {
+            if viewModel.isLoading {
+                ProgressView("Loading products...")
+            } else if let errorMessage = viewModel.errorMessage {
                 VStack {
-                    if viewModel.isLoading {
-                        ProgressView("Loading products...")
-                    } else if let errorMessage = viewModel.errorMessage {
-                        VStack {
-                            Text("❌ \(errorMessage)")
-                                .foregroundColor(.red)
-                                .padding()
-                            Button(action: {
-                                viewModel.loadProducts()
-                            }) {
-                                Text("Retry")
-                                    .padding()
-                                    .background(Color.blue)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(8)
-                            }
-                        }
-                    } else {
-                        Text("Products count: \(viewModel.products.count)")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                        if viewModel.products.isEmpty {
-                            Text("No products available")
-                        } else {
-                            List(viewModel.products, id: \.id) { product in
-                                ProductRowView(product: product) { selectedProduct in
-                                    viewModel.didSelectProduct(selectedProduct)
-                                }
-                            }
-                        }
-                        
+                    Text("❌ \(errorMessage)")
+                        .foregroundColor(.red)
+                        .padding()
+                    Button(action: {
+                        viewModel.loadProducts()
+                    }) {
+                        Text("Retry")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
                     }
                 }
-                .navigationTitle("Products")
-                .onAppear {
-                    print("🔹 Calling loadProducts()")
-                    viewModel.loadProducts()
+            } else {
+                Text("Products count: \(viewModel.products.count)")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                if viewModel.products.isEmpty {
+                    Text("No products available")
+                } else {
+                    List(viewModel.products, id: \.id) { product in
+                        ProductRowView(product: product) { selectedProduct in
+                            viewModel.goToProductDetail(productID: selectedProduct.id)
+                        }
+                    }
                 }
-//                .navigationDestination(for: ProductRoute.self) { route in
-//                    switch route {
-//                    case .productDetail(let productID):
-//                        ProductDetailModule.build(productId: productID, coordinator: viewModel.coordinator)
-//                    }
-//                }
-            
+                
+            }
         }
+        .navigationTitle("Products")
+        .onAppear {
+            print("🔹 Calling loadProducts()")
+            viewModel.loadProducts()
+        }
+    }
     
 }
 
-
 #Preview {
     let mockService = ProductService.shared
-    let mockCoordinator = ProductCoordinator()
+    let mockCoordinator = AppCoordinator()
     let mockViewModel = ProductViewModel(service: mockService, coordinator: mockCoordinator)
     
     return ProductView(viewModel: mockViewModel)

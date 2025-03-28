@@ -12,9 +12,9 @@ struct HomeView: View {
     
     var body: some View {
         TabView {
-            ProductModule.build(coordinator: viewModel.coordinator.productCoordinator)
+            ProductModule.build(coordinator: viewModel.coordinator)
                 .tabItem { Label("Products", systemImage: "list.bullet") }
-            SettingsModule.build(coordinator: viewModel.coordinator.settingsCoordinator)
+            SettingsModule.build(coordinator: viewModel.coordinator)
                 .tabItem { Label("Settings", systemImage: "gearshape")
                 }
             

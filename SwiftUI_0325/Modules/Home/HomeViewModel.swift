@@ -8,9 +8,9 @@
 import Foundation
 
 final class HomeViewModel: ObservableObject {
-    let coordinator: HomeCoordinator
+    var coordinator: AppCoordinator
     
-    init(coordinator: HomeCoordinator) {
+    init(coordinator: AppCoordinator) {
         self.coordinator = coordinator
     }
 }

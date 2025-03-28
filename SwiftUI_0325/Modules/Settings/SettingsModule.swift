@@ -7,8 +7,9 @@
 
 
 final class SettingsModule {
-    static func build(coordinator: SettingsCoordinator) -> SettingsView {
+    static func build(coordinator: AppCoordinator) -> SettingsView {
         let viewModel = SettingsViewModel(coordinator: coordinator)
+        
         return SettingsView(viewModel: viewModel)
     }
 }

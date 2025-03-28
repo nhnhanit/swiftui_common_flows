@@ -8,11 +8,11 @@
 import Foundation
 
 final class ProductDetailViewModel: ObservableObject {
-    private let coordinator: ProductCoordinator
-    let productId: Int
+    private let coordinator: AppCoordinator
+    let productId: String
 
-    init(productId: Int, coordinator: ProductCoordinator) {
-        self.productId = productId
+    init(coordinator: AppCoordinator, productId: String) {
         self.coordinator = coordinator
+        self.productId = productId
     }
 }

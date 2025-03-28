@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct PromotionDetailView: View {
+    @ObservedObject var coordinator: AppCoordinator
     let promotionID: Int
     
     var body: some View {
-        Text("Promotion ID: \(promotionID)")
-            .font(.title)
-            .padding()
+        VStack {
+            Text("Promotion ID: \(promotionID)")
+                .font(.title)
+                .padding()
+            Button("Back to Product Detail") {
+                coordinator.navigate(to: .product(.productList))
+            }
+        }
     }
 }
