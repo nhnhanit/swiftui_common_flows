@@ -5,17 +5,16 @@
 //  Created by hongnhan on 26/3/25.
 //
 
-
 import SwiftUI
 
 struct ProductDetailView: View {
-    let product: Product
+    @ObservedObject var viewModel: ProductDetailViewModel
 
     var body: some View {
         VStack {
-            Text(product.name)
-                .font(.largeTitle)
-            Text("Price: \(product.price, specifier: "%.2f")$")
+            Text("Product Detail for ID: \(viewModel.productId)")
+                .font(.title)
+                .padding()
         }
         .navigationTitle("Product Detail")
     }

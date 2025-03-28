@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var coordinator = ProductCoordinator()
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -17,7 +19,7 @@ struct ContentView: View {
                 Text("Hello, world!")
                 
                 NavigationLink("Go to ProductView") {
-                    ProductModule.build()
+                    ProductModule.build(coordinator: coordinator)
                 }
                 .padding()
                 .buttonStyle(.borderedProminent)

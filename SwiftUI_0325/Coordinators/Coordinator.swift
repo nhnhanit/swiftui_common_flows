@@ -10,5 +10,4 @@ import SwiftUI
 
 protocol Coordinator: ObservableObject {
     var navigationPath: NavigationPath { get set }
-    func start()
 }

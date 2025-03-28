@@ -5,7 +5,6 @@
 //  Created by hongnhan on 26/3/25.
 //
 
-
 import Foundation
 
 class ProductViewModel: ObservableObject {
@@ -14,13 +13,12 @@ class ProductViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private let service: ProductService
-    private let coordinator: ProductCoordinator
+    var coordinator: ProductCoordinator
     
     init(service: ProductService, coordinator: ProductCoordinator) {
         self.service = service
         self.coordinator = coordinator
     }
-    
 
     func loadProducts() {
         service.fetchProducts { [weak self] result in
@@ -34,9 +32,8 @@ class ProductViewModel: ObservableObject {
             }
         }
     }
-
     
     func didSelectProduct(_ product: Product) {
-        coordinator.goToDetail(product: product)
+        coordinator.goToDetail(productID: product.id)
     }
 }

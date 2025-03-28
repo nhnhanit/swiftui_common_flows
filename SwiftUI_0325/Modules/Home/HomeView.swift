@@ -1,0 +1,26 @@
+//
+//  HomeView.swift
+//  SwiftUI_0325
+//
+//  Created by hongnhan on 28/3/25.
+//
+
+import SwiftUI
+
+struct HomeView: View {
+    @ObservedObject var viewModel: HomeViewModel
+    
+    var body: some View {
+        TabView {
+            ProductModule.build(coordinator: viewModel.coordinator.productCoordinator)
+                .tabItem { Label("Products", systemImage: "list.bullet") }
+            SettingsModule.build(coordinator: viewModel.coordinator.settingsCoordinator)
+                .tabItem { Label("Settings", systemImage: "gearshape")
+                }
+            
+        }
+        .navigationBarBackButtonHidden(true)
+        
+    }
+}
+

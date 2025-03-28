@@ -5,21 +5,21 @@
 //  Created by hongnhan on 26/3/25.
 //
 //
-//
-//import SwiftUI
-//
-//class AppCoordinator: Coordinator {
-//    @Published var navigationPath = NavigationPath()
-//    
-//    func start() {
-//        // Initial screen logic (if needed)
-//    }
-//    
-//    func goToProductDetail(product: Product) {
-//        navigationPath.append(product)
-//    }
-//    
-//    func goBack() {
-//        navigationPath.removeLast()
-//    }
-//}
+
+import SwiftUI
+
+final class AppCoordinator: Coordinator {
+    @Published var navigationPath = NavigationPath()
+
+    func navigate(to route: AppRoute) {
+        navigationPath.append(route)
+    }
+
+    func logout() {
+        navigationPath = NavigationPath() // Xóa hết stack để quay về Splash
+    }
+}
+
+enum AppRoute: Hashable {
+    case splash, login, home
+}
