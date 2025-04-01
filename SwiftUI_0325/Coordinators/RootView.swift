@@ -20,18 +20,23 @@ struct RootView: View {
                         LoginModule.build(coordinator: coordinator)
                     case .main:
                         MainModule.build(coordinator: coordinator)
-//                    case .product(.productDetail(let productId)):
-//                        ProductDetailModule.build(productId: productId, coordinator: coordinator)
-//                    case .settings:
-//                        EmptyView()
-//                    case .product(.productList):
-//                        EmptyView()
-//                    case .product(.cart):
-//                        EmptyView()
-//                    case .product(_):
-//                        <#code#>
+                    case .productModule(let productRoute):
+                            handleProductRoute(productRoute)
+                    @unknown default:
+                        EmptyView() // ✅ Giúp tránh lỗi build khi thêm case mới trong tương lai
+
                     }
                 }
+        }
+    }
+    
+    @ViewBuilder
+    private func handleProductRoute(_ route: ProductRoute) -> some View {
+        switch route {
+        case .productDetail(let productId):
+            ProductDetailModule.build(productId: productId, coordinator: coordinator)
+        @unknown default:
+            EmptyView() // ✅ Giúp tránh lỗi build khi thêm case mới trong tương lai
         }
     }
 }

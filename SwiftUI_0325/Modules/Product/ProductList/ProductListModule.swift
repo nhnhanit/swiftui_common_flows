@@ -6,7 +6,7 @@
 //
 
 final class ProductListModule {
-    static func build(coordinator: AppCoordinator) -> ProductListView {
+    static func build(coordinator: ProductCoordinator) -> ProductListView {
         let productService = ProductListService.shared
         let viewModel = ProductListViewModel(service: productService, coordinator: coordinator)
         

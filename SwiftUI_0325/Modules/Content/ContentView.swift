@@ -19,7 +19,7 @@ struct ContentView: View {
                 Text("Hello, world!")
                 
                 NavigationLink("Go to ProductListView") {
-                    ProductListModule.build(coordinator: coordinator)
+                    ProductListModule.build(coordinator: ProductCoordinator(appCoordinator: coordinator))
                 }
                 .padding()
                 .buttonStyle(.borderedProminent)

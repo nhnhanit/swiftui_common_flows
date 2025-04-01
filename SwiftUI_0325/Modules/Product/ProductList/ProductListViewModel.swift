@@ -13,9 +13,9 @@ class ProductListViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private let service: ProductListService
-    var coordinator: AppCoordinator
+    var coordinator: ProductCoordinator
     
-    init(service: ProductListService, coordinator: AppCoordinator) {
+    init(service: ProductListService, coordinator: ProductCoordinator) {
         self.service = service
         self.coordinator = coordinator
     }
@@ -34,6 +34,6 @@ class ProductListViewModel: ObservableObject {
     }
     
     func goToProductDetail(productID: String) {
-//        coordinator.navigate(to: .product(.productDetail(productID: productID)))
+        coordinator.goToProductDetail(productID: productID)
     }
 }

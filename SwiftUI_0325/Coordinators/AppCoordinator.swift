@@ -41,14 +41,12 @@ final class AppCoordinator: ObservableObject {
 enum AppRoute: Hashable {
     case login
     case main
-//    case product(ProductRoute)  // 📌 Module A
+    case productModule(ProductRoute)  // 📌 Module A
 //    case settings(SettingsRoute) // 📌 Module B
 }
 
 enum ProductRoute: Hashable {
-    case productList
     case productDetail(productID: String)
-    case cart
 }
 
 enum SettingsRoute: Hashable {

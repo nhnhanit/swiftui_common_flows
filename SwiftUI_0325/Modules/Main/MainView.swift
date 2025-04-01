@@ -12,7 +12,7 @@ struct MainView: View {
     
     var body: some View {
         TabView {
-            ProductListModule.build(coordinator: viewModel.coordinator)
+            ProductListModule.build(coordinator: ProductCoordinator(appCoordinator: viewModel.coordinator))
                 .tabItem { Label("Products", systemImage: "list.bullet") }
             SettingsModule.build(coordinator: viewModel.coordinator)
                 .tabItem { Label("Settings", systemImage: "gearshape")
