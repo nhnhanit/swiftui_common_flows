@@ -6,7 +6,7 @@
 //
 
 final class LoginModule {
-    static func build(coordinator: AppCoordinator) -> LoginView {
+    static func build(coordinator: AuthenCoordinator) -> LoginView {
         let viewModel = LoginViewModel(coordinator: coordinator)
         
         return LoginView(viewModel: viewModel)

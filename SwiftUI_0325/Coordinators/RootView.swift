@@ -17,16 +17,29 @@ struct RootView: View {
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .login:
-                        LoginModule.build(coordinator: coordinator)
+                        LoginModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator))
+                    case .authenRoute(let authenRoute):
+                            handleAuthenRoute(authenRoute)
                     case .main:
                         MainModule.build(coordinator: coordinator)
-                    case .productModule(let productRoute):
+                    case .productRoute(let productRoute):
                             handleProductRoute(productRoute)
                     @unknown default:
-                        EmptyView() // ✅ Giúp tránh lỗi build khi thêm case mới trong tương lai
-
+                        EmptyView()
                     }
                 }
+        }
+    }
+    
+    @ViewBuilder
+    private func handleAuthenRoute(_ route: AuthenRoute) -> some View {
+        switch route {
+        case .signUp:
+            SignUpModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator))
+        case .confirmOTP:
+            ConfirmOTPModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator))
+        @unknown default:
+            EmptyView() // ✅ Giúp tránh lỗi build khi thêm case mới trong tương lai
         }
     }
     

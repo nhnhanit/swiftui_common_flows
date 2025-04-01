@@ -1,23 +1,23 @@
 //
-//  LoginView.swift
+//  ConfirmOTPView.swift
 //  SwiftUI_0325
 //
-//  Created by hongnhan on 28/3/25.
+//  Created by hongnhan on 1/4/25.
 //
 
 import SwiftUI
 
-struct LoginView: View {
-    @ObservedObject var viewModel: LoginViewModel
+struct ConfirmOTPView: View {
+    @ObservedObject var viewModel: ConfirmOTPViewModel
     
     var body: some View {
         VStack {
-            Text("Login Screen")
+            Text("Confirm OTP Screen")
                 .font(.title)
                 .bold()
             
-            Button("Login") {
-                viewModel.login()
+            Button("Confirm OTP") {
+                viewModel.confirmOTP()
             }
             .padding()
             .background(Color.blue)

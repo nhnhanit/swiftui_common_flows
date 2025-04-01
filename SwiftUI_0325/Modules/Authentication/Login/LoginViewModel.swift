@@ -8,14 +8,18 @@
 import Foundation
 
 final class LoginViewModel: ObservableObject {
-    private let coordinator: AppCoordinator
+    private let coordinator: AuthenCoordinator
 
-    init(coordinator: AppCoordinator) {
+    init(coordinator: AuthenCoordinator) {
         self.coordinator = coordinator
     }
 
     func login() {
         UserDefaults.standard.set(true, forKey: "isLoggedIn")
-        coordinator.goToMain()
+        coordinator.login()
+    }
+    
+    func goToSignUp() {
+        coordinator.goToSignUp()
     }
 }
