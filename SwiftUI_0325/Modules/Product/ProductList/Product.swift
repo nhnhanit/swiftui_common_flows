@@ -12,9 +12,31 @@ struct Product: Identifiable, Decodable, Hashable {
     let name: String
     let price: Double
     let imageURL: String
+    var isLiked: Bool = false
 
-    // ✅ Hash only `id`
+    // ✅ Custom decoding để bỏ qua `isLiked` nếu không có trong JSON
+    enum CodingKeys: String, CodingKey {
+        case id, name, price, imageURL, isLiked
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        price = try container.decode(Double.self, forKey: .price)
+        imageURL = try container.decode(String.self, forKey: .imageURL)
+        isLiked = try container.decodeIfPresent(Bool.self, forKey: .isLiked) ?? false
+    }
+
+    // ✅ Nếu bạn cần `Encodable`, bạn có thể thêm:
+    // func encode(to encoder: Encoder) throws { ... }
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
+
+    mutating func toggleLike() {
+        isLiked.toggle()
+    }
 }
+

@@ -5,12 +5,12 @@
 //  Created by hongnhan on 26/3/25.
 //
 
-
 import SwiftUI
 
 struct ProductRowView: View {
     let product: Product
-    let onSelect: (Product) -> Void // Callback for selection
+    let onSelect: (Product) -> Void
+    let onLikeToggle: (String) -> Void // ✅ Callback để like/unlike
     @StateObject private var imageLoader = ImageLoader()
     
     var body: some View {
@@ -36,13 +36,23 @@ struct ProductRowView: View {
             Spacer()
             
             Button(action: {
-                onSelect(product) // Notify parent when tapped
+                onLikeToggle(product.id) // ✅ Toggle trạng thái like
+            }) {
+                Image(systemName: product.isLiked ? "heart.fill" : "heart")
+                    .foregroundColor(product.isLiked ? .red : .gray)
+            }
+            .buttonStyle(PlainButtonStyle()) // ✅ Để không ảnh hưởng đến tap gesture
+            .contentShape(Rectangle())
+            
+            Button(action: {
+                onSelect(product)
             }) {
                 Image(systemName: "chevron.right")
                     .foregroundColor(.blue)
             }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())
         }
-        .contentShape(Rectangle()) // Make whole row tappable
         .onTapGesture {
             onSelect(product)
         }
@@ -51,3 +61,4 @@ struct ProductRowView: View {
         }
     }
 }
+

@@ -38,7 +38,9 @@ struct ProductListView: View {
                 } else {
                     List(viewModel.products, id: \.id) { product in
                         ProductRowView(product: product) { selectedProduct in
-                            viewModel.goToProductDetail(productID: selectedProduct.id)
+                            viewModel.goToProductDetail(product: selectedProduct)
+                        } onLikeToggle: { productId in
+                            viewModel.toggleLike(for: productId) // ✅ Truyền hàm xử lý Like
                         }
                     }
                 }

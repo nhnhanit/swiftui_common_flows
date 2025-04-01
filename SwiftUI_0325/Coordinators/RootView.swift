@@ -46,8 +46,8 @@ struct RootView: View {
     @ViewBuilder
     private func handleProductRoute(_ route: ProductRoute) -> some View {
         switch route {
-        case .productDetail(let productId):
-            ProductDetailModule.build(productId: productId, coordinator: coordinator)
+        case .productDetail(let product):
+            ProductDetailModule.build(product: product, coordinator: coordinator)
         @unknown default:
             EmptyView() // ✅ Giúp tránh lỗi build khi thêm case mới trong tương lai
         }

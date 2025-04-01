@@ -9,10 +9,17 @@ import Foundation
 
 final class ProductDetailViewModel: ObservableObject {
     private let coordinator: AppCoordinator
-    let productId: String
+    var product: Product
+    @Published var isLiked: Bool
 
-    init(coordinator: AppCoordinator, productId: String) {
+    init(product: Product, coordinator: AppCoordinator) {
         self.coordinator = coordinator
-        self.productId = productId
+        self.product = product
+        self.isLiked = product.isLiked
+    }
+    
+    func toggleLike() {
+        isLiked.toggle()
+        product.isLiked = isLiked // Cập nhật giá trị trong product
     }
 }

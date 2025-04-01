@@ -43,7 +43,6 @@ enum AppRoute: Hashable {
     case authenRoute(AuthenRoute)
     case main
     case productRoute(ProductRoute)  // 📌 Module A
-//    case settings(SettingsRoute) // 📌 Module B
 }
 
 enum AuthenRoute: Hashable {
@@ -52,7 +51,7 @@ enum AuthenRoute: Hashable {
 }
 
 enum ProductRoute: Hashable {
-    case productDetail(productID: String)
+    case productDetail(product: Product)
 }
 
 enum SettingsRoute: Hashable {

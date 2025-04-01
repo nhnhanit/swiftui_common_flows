@@ -9,6 +9,7 @@ import Foundation
 
 class ProductListViewModel: ObservableObject {
     @Published var products: [Product] = []
+    @Published var likedProducts: [String: Bool] = [:] // ✅ Lưu trạng thái like
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
@@ -25,7 +26,12 @@ class ProductListViewModel: ObservableObject {
             switch result {
             case .success(let products):
                 DispatchQueue.main.async {
-                    self?.products = products
+                    //self?.products = products
+                    self?.products = products.map { product in
+                        var updatedProduct = product
+                        updatedProduct.isLiked = self?.likedProducts[product.id] ?? false
+                        return updatedProduct
+                    }
                 }
             case .failure(let error):
                 print("❌ Error fetching products:", error)
@@ -33,7 +39,15 @@ class ProductListViewModel: ObservableObject {
         }
     }
     
-    func goToProductDetail(productID: String) {
-        coordinator.goToProductDetail(productID: productID)
+    func toggleLike(for productID: String) {
+        if let index = products.firstIndex(where: { $0.id == productID }) {
+            products[index].toggleLike()
+            likedProducts[productID] = products[index].isLiked
+        }
     }
+
+    func goToProductDetail(product: Product) {
+        coordinator.goToProductDetail(product: product)
+    }
+    
 }
