@@ -1,5 +1,5 @@
 //
-//  HomeViewModel.swift
+//  MainViewModel.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 28/3/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class HomeViewModel: ObservableObject {
+final class MainViewModel: ObservableObject {
     var coordinator: AppCoordinator
     
     init(coordinator: AppCoordinator) {

@@ -15,22 +15,34 @@ final class AppCoordinator: ObservableObject {
     func navigate(to route: AppRoute) {
         path.append(route)
     }
-
+    
     func pop() {
         path.removeLast()
     }
-
+    
     func popToRoot() {
         path.removeLast(path.count)
     }
+    
+    func goToLogin() {
+        path.append(AppRoute.login)
+    }
+    
+    func goToMain() {
+        path.append(AppRoute.main)
+    }
+    
+    func popToSplash() {
+        path.removeLast(path.count)
+    }
+    
 }
 
 enum AppRoute: Hashable {
-    case splash
     case login
-    case home
-    case product(ProductRoute)  // 📌 Module A
-    case settings(SettingsRoute) // 📌 Module B
+    case main
+//    case product(ProductRoute)  // 📌 Module A
+//    case settings(SettingsRoute) // 📌 Module B
 }
 
 enum ProductRoute: Hashable {

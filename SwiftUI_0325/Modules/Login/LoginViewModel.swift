@@ -16,6 +16,8 @@ final class LoginViewModel: ObservableObject {
 
     func login() {
         UserDefaults.standard.set(true, forKey: "isLoggedIn")
-        coordinator.navigate(to: .home)
+        
+        // popToSplashView
+        coordinator.popToSplash()
     }
 }

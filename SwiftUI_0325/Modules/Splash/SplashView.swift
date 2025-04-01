@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct SplashView: View {
-    @ObservedObject var viewModel: SplashViewModel
+    @StateObject var viewModel: SplashViewModel
 
     var body: some View {
         VStack {
             Text("Splash Screen")
-                .onAppear {
-                    viewModel.checkLoginStatus()
-                }
+                
+        }
+        .onAppear {
+            viewModel.checkLoginStatus()
         }
     }
 }

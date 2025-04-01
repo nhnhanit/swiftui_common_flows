@@ -34,6 +34,6 @@ class ProductViewModel: ObservableObject {
     }
     
     func goToProductDetail(productID: String) {
-        coordinator.navigate(to: .product(.productDetail(productID: productID)))
+//        coordinator.navigate(to: .product(.productDetail(productID: productID)))
     }
 }

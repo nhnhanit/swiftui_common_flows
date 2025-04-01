@@ -17,7 +17,7 @@ struct PromotionDetailView: View {
                 .font(.title)
                 .padding()
             Button("Back to Product Detail") {
-                coordinator.navigate(to: .product(.productList))
+//                coordinator.navigate(to: .product(.productList))
             }
         }
     }

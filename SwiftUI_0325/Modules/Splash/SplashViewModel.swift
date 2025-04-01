@@ -7,17 +7,22 @@
 
 import Foundation
 
-final class SplashViewModel: ObservableObject {
+class SplashViewModel: ObservableObject {
     private let coordinator: AppCoordinator
-
+    
     init(coordinator: AppCoordinator) {
         self.coordinator = coordinator
     }
-
+    
     func checkLoginStatus() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             let isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
-            self.coordinator.navigate(to: isLoggedIn ? .home : .login)
+
+            if isLoggedIn {
+                self.coordinator.navigate(to: .main)
+            } else {
+                self.coordinator.navigate(to: .login)
+            }
         }
     }
 }

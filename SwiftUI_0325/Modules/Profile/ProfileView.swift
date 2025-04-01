@@ -14,7 +14,7 @@ struct ProfileView: View {
         VStack {
             Text("Profile Screen")
             Button("Back to Product Detail") {
-                coordinator.navigate(to: .product(.productDetail(productID: "3")))
+//                coordinator.navigate(to: .product(.productDetail(productID: "3")))
             }
         }
     }

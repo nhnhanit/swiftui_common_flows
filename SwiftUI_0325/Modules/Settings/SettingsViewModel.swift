@@ -16,6 +16,6 @@ final class SettingsViewModel: ObservableObject {
 
     func logout() {
         UserDefaults.standard.set(false, forKey: "isLoggedIn") // Clear login state
-        coordinator.popToRoot()
+        coordinator.popToSplash()
     }
 }
