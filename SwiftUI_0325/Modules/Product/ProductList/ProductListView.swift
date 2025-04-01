@@ -1,5 +1,5 @@
 //
-//  ProductView.swift
+//  ProductListView.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 26/3/25.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ProductView: View {
-    @StateObject var viewModel: ProductViewModel
+struct ProductListView: View {
+    @StateObject var viewModel: ProductListViewModel
     
     var body: some View {
         VStack {
@@ -55,9 +55,9 @@ struct ProductView: View {
 }
 
 #Preview {
-    let mockService = ProductService.shared
+    let mockService = ProductListService.shared
     let mockCoordinator = AppCoordinator()
-    let mockViewModel = ProductViewModel(service: mockService, coordinator: mockCoordinator)
+    let mockViewModel = ProductListViewModel(service: mockService, coordinator: mockCoordinator)
     
-    return ProductView(viewModel: mockViewModel)
+    return ProductListView(viewModel: mockViewModel)
 }

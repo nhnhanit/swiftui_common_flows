@@ -1,5 +1,5 @@
 //
-//  ProductViewModel.swift
+//  ProductListViewModel.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 26/3/25.
@@ -7,15 +7,15 @@
 
 import Foundation
 
-class ProductViewModel: ObservableObject {
+class ProductListViewModel: ObservableObject {
     @Published var products: [Product] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
-    private let service: ProductService
+    private let service: ProductListService
     var coordinator: AppCoordinator
     
-    init(service: ProductService, coordinator: AppCoordinator) {
+    init(service: ProductListService, coordinator: AppCoordinator) {
         self.service = service
         self.coordinator = coordinator
     }

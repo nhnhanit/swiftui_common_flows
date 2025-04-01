@@ -1,5 +1,5 @@
 //
-//  ProductService.swift
+//  ProductListService.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 26/3/25.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-class ProductService {
-    static let shared = ProductService()
+class ProductListService {
+    static let shared = ProductListService()
     private init() {}
     
     private static let cache = NSCache<NSString, NSData>()
@@ -17,7 +17,7 @@ class ProductService {
         let cacheKey = "cachedProducts"
         
         // ✅ Check cache
-        if let cachedData = ProductService.cache.object(forKey: cacheKey as NSString) {
+        if let cachedData = ProductListService.cache.object(forKey: cacheKey as NSString) {
             do {
                 let products = try JSONDecoder().decode([Product].self, from: cachedData as Data)
                 print("✅ Returning cached data")
@@ -27,7 +27,7 @@ class ProductService {
                 return
             } catch {
                 print("❌ Cache decoding failed, clearing cache:", error)
-                ProductService.cache.removeObject(forKey: cacheKey as NSString)
+                ProductListService.cache.removeObject(forKey: cacheKey as NSString)
             }
         }
 
@@ -47,7 +47,7 @@ class ProductService {
                 print("✅ Returning network data")
                 DispatchQueue.main.async {
                     // ✅ Convert `Data` -> `NSData`
-                    ProductService.cache.setObject(mockData as NSData, forKey: cacheKey as NSString)
+                    ProductListService.cache.setObject(mockData as NSData, forKey: cacheKey as NSString)
                     completion(.success(products))
                 }
             } catch {

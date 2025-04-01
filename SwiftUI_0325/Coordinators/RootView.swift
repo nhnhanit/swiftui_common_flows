@@ -16,8 +16,6 @@ struct RootView: View {
             SplashModule.build(coordinator: coordinator)
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
-//                    case .splash:
-//                        SplashModule.build(coordinator: coordinator)
                     case .login:
                         LoginModule.build(coordinator: coordinator)
                     case .main:
@@ -30,6 +28,8 @@ struct RootView: View {
 //                        EmptyView()
 //                    case .product(.cart):
 //                        EmptyView()
+//                    case .product(_):
+//                        <#code#>
                     }
                 }
         }

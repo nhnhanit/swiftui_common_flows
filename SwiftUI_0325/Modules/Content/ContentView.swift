@@ -18,8 +18,8 @@ struct ContentView: View {
                     .foregroundStyle(.tint)
                 Text("Hello, world!")
                 
-                NavigationLink("Go to ProductView") {
-                    ProductModule.build(coordinator: coordinator)
+                NavigationLink("Go to ProductListView") {
+                    ProductListModule.build(coordinator: coordinator)
                 }
                 .padding()
                 .buttonStyle(.borderedProminent)
