@@ -14,9 +14,9 @@ final class ProductCoordinator: ObservableObject {
         self.appCoordinator = appCoordinator
     }
 
-    func goToProductDetail(product: Product) {
+    func goToProductDetail(product: Product, viewModel: ProductListViewModel) {
         if let appCoordinator = appCoordinator {
-            appCoordinator.navigate(to: .productRoute(.productDetail(product: product)))
+            appCoordinator.navigate(to: .productRoute(.productDetail(product: product, viewModel: viewModel)))
         } else {
             print("appCoordinator is nil")
         }

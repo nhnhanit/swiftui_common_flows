@@ -6,9 +6,11 @@
 //
 
 final class ProductDetailModule {
-    static func build(product: Product, coordinator: ProductCoordinator) -> ProductDetailView {
-        let viewModel = ProductDetailViewModel(product: product, coordinator: coordinator)
+    static func build(product: Product, coordinator: ProductCoordinator, delegate: ProductDetailDelegate?) -> ProductDetailView {
+        let viewModel = ProductDetailViewModel(product: product, coordinator: coordinator, delegate: delegate)
         
         return ProductDetailView(viewModel: viewModel)
     }
 }
+
+
