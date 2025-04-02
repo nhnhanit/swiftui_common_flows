@@ -61,12 +61,12 @@ class ProductListViewModel: ObservableObject {
 }
 
 extension ProductListViewModel: ProductDetailDelegate {
+    
     func productDetail(_ productDetail: ProductDetailViewModel, didChangeLikeFor productID: String, isLiked: Bool) {
         if let index = products.firstIndex(where: { $0.id == productID }) {
             products[index].isLiked = isLiked
             likedProducts[productID] = isLiked
         }
     }
-    
     
 }

@@ -15,8 +15,6 @@ enum SettingsRoute: Hashable {
         switch (lhs, rhs) {
         case let (.userProfile(p1, _), .userProfile(p2, _)):
             return p1.id == p2.id
-        default:
-            return false
         }
     }
 

@@ -18,11 +18,11 @@ final class ProductDetailViewModel: ObservableObject {
     @Published var isLiked: Bool
     weak var delegate: ProductDetailDelegate?
 
-    init(product: Product, coordinator: ProductCoordinator, delegate: ProductDetailDelegate?) {
+    init(product: Product, coordinator: ProductCoordinator, delegateToViewModel: ProductDetailDelegate?) {
         self.coordinator = coordinator
         self.product = product
         self.isLiked = product.isLiked
-        self.delegate = delegate
+        self.delegate = delegateToViewModel
     }
     
     func toggleLike() {

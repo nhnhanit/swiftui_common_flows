@@ -17,14 +17,19 @@ struct RootView: View {
                     switch route {
                     case .login:
                         LoginModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator))
+                        
                     case .authenRoute(let authenRoute):
                         handleAuthenRoute(authenRoute)
+                        
                     case .main:
                         MainModule.build(coordinator: coordinator)
+                        
                     case .productRoute(let productRoute):
                         handleProductRoute(productRoute)
+                        
                     case .settingsRoute(let settingsRoute):
                         handleSettingsRoute(settingsRoute)
+                        
                     @unknown default:
                         EmptyView()
                     }
@@ -37,11 +42,13 @@ struct RootView: View {
 // MARK: - Handle Settings Route
 
 extension RootView {
+    
     @ViewBuilder
     private func handleSettingsRoute(_ route: SettingsRoute) -> some View {
         switch route {
         case .userProfile(let user, let onSaveUser):
             ProfileModule.build(user: user, coordinator: SettingsCoordinator(appCoordinator: coordinator), onSaveUser: onSaveUser)
+            
         @unknown default:
             Text("Undefined")
                 .foregroundColor(.red)
@@ -53,11 +60,13 @@ extension RootView {
 // MARK: - Handle Product Route
 
 extension RootView {
+    
     @ViewBuilder
     private func handleProductRoute(_ route: ProductRoute) -> some View {
         switch route {
         case .productDetail(let product, let viewModel):
-            ProductDetailModule.build(product: product, coordinator: ProductCoordinator(appCoordinator: coordinator), delegate: viewModel)
+            ProductDetailModule.build(product: product, coordinator: ProductCoordinator(appCoordinator: coordinator), delegateToViewModel: viewModel)
+            
         @unknown default:
             Text("Undefined")
                 .foregroundColor(.red)
@@ -69,13 +78,16 @@ extension RootView {
 // MARK: - Handle Authen Route
 
 extension RootView {
+    
     @ViewBuilder
     private func handleAuthenRoute(_ route: AuthenRoute) -> some View {
         switch route {
         case .signUp:
             SignUpModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator))
+            
         case .confirmOTP:
             ConfirmOTPModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator))
+            
         @unknown default:
             Text("Undefined")
                 .foregroundColor(.red)
