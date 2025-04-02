@@ -39,7 +39,9 @@ struct RootView: View {
         case .confirmOTP:
             ConfirmOTPModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator))
         @unknown default:
-            EmptyView() // ✅ Giúp tránh lỗi build khi thêm case mới trong tương lai
+            Text("Lỗi không xác định")
+                .foregroundColor(.red)
+
         }
     }
     
@@ -49,7 +51,9 @@ struct RootView: View {
         case .productDetail(let product):
             ProductDetailModule.build(product: product, coordinator: ProductCoordinator(appCoordinator: coordinator))
         @unknown default:
-            EmptyView() // ✅ Giúp tránh lỗi build khi thêm case mới trong tương lai
+            Text("Lỗi không xác định")
+                .foregroundColor(.red)
+
         }
     }
 }

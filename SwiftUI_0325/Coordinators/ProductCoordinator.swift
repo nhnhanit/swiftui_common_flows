@@ -15,7 +15,6 @@ final class ProductCoordinator: ObservableObject {
     }
 
     func goToProductDetail(product: Product) {
-//        appCoordinator?.navigate(to: .productRoute(.productDetail(product: product)))
         if let appCoordinator = appCoordinator {
             appCoordinator.navigate(to: .productRoute(.productDetail(product: product)))
         } else {
