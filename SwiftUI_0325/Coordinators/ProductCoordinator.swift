@@ -7,6 +7,26 @@
 
 import SwiftUI
 
+enum ProductRoute: Hashable {
+    
+    case productDetail(product: Product, viewModel: ProductListViewModel)
+    
+    // Để enum này conform Hashable, cần bỏ closure/delegate khi so sánh
+    static func == (lhs: ProductRoute, rhs: ProductRoute) -> Bool {
+        switch (lhs, rhs) {
+        case let (.productDetail(p1, _), .productDetail(p2, _)):
+            return p1.id == p2.id
+        }
+    }
+
+    func hash(into hasher: inout Hasher) {
+        switch self {
+        case let .productDetail(product, _):
+            hasher.combine(product.id)
+        }
+    }
+}
+
 final class ProductCoordinator: ObservableObject {
     private weak var appCoordinator: AppCoordinator?
     
@@ -22,5 +42,4 @@ final class ProductCoordinator: ObservableObject {
         }
     }
 }
-
 

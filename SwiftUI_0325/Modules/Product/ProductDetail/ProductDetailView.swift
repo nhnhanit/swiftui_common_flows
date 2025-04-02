@@ -60,6 +60,7 @@ struct ProductDetailView: View {
             
             Spacer()
         }
+        .navigationTitle("Detail Product")
         .padding()
     }
 }

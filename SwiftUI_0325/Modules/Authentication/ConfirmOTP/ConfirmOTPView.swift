@@ -12,9 +12,7 @@ struct ConfirmOTPView: View {
     
     var body: some View {
         VStack {
-            Text("Confirm OTP Screen")
-                .font(.title)
-                .bold()
+            Text("Press Confirm OTP Button to go to Main Screen")
             
             Button("Confirm OTP") {
                 viewModel.confirmOTP()
@@ -24,5 +22,6 @@ struct ConfirmOTPView: View {
             .foregroundColor(.white)
             .cornerRadius(10)
         }
+        .navigationTitle("Confirm OTP Screen")
     }
 }

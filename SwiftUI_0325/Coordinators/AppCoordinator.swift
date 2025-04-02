@@ -11,7 +11,7 @@ import SwiftUI
 final class AppCoordinator: ObservableObject {
     @Published var path = NavigationPath()
 
-    // Điều hướng đến bất kỳ module nào
+    // Navigate to any module
     func navigate(to route: AppRoute) {
         path.append(route)
     }
@@ -22,20 +22,7 @@ final class AppCoordinator: ObservableObject {
     
     func popToRoot() {
         path.removeLast(path.count)
-    }
-    
-    func goToLogin() {
-        path.append(AppRoute.login)
-    }
-    
-    func goToMain() {
-        path.append(AppRoute.main)
-    }
-    
-    func popToSplash() {
-        path.removeLast(path.count)
-    }
-    
+    }    
 }
 
 enum AppRoute: Hashable {
@@ -45,34 +32,7 @@ enum AppRoute: Hashable {
     case productRoute(ProductRoute)
 }
 
-enum ProductRoute: Hashable {
-    
-    case productDetail(product: Product, viewModel: ProductListViewModel)
-    
-    // Để enum này conform Hashable, cần bỏ closure khi so sánh
-    static func == (lhs: ProductRoute, rhs: ProductRoute) -> Bool {
-        switch (lhs, rhs) {
-        case let (.productDetail(p1, _), .productDetail(p2, _)):
-            return p1.id == p2.id
-        }
-    }
-
-    func hash(into hasher: inout Hasher) {
-        switch self {
-        case let .productDetail(product, _):
-            hasher.combine(product.id)
-        }
-    }
-}
-
-enum AuthenRoute: Hashable {
-    case signUp
-    case confirmOTP
-}
-
 enum SettingsRoute: Hashable {
     case profile
     case logout
 }
-
-

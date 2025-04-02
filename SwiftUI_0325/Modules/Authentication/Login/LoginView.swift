@@ -12,9 +12,7 @@ struct LoginView: View {
     
     var body: some View {
         VStack {
-            Text("Login Screen")
-                .font(.title)
-                .bold()
+            Text("Press Login Button to go to Main Screen")
             
             Button("Login") {
                 viewModel.login()
@@ -23,13 +21,12 @@ struct LoginView: View {
             .background(Color.blue)
             .foregroundColor(.white)
             .cornerRadius(10)
+            
             Button("Sign Up") {
                 viewModel.goToSignUp()
             }
             .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
         }
+        .navigationTitle("Login Screen")
     }
 }

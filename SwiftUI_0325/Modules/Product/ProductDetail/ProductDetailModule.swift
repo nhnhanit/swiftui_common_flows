@@ -12,5 +12,3 @@ final class ProductDetailModule {
         return ProductDetailView(viewModel: viewModel)
     }
 }
-
-

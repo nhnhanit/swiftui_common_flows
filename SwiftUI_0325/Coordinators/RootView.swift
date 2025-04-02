@@ -11,19 +11,18 @@ struct RootView: View {
     @StateObject private var coordinator = AppCoordinator()
         
     var body: some View {
-        NavigationStack(path: $coordinator.path) {
-            // ✅ Chỉ có 1 NavigationStack
+        NavigationStack(path: $coordinator.path) { // ✅ Only 1 NavigationStack
             SplashModule.build(coordinator: coordinator)
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .login:
                         LoginModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator))
                     case .authenRoute(let authenRoute):
-                            handleAuthenRoute(authenRoute)
+                        handleAuthenRoute(authenRoute)
                     case .main:
                         MainModule.build(coordinator: coordinator)
                     case .productRoute(let productRoute):
-                            handleProductRoute(productRoute)
+                        handleProductRoute(productRoute)
                     @unknown default:
                         EmptyView()
                     }
@@ -31,6 +30,27 @@ struct RootView: View {
         }
     }
     
+}
+
+// MARK: - Handle Product Route
+
+extension RootView {
+    @ViewBuilder
+    private func handleProductRoute(_ route: ProductRoute) -> some View {
+        switch route {
+        case .productDetail(let product, let viewModel):
+            ProductDetailModule.build(product: product, coordinator: ProductCoordinator(appCoordinator: coordinator), delegate: viewModel)
+        @unknown default:
+            Text("Undefined")
+                .foregroundColor(.red)
+
+        }
+    }
+}
+
+// MARK: - Handle Authen Route
+
+extension RootView {
     @ViewBuilder
     private func handleAuthenRoute(_ route: AuthenRoute) -> some View {
         switch route {
@@ -39,19 +59,7 @@ struct RootView: View {
         case .confirmOTP:
             ConfirmOTPModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator))
         @unknown default:
-            Text("Lỗi không xác định")
-                .foregroundColor(.red)
-
-        }
-    }
-    
-    @ViewBuilder
-    private func handleProductRoute(_ route: ProductRoute) -> some View {
-        switch route {
-        case .productDetail(let product, let viewModel):
-            ProductDetailModule.build(product: product, coordinator: ProductCoordinator(appCoordinator: coordinator), delegate: viewModel)
-        @unknown default:
-            Text("Lỗi không xác định")
+            Text("Undefined")
                 .foregroundColor(.red)
 
         }

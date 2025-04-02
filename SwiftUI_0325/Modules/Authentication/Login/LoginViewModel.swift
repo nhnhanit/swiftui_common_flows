@@ -16,7 +16,7 @@ final class LoginViewModel: ObservableObject {
 
     func login() {
         UserDefaults.standard.set(true, forKey: "isLoggedIn")
-        coordinator.login()
+        coordinator.goToMain()
     }
     
     func goToSignUp() {

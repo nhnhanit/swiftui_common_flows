@@ -50,7 +50,7 @@ struct ProductListView: View {
                 
             }
         }
-        .navigationTitle("Products")
+        .navigationTitle("Product List")
         .onAppear {
             print("🔹 Calling loadProducts()")
             viewModel.loadProducts()

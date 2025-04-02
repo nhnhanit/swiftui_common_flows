@@ -12,9 +12,7 @@ struct SignUpView: View {
     
     var body: some View {
         VStack {
-            Text("Sign Up Screen")
-                .font(.title)
-                .bold()
+            Text("Press Sign Up Button to go to Confirm OTP Screen")
             
             Button("Sign Up") {
                 viewModel.signUp()
@@ -24,5 +22,6 @@ struct SignUpView: View {
             .foregroundColor(.white)
             .cornerRadius(10)
         }
+        .navigationTitle("Sign Up Screen")
     }
 }

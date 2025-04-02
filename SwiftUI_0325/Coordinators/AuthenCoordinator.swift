@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum AuthenRoute: Hashable {
+    case signUp
+    case confirmOTP
+}
+
 final class AuthenCoordinator: ObservableObject {
     private weak var appCoordinator: AppCoordinator?
     
@@ -14,8 +19,8 @@ final class AuthenCoordinator: ObservableObject {
         self.appCoordinator = appCoordinator
     }
 
-    func login() {
-        appCoordinator?.goToMain()
+    func goToMain() {
+        appCoordinator?.navigate(to: .main)
     }
     
     func goToSignUp() {
@@ -26,9 +31,6 @@ final class AuthenCoordinator: ObservableObject {
         appCoordinator?.navigate(to: .authenRoute(.confirmOTP))
     }
     
-    func goToMain() {
-        appCoordinator?.goToMain()
-    }
-    
 }
+
 

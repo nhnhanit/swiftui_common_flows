@@ -13,7 +13,6 @@ struct SplashView: View {
     var body: some View {
         VStack {
             Text("Splash Screen")
-                
         }
         .onAppear {
             viewModel.checkLoginStatus()
