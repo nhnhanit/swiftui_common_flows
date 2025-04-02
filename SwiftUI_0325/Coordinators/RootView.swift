@@ -23,6 +23,8 @@ struct RootView: View {
                         MainModule.build(coordinator: coordinator)
                     case .productRoute(let productRoute):
                         handleProductRoute(productRoute)
+                    case .settingsRoute(let settingsRoute):
+                        handleSettingsRoute(settingsRoute)
                     @unknown default:
                         EmptyView()
                     }
@@ -30,6 +32,22 @@ struct RootView: View {
         }
     }
     
+}
+
+// MARK: - Handle Settings Route
+
+extension RootView {
+    @ViewBuilder
+    private func handleSettingsRoute(_ route: SettingsRoute) -> some View {
+        switch route {
+        case .userProfile(let user, let onSaveUser):
+            ProfileModule.build(user: user, coordinator: SettingsCoordinator(appCoordinator: coordinator), onSaveUser: onSaveUser)
+        @unknown default:
+            Text("Undefined")
+                .foregroundColor(.red)
+
+        }
+    }
 }
 
 // MARK: - Handle Product Route

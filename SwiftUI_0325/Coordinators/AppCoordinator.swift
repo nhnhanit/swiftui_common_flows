@@ -22,7 +22,7 @@ final class AppCoordinator: ObservableObject {
     
     func popToRoot() {
         path.removeLast(path.count)
-    }    
+    }
 }
 
 enum AppRoute: Hashable {
@@ -30,9 +30,7 @@ enum AppRoute: Hashable {
     case authenRoute(AuthenRoute)
     case main
     case productRoute(ProductRoute)
+    case settingsRoute(SettingsRoute)
+    
 }
 
-enum SettingsRoute: Hashable {
-    case profile
-    case logout
-}

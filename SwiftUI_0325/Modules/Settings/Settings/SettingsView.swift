@@ -8,16 +8,40 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @ObservedObject var viewModel: SettingsViewModel
-
+    @StateObject var viewModel: SettingsViewModel
+        
     var body: some View {
-        VStack {
-            Text("Press log out button to go to Splash Screen")
-
-            Button("Logout") {
-                viewModel.logout()
+        VStack(spacing: 20) {
+            if let user = viewModel.user {
+                Text("Name: \(user.name)")
+                    .font(.title2)
+            } else {
+                ProgressView()
+            }
+            
+            Button(action: viewModel.updateUserInfo) {
+                Text("Update User Info")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+            
+            Button(action: viewModel.logout) {
+                Text("Logout")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
             }
         }
-        .navigationTitle("Settings Screen")
+        .padding()
+        .onAppear {
+            viewModel.loadUser()
+        }
+        
     }
+    
 }

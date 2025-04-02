@@ -29,6 +29,5 @@ final class ProductDetailViewModel: ObservableObject {
         isLiked.toggle()
         product.isLiked = isLiked // Cập nhật giá trị trong product
         delegate?.productDetail(self, didChangeLikeFor: product.id, isLiked: isLiked)
-
     }
 }

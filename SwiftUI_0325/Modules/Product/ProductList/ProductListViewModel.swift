@@ -24,7 +24,7 @@ class ProductListViewModel: ObservableObject {
     func addProduct() {
         let product4 = Product(id: UUID().uuidString,
                                name: "Laptop", price: 1200.0,
-                               imageURL: "laptop.jpg",
+                               imageURL: "https://picsum.photos/id/240/200/300",
                                isLiked: true)
         products.append(product4)
     }
@@ -34,7 +34,7 @@ class ProductListViewModel: ObservableObject {
             switch result {
             case .success(let products):
                 DispatchQueue.main.async {
-                    //self?.products = products
+                    print(products)
                     self?.products = products.map { product in
                         var updatedProduct = product
                         updatedProduct.isLiked = self?.likedProducts[product.id] ?? false

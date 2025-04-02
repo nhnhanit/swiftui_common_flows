@@ -14,13 +14,11 @@ struct MainView: View {
         TabView {
             ProductListModule.build(coordinator: ProductCoordinator(appCoordinator: viewModel.coordinator))
                 .tabItem { Label("Products", systemImage: "list.bullet") }
-            SettingsModule.build(coordinator: viewModel.coordinator)
+            SettingsModule.build(coordinator: SettingsCoordinator(appCoordinator: viewModel.coordinator))
                 .tabItem { Label("Settings", systemImage: "gearshape")
                 }
-            
         }
         .navigationBarBackButtonHidden(true)
-        
     }
 }
 
