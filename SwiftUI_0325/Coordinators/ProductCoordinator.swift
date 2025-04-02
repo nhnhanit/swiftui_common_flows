@@ -14,11 +14,13 @@ final class ProductCoordinator: ObservableObject {
         self.appCoordinator = appCoordinator
     }
 
-//    func goToProductDetail(productID: String) {
-//        appCoordinator?.navigate(to: .productRoute(.productDetail(productID: productID)))
-//    }
     func goToProductDetail(product: Product) {
-        appCoordinator?.navigate(to: .productRoute(.productDetail(product: product)))
+//        appCoordinator?.navigate(to: .productRoute(.productDetail(product: product)))
+        if let appCoordinator = appCoordinator {
+            appCoordinator.navigate(to: .productRoute(.productDetail(product: product)))
+        } else {
+            print("appCoordinator is nil")
+        }
     }
 }
 

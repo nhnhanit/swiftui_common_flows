@@ -32,7 +32,7 @@ class ProductListService {
         }
 
         DispatchQueue.global(qos: .userInitiated).async {
-            sleep(2) // Simulate network delay
+            sleep(UInt32(0.5)) // Simulate network delay
 
             let mockData = """
             [

@@ -19,6 +19,15 @@ struct Product: Identifiable, Decodable, Hashable {
         case id, name, price, imageURL, isLiked
     }
 
+    // Constructor (hàm khởi tạo) mặc định
+    init(id: String, name: String, price: Double, imageURL: String, isLiked: Bool = false) {
+        self.id = id
+        self.name = name
+        self.price = price
+        self.imageURL = imageURL
+        self.isLiked = isLiked
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)

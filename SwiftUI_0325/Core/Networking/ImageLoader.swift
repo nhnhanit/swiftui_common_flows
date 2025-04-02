@@ -30,6 +30,8 @@ class ImageLoader: ObservableObject {
                 DispatchQueue.main.async {
                     self.image = loadedImage
                 }
+            } else {
+                self.image = UIImage()
             }
         }
     }

@@ -12,6 +12,9 @@ struct ProductListView: View {
     
     var body: some View {
         VStack {
+            Button("Add Product") {
+                viewModel.addProduct()
+            }
             if viewModel.isLoading {
                 ProgressView("Loading products...")
             } else if let errorMessage = viewModel.errorMessage {

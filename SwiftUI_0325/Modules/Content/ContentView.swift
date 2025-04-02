@@ -9,8 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var coordinator = AppCoordinator()
+    @State private var count = 0
     
     var body: some View {
+        VStack {
+            Text("Count: \(count)")
+            Button("Increase count") {
+                count += 1
+            }
+        }
         NavigationStack {
             VStack {
                 Image(systemName: "globe")

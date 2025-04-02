@@ -8,11 +8,11 @@
 import Foundation
 
 final class ProductDetailViewModel: ObservableObject {
-    private let coordinator: AppCoordinator
+    private let coordinator: ProductCoordinator
     var product: Product
     @Published var isLiked: Bool
 
-    init(product: Product, coordinator: AppCoordinator) {
+    init(product: Product, coordinator: ProductCoordinator) {
         self.coordinator = coordinator
         self.product = product
         self.isLiked = product.isLiked

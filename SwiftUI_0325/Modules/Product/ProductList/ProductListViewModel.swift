@@ -20,6 +20,14 @@ class ProductListViewModel: ObservableObject {
         self.service = service
         self.coordinator = coordinator
     }
+    
+    func addProduct() {
+        let product4 = Product(id: UUID().uuidString,
+                               name: "Laptop", price: 1200.0,
+                               imageURL: "laptop.jpg",
+                               isLiked: true)
+        products.append(product4)
+    }
 
     func loadProducts() {
         service.fetchProducts { [weak self] result in
