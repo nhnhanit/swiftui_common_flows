@@ -36,15 +36,15 @@ class ProductListService {
 
             let mockData = """
             [
-                { "id": "1", "name": "iPhone 15", "price": 999.99, "imageURL": "https://picsum.photos/id/237/200/300" },
-                { "id": "2", "name": "MacBook Pro", "price": 1999.99, "imageURL": "https://picsum.photos/id/238/200/300" },
+                { "id": "1", "name": "iPhone 15", "price": 999.99, "imageURL": "https://picsum.photos/id/237/200/300"},
+                { "id": "2", "name": "MacBook Pro", "price": 1999.99, "imageURL": "https://picsum.photos/id/238/200/300", "isLiked": true },
                 { "id": "3", "name": "Apple Watch", "price": 399.99, "imageURL": "https://picsum.photos/id/239/200/300" }
             ]
             """.data(using: .utf8)!
 
             do {
                 let products = try JSONDecoder().decode([Product].self, from: mockData)
-                print("✅ Returning network data")
+                print("✅ Returning network data", products[0].description)
                 DispatchQueue.main.async {
                     // ✅ Convert `Data` -> `NSData`
                     ProductListService.cache.setObject(mockData as NSData, forKey: cacheKey as NSString)

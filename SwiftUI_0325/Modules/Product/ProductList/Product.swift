@@ -5,21 +5,27 @@
 //  Created by hongnhan on 26/3/25.
 //
 
-import Foundation
+import SwiftUI
 
-struct Product: Identifiable, Decodable, Hashable {
+class Product: Identifiable, ObservableObject, Decodable {
     let id: String
     let name: String
     let price: Double
     let imageURL: String
-    var isLiked: Bool = false
+    
+    // Đánh dấu là @Published để SwiftUI có thể theo dõi thay đổi
+    @Published var isLiked: Bool = false
 
-    // ✅ Custom decoding để bỏ qua `isLiked` nếu không có trong JSON
+    var description: String {
+        return "Product(id: \(id), name: \(name), price: \(price), imageURL: \(imageURL), isLiked: \(isLiked))"
+    }
+    
+    // Enum cho việc giải mã JSON
     enum CodingKeys: String, CodingKey {
         case id, name, price, imageURL, isLiked
     }
 
-    // Constructor (hàm khởi tạo) mặc định
+    // Hàm khởi tạo mặc định
     init(id: String, name: String, price: Double, imageURL: String, isLiked: Bool = false) {
         self.id = id
         self.name = name
@@ -28,7 +34,7 @@ struct Product: Identifiable, Decodable, Hashable {
         self.isLiked = isLiked
     }
     
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
@@ -37,15 +43,8 @@ struct Product: Identifiable, Decodable, Hashable {
         isLiked = try container.decodeIfPresent(Bool.self, forKey: .isLiked) ?? false
     }
 
-    // ✅ Nếu bạn cần `Encodable`, bạn có thể thêm:
-    // func encode(to encoder: Encoder) throws { ... }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-
-    mutating func toggleLike() {
+    // Hàm toggleLike
+    func toggleLike() {
         isLiked.toggle()
     }
 }
-

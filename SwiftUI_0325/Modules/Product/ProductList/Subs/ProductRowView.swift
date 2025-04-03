@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct ProductRowView: View {
-    let product: Product
-    let onSelect: (Product) -> Void
-    let onLikeToggle: (String) -> Void // ✅ Callback để like/unlike
+    @ObservedObject var product: Product
     @StateObject private var imageLoader = ImageLoader()
+    let onSelect: (Product) -> Void
     
     var body: some View {
         HStack {
@@ -36,7 +35,7 @@ struct ProductRowView: View {
             Spacer()
             
             Button(action: {
-                onLikeToggle(product.id) // ✅ Toggle trạng thái like
+                product.toggleLike()
             }) {
                 Image(systemName: product.isLiked ? "heart.fill" : "heart")
                     .foregroundColor(product.isLiked ? .red : .gray)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProductDetailView: View {
-    @ObservedObject var viewModel: ProductDetailViewModel
+    @StateObject var viewModel: ProductDetailViewModel
     
     var body: some View {
         VStack {
@@ -47,7 +47,7 @@ struct ProductDetailView: View {
                 HStack {
                     Image(systemName: viewModel.isLiked ? "heart.fill" : "heart")
                         .foregroundColor(viewModel.isLiked ? .red : .gray)
-                    Text(viewModel.isLiked ? "Unlike" : "Like")
+                    Text(viewModel.product.isLiked ? "Unlike" : "Like")
                         .foregroundColor(.white)
                         .bold()
                 }

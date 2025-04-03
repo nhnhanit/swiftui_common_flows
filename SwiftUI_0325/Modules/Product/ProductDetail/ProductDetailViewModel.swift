@@ -6,28 +6,21 @@
 //
 
 import Foundation
-
-protocol ProductDetailDelegate: AnyObject {
-    func productDetail(didChangeLikeFor productID: String, isLiked: Bool)
-}
-
+import SwiftUI
 
 final class ProductDetailViewModel: ObservableObject {
     private let coordinator: ProductCoordinator
-    var product: Product
+    @ObservedObject var product: Product // Theo dõi đối tượng ProductModel
     @Published var isLiked: Bool
-    weak var delegate: ProductDetailDelegate?
 
-    init(product: Product, coordinator: ProductCoordinator, delegateToViewModel: ProductDetailDelegate?) {
+    init(product: Product, coordinator: ProductCoordinator) {
         self.coordinator = coordinator
         self.product = product
         self.isLiked = product.isLiked
-        self.delegate = delegateToViewModel
     }
     
     func toggleLike() {
         isLiked.toggle()
-        product.isLiked = isLiked // Cập nhật giá trị trong product
-        delegate?.productDetail(didChangeLikeFor: product.id, isLiked: isLiked)
+        product.toggleLike() // Cập nhật giá trị trong product
     }
 }

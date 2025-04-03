@@ -36,7 +36,7 @@ class ProductListViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     print(products)
                     self?.products = products.map { product in
-                        var updatedProduct = product
+                        let updatedProduct = product
                         updatedProduct.isLiked = self?.likedProducts[product.id] ?? false
                         return updatedProduct
                     }
@@ -56,17 +56,6 @@ class ProductListViewModel: ObservableObject {
 
     func goToProductDetail(product: Product) {
         coordinator.goToProductDetail(product: product, viewModel: self)
-    }
-    
-}
-
-extension ProductListViewModel: ProductDetailDelegate {
-    
-    func productDetail(didChangeLikeFor productID: String, isLiked: Bool) {
-        if let index = products.firstIndex(where: { $0.id == productID }) {
-            products[index].isLiked = isLiked
-            likedProducts[productID] = isLiked
-        }
     }
     
 }

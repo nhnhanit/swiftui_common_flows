@@ -7,35 +7,42 @@
 
 import SwiftUI
 
+let mockData = """
+[
+    { "id": "1", "name": "iPhone 15", "price": 999.99, "imageURL": "https://picsum.photos/id/237/200/300", "isLiked": true },
+    { "id": "2", "name": "MacBook Pro", "price": 1999.99, "imageURL": "https://picsum.photos/id/238/200/300", "isLiked": true },
+    { "id": "3", "name": "Apple Watch", "price": 399.99, "imageURL": "https://picsum.photos/id/239/200/300", "isLiked": true }
+]
+""".data(using: .utf8)!
 struct ContentView: View {
-    @StateObject private var coordinator = AppCoordinator()
-    @State private var count = 0
-    
+    @State var products: [Product] = []
+
     var body: some View {
         VStack {
-            Text("Count: \(count)")
-            Button("Increase count") {
-                count += 1
+            List(products) { product in
+                HStack {
+                    Text(product.name)
+                    Spacer()
+                    Button(action: {
+                        product.toggleLike()
+                    }) {
+                        Image(systemName: product.isLiked ? "heart.fill" : "heart")
+                    }
+                }
             }
         }
-        NavigationStack {
-            VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Text("Hello, world!")
-                
-                NavigationLink("Go to ProductListView") {
-                    ProductListModule.build(coordinator: ProductCoordinator(appCoordinator: coordinator))
-                }
-                .padding()
-                .buttonStyle(.borderedProminent)
+        .onAppear {
+            do {
+                products = try JSONDecoder().decode([Product].self, from: mockData)
+            } catch {
+                print("Error decoding JSON: \(error)")
             }
-            .padding()
         }
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }

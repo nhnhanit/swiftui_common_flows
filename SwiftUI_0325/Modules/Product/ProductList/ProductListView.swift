@@ -41,9 +41,7 @@ struct ProductListView: View {
                 } else {
                     List(viewModel.products, id: \.id) { product in
                         ProductRowView(product: product) { selectedProduct in
-                            viewModel.goToProductDetail(product: selectedProduct)
-                        } onLikeToggle: { productId in
-                            viewModel.toggleLike(for: productId) // ✅ Truyền hàm xử lý Like
+                            viewModel.goToProductDetail(product: product)
                         }
                     }
                 }
@@ -52,8 +50,13 @@ struct ProductListView: View {
         }
         .navigationTitle("Product List")
         .onAppear {
-            print("🔹 Calling loadProducts()")
-            viewModel.loadProducts()
+            if viewModel.products.isEmpty {
+                print("🔹 onAppear Calling loadProducts()")
+                viewModel.loadProducts()
+            } else {
+                print("onAppear Dont refresh data")
+            }
+            
         }
     }
     
