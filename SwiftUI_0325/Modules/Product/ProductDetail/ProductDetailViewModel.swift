@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ProductDetailDelegate: AnyObject {
-    func productDetail(_ productDetail: ProductDetailViewModel, didChangeLikeFor productID: String, isLiked: Bool)
+    func productDetail(didChangeLikeFor productID: String, isLiked: Bool)
 }
 
 
@@ -28,6 +28,6 @@ final class ProductDetailViewModel: ObservableObject {
     func toggleLike() {
         isLiked.toggle()
         product.isLiked = isLiked // Cập nhật giá trị trong product
-        delegate?.productDetail(self, didChangeLikeFor: product.id, isLiked: isLiked)
+        delegate?.productDetail(didChangeLikeFor: product.id, isLiked: isLiked)
     }
 }
