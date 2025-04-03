@@ -64,3 +64,13 @@ struct ProductDetailView: View {
         .padding()
     }
 }
+
+#Preview {
+    let mockCoordinator = AppCoordinator()
+    let mockProductCoordinator = ProductCoordinator(appCoordinator: mockCoordinator)
+    let product = Product(id: "1", name: "Sample Product", price: 29.99, imageURL: "http://example.com/image.jpg")
+    
+    let viewModel = ProductDetailViewModel(product: product, coordinator: mockProductCoordinator)
+    
+    ProductDetailView(viewModel: viewModel)
+}

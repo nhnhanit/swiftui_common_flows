@@ -10,7 +10,7 @@ import SwiftUI
 struct ProductRowView: View {
     @ObservedObject var product: Product
     @StateObject private var imageLoader = ImageLoader()
-    let onSelect: (Product) -> Void
+    let onSelect: ((Product) -> Void)?
     
     var body: some View {
         HStack {
@@ -34,6 +34,7 @@ struct ProductRowView: View {
             }
             Spacer()
             
+            // Nút Like
             Button(action: {
                 product.toggleLike()
             }) {
@@ -41,10 +42,11 @@ struct ProductRowView: View {
                     .foregroundColor(product.isLiked ? .red : .gray)
             }
             .buttonStyle(PlainButtonStyle()) // ✅ Để không ảnh hưởng đến tap gesture
-            .contentShape(Rectangle())
+            .contentShape(Rectangle()) // Đảm bảo khu vực nhấn của nút
             
+            // Nút Chuyển tiếp
             Button(action: {
-                onSelect(product)
+                onSelect?(product)
             }) {
                 Image(systemName: "chevron.right")
                     .foregroundColor(.blue)
@@ -52,9 +54,22 @@ struct ProductRowView: View {
             .buttonStyle(PlainButtonStyle())
             .contentShape(Rectangle())
         }
+        // Sự kiện nhấn trên HStack, loại trừ nút Like
+        .contentShape(Rectangle()) // Tối ưu vùng để tap
         .onTapGesture {
-            onSelect(product)
+            // Không làm gì nếu tap ở nút like
+            // Phải đảm bảo rằng sự kiện tap không chạy khi nhấn vào nút like
+            if !product.isLiked {
+                onSelect?(product) // Kích hoạt onSelect
+            }
         }
+        .background(
+            Color.clear // Đảm bảo nút like không kích hoạt onSelect
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    // Do nothing here to exclude the button
+                }
+        )
         .onAppear {
             imageLoader.loadImage(from: product.imageURL)
         }

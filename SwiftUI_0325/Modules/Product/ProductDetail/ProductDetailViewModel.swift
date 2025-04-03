@@ -11,7 +11,7 @@ import SwiftUI
 final class ProductDetailViewModel: ObservableObject {
     private let coordinator: ProductCoordinator
     @ObservedObject var product: Product // Theo dõi đối tượng ProductModel
-    @Published var isLiked: Bool
+    @Published var isLiked: Bool // Cheating to trigger UI update as press button
 
     init(product: Product, coordinator: ProductCoordinator) {
         self.coordinator = coordinator
