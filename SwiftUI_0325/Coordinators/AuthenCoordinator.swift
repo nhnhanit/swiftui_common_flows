@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-enum AuthenRoute: Hashable {
-    case signUp
-    case confirmOTP
-}
-
 final class AuthenCoordinator: ObservableObject {
     private weak var appCoordinator: AppCoordinator?
     
@@ -33,4 +28,8 @@ final class AuthenCoordinator: ObservableObject {
     
 }
 
+enum AuthenRoute: Hashable {
+    case signUp
+    case confirmOTP
+}
 

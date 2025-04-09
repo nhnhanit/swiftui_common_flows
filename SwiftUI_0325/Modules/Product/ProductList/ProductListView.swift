@@ -64,7 +64,8 @@ struct ProductListView: View {
 
 #Preview {
     let mockService = ProductListService.shared
-    let mockCoordinator = AppCoordinator()
+    var alertManager = GlobalAlertManager()
+    let mockCoordinator = AppCoordinator(alertManager: alertManager)
     let mockProductCoordinator = ProductCoordinator(appCoordinator: mockCoordinator)
     let mockViewModel = ProductListViewModel(service: mockService, coordinator: mockProductCoordinator)
     

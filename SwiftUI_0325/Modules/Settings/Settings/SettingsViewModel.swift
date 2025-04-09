@@ -20,7 +20,16 @@ final class SettingsViewModel: ObservableObject {
         self.user = User(id: UUID(), name: "John Doe", email: "johndoe@example.com")
     }
     
-    func logout() {
+    func logoutButtonTapped() {
+        coordinator.presentSignOutConfirmation {
+            self.performSignOut()
+        }
+    }
+    
+    private func performSignOut() {
+        print("✅ User signed out.")
+        // Gọi API / clear token / navigate to login...
+        
         UserDefaults.standard.set(false, forKey: "isLoggedIn") // Clear login state
         coordinator.popTopSplash()
     }

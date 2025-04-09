@@ -11,6 +11,12 @@ import SwiftUI
 final class AppCoordinator: ObservableObject {
     @Published var path = NavigationPath()
 
+    let alertManager: GlobalAlertManager
+
+    init(alertManager: GlobalAlertManager) {
+        self.alertManager = alertManager
+    }
+    
     // Navigate to any module
     func navigate(to route: AppRoute) {
         path.append(route)

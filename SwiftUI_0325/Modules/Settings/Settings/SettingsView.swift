@@ -9,7 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @StateObject var viewModel: SettingsViewModel
-        
+    @EnvironmentObject var alertManager: GlobalAlertManager
+    
     var body: some View {
         VStack(spacing: 20) {
             if let user = viewModel.user {
@@ -28,18 +29,37 @@ struct SettingsView: View {
                     .cornerRadius(8)
             }
             
-            Button(action: viewModel.logout) {
-                Text("Logout")
+            
+            Button(role: .destructive) {
+                viewModel.logoutButtonTapped()
+            } label: {
+                Text("Log Out")
+                    .fontWeight(.bold)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.red)
                     .foregroundColor(.white)
-                    .cornerRadius(8)
+                    .cornerRadius(12)
+                
             }
+            .padding()
         }
         .padding()
         .onAppear {
-            viewModel.loadUser()
+            if (viewModel.user == nil) {
+                viewModel.loadUser()
+            } else {
+                print("dont loadUser")
+            }
+        }
+        .navigationTitle("Settings")
+        .alert(item: $alertManager.currentAlert) { alert in
+            Alert(
+                title: Text(alert.title),
+                message: alert.message.map(Text.init),
+                primaryButton: alert.primaryButton,
+                secondaryButton: alert.secondaryButton ?? .cancel()
+            )
         }
         
     }

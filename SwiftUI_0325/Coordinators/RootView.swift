@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RootView: View {
-    @StateObject private var coordinator = AppCoordinator()
+    @StateObject var coordinator: AppCoordinator
         
     var body: some View {
         NavigationStack(path: $coordinator.path) { // ✅ Only 1 NavigationStack
@@ -97,5 +97,7 @@ extension RootView {
 }
 
 #Preview {
-    return RootView()
+    @Previewable @StateObject var alertManager = GlobalAlertManager()
+    return RootView(coordinator: AppCoordinator(alertManager: alertManager))
+        .environmentObject(alertManager)
 }

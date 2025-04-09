@@ -7,6 +7,40 @@
 
 import SwiftUI
 
+final class SettingsCoordinator: ObservableObject {
+    private weak var appCoordinator: AppCoordinator?
+    
+    init(appCoordinator: AppCoordinator) {
+        self.appCoordinator = appCoordinator
+    }
+
+    func goToUserProfile(user: User, onSaveUser: ((User) -> Void)?) {
+        if let appCoordinator = appCoordinator {
+            appCoordinator.navigate(to: .settingsRoute(.userProfile(user: user, onSaveUser: onSaveUser)))
+        } else {
+            print("appCoordinator is nil")
+        }
+    }
+    
+    func presentSignOutConfirmation(onConfirm: @escaping () -> Void) {
+        let alert = GlobalAlert(
+            title: "Are you sure you want to sign out?",
+            message: nil,
+            primaryButton: .destructive(Text("Sign Out"), action: onConfirm),
+            secondaryButton: .cancel()
+        )
+        
+        appCoordinator?.alertManager.showAlert(alert)
+    }
+    
+    func popTopSplash() {
+        appCoordinator?.popToRoot()
+    }
+    
+}
+
+// MARK: - SettingsRoute
+
 enum SettingsRoute: Hashable {
     case userProfile(user: User, onSaveUser: ((User) -> Void)?)
     
@@ -23,25 +57,5 @@ enum SettingsRoute: Hashable {
         case let .userProfile(user, _):
             hasher.combine(user.id)
         }
-    }
-}
-
-final class SettingsCoordinator: ObservableObject {
-    private weak var appCoordinator: AppCoordinator?
-    
-    init(appCoordinator: AppCoordinator) {
-        self.appCoordinator = appCoordinator
-    }
-
-    func goToUserProfile(user: User, onSaveUser: ((User) -> Void)?) {
-        if let appCoordinator = appCoordinator {
-            appCoordinator.navigate(to: .settingsRoute(.userProfile(user: user, onSaveUser: onSaveUser)))
-        } else {
-            print("appCoordinator is nil")
-        }
-    }
-    
-    func popTopSplash() {
-        appCoordinator?.popToRoot()
     }
 }

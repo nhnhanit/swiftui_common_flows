@@ -9,10 +9,13 @@ import SwiftUI
 
 @main
 struct SwiftUI_0325App: App {
+    @StateObject private var alertManager = GlobalAlertManager()
+    
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-            RootView()
+            //ContentView()
+            RootView(coordinator: AppCoordinator(alertManager: alertManager))
+                .environmentObject(alertManager)
         }
     }
 }

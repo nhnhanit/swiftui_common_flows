@@ -66,7 +66,8 @@ struct ProductDetailView: View {
 }
 
 #Preview {
-    let mockCoordinator = AppCoordinator()
+    var alertManager = GlobalAlertManager()
+    let mockCoordinator = AppCoordinator(alertManager: alertManager)
     let mockProductCoordinator = ProductCoordinator(appCoordinator: mockCoordinator)
     let product = Product(id: "1", name: "Sample Product", price: 29.99, imageURL: "http://example.com/image.jpg")
     
