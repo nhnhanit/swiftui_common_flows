@@ -28,11 +28,15 @@ class ProductListViewModel: ObservableObject {
     }
     
     func addProduct() {
-//        let product4 = Product(id: UUID().uuidString,
-//                               name: "Laptop", price: 1200.0,
-//                               imageURL: "https://picsum.photos/id/240/200/300",
-//                               isLiked: true)
-//        products.append(product4)
+        let product4 = Product(id: UUID().uuidString,
+                               name: "Laptop", price: 1200.0,
+                               imageURL: "https://picsum.photos/id/240/200/300",
+                               isLiked: false)
+        let cellVM = ProductCellViewModel(product: product4)
+        cellVM.onSelect = { [weak self] in
+            self?.goToProductDetail(cellVM: cellVM)
+        }
+        productCellViewModels.append(cellVM)
     }
 
     func loadProducts() {
