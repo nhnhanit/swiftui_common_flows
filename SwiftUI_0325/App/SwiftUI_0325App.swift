@@ -12,10 +12,14 @@ struct SwiftUI_0325App: App {
     @StateObject private var alertManager = GlobalAlertManager()
     
     var body: some Scene {
+        
         WindowGroup {
-            //ContentView()
-            RootView(coordinator: AppCoordinator(alertManager: alertManager))
-                .environmentObject(alertManager)
+            ZStack {
+                //ContentView()
+                RootView(coordinator: AppCoordinator(alertManager: alertManager))
+                GlobalAlertView() // 👈 Hiển thị alert toàn app
+            }
+            .environmentObject(alertManager)
         }
     }
 }

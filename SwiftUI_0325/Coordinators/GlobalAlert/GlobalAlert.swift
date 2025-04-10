@@ -5,14 +5,14 @@
 //  Created by hongnhan on 8/4/25.
 //
 
-
-// GlobalAlert.swift
 import SwiftUI
 
 struct GlobalAlert: Identifiable {
-    let id = UUID()
+    var id = UUID()
     let title: String
     let message: String?
-    let primaryButton: Alert.Button
-    let secondaryButton: Alert.Button?
+    let primaryText: String
+    let secondaryText: String?
+    let onPrimary: () -> Void
+    let onSecondary: (() -> Void)?
 }

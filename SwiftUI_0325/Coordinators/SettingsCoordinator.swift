@@ -23,14 +23,19 @@ final class SettingsCoordinator: ObservableObject {
     }
     
     func presentSignOutConfirmation(onConfirm: @escaping () -> Void) {
-        let alert = GlobalAlert(
-            title: "Are you sure you want to sign out?",
-            message: nil,
-            primaryButton: .destructive(Text("Sign Out"), action: onConfirm),
-            secondaryButton: .cancel()
-        )
-        
-        appCoordinator?.alertManager.showAlert(alert)
+        appCoordinator?.alertManager.showAlert(GlobalAlert(
+            title: "Sign Out?",
+            message: "Are you sure you want to sign out?",
+            primaryText: "Confirm",
+            secondaryText: "Cancel",
+            onPrimary: {
+                print("✅ Signed out")
+                onConfirm()
+            },
+            onSecondary: {
+                print("❌ Cancelled")
+            }
+        ))
     }
     
     func popTopSplash() {

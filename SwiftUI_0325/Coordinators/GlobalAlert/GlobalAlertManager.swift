@@ -13,6 +13,14 @@ final class GlobalAlertManager: ObservableObject {
     @Published var currentAlert: GlobalAlert?
 
     func showAlert(_ alert: GlobalAlert) {
-        currentAlert = alert
+        withAnimation {
+            currentAlert = alert
+        }
+    }
+
+    func dismiss() {
+        withAnimation {
+            currentAlert = nil
+        }
     }
 }
