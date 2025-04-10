@@ -14,6 +14,12 @@ final class SettingsViewModel: ObservableObject {
     
     init(coordinator: SettingsCoordinator) {
         self.coordinator = coordinator
+        
+        print("🔁 SettingsCoordinator INIT")
+    }
+    
+    deinit {
+        print("❌ DEINIT SettingsCoordinator")
     }
 
     func loadUser() {

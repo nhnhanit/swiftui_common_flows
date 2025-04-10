@@ -10,6 +10,10 @@ import SwiftUI
 struct ProductDetailView: View {
     @StateObject var viewModel: ProductDetailViewModel
     
+    init(product: Product, coordinator: ProductCoordinator) {
+        _viewModel = StateObject(wrappedValue: ProductDetailViewModel(product: product, coordinator: coordinator))
+    }
+    
     var body: some View {
         VStack {
             AsyncImage(url: URL(string: viewModel.product.imageURL)) { phase in
@@ -71,7 +75,5 @@ struct ProductDetailView: View {
     let mockProductCoordinator = ProductCoordinator(appCoordinator: mockCoordinator)
     let product = Product(id: "1", name: "Sample Product", price: 29.99, imageURL: "http://example.com/image.jpg")
     
-    let viewModel = ProductDetailViewModel(product: product, coordinator: mockProductCoordinator)
-    
-    ProductDetailView(viewModel: viewModel)
+    ProductDetailView(product: product, coordinator: mockProductCoordinator)
 }

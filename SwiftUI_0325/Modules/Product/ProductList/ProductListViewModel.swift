@@ -19,6 +19,12 @@ class ProductListViewModel: ObservableObject {
     init(service: ProductListService, coordinator: ProductCoordinator) {
         self.service = service
         self.coordinator = coordinator
+        
+        print("🔁 ProductListViewModel INIT")
+    }
+    
+    deinit {
+        print("❌ DEINIT ProductListViewModel")
     }
     
     func addProduct() {

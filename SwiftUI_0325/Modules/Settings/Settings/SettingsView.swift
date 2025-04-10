@@ -11,6 +11,10 @@ struct SettingsView: View {
     @StateObject var viewModel: SettingsViewModel
     @EnvironmentObject var alertManager: GlobalAlertManager
     
+    init(coordinator: SettingsCoordinator) {
+        _viewModel = StateObject(wrappedValue: SettingsViewModel(coordinator: coordinator))
+    }
+    
     var body: some View {
         VStack(spacing: 20) {
             if let user = viewModel.user {
@@ -49,19 +53,9 @@ struct SettingsView: View {
             if (viewModel.user == nil) {
                 viewModel.loadUser()
             } else {
-                print("dont loadUser")
+                print("SettingsView onAppear dont refresh data")
             }
         }
         .navigationTitle("Settings")
-        .alert(item: $alertManager.currentAlert) { alert in
-            Alert(
-                title: Text(alert.title),
-                message: alert.message.map(Text.init),
-                primaryButton: alert.primaryButton,
-                secondaryButton: alert.secondaryButton ?? .cancel()
-            )
-        }
-        
     }
-    
 }

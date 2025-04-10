@@ -7,8 +7,7 @@
 
 final class ProductDetailModule {
     static func build(product: Product, coordinator: ProductCoordinator) -> ProductDetailView {
-        let viewModel = ProductDetailViewModel(product: product, coordinator: coordinator)
         
-        return ProductDetailView(viewModel: viewModel)
+        return ProductDetailView(product: product, coordinator: coordinator)
     }
 }

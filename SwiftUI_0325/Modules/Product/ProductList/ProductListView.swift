@@ -10,6 +10,10 @@ import SwiftUI
 struct ProductListView: View {
     @StateObject var viewModel: ProductListViewModel
     
+    init(service: ProductListService, coordinator: ProductCoordinator) {
+        _viewModel = StateObject(wrappedValue: ProductListViewModel(service: service, coordinator: coordinator))
+    }
+    
     var body: some View {
         VStack {
             Button("Add Product") {
@@ -54,7 +58,7 @@ struct ProductListView: View {
                 print("🔹 onAppear Calling loadProducts()")
                 viewModel.loadProducts()
             } else {
-                print("onAppear Dont refresh data")
+                print("ProductListView onAppear dont refresh data")
             }
             
         }
@@ -67,7 +71,6 @@ struct ProductListView: View {
     var alertManager = GlobalAlertManager()
     let mockCoordinator = AppCoordinator(alertManager: alertManager)
     let mockProductCoordinator = ProductCoordinator(appCoordinator: mockCoordinator)
-    let mockViewModel = ProductListViewModel(service: mockService, coordinator: mockProductCoordinator)
     
-    return ProductListView(viewModel: mockViewModel)
+    return ProductListView(service: mockService, coordinator: mockProductCoordinator)
 }
