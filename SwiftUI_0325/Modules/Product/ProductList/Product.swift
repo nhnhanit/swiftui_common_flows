@@ -42,9 +42,4 @@ class Product: Identifiable, ObservableObject, Decodable {
         imageURL = try container.decode(String.self, forKey: .imageURL)
         isLiked = try container.decodeIfPresent(Bool.self, forKey: .isLiked) ?? false
     }
-
-    // Hàm toggleLike
-    func toggleLike() {
-        isLiked.toggle()
-    }
 }

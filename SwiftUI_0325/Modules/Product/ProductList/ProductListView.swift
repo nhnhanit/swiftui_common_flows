@@ -37,16 +37,14 @@ struct ProductListView: View {
                     }
                 }
             } else {
-                Text("Products count: \(viewModel.products.count)")
+                Text("Products count: \(viewModel.productCellViewModels.count)")
                     .font(.caption)
                     .foregroundColor(.gray)
-                if viewModel.products.isEmpty {
+                if viewModel.productCellViewModels.isEmpty {
                     Text("No products available")
                 } else {
-                    List(viewModel.products, id: \.id) { product in
-                        ProductRowView(product: product) { selectedProduct in
-                            viewModel.goToProductDetail(product: product)
-                        }
+                    List(viewModel.productCellViewModels, id: \.id) { cellVM in
+                        ProductCellView(viewModel: cellVM)
                     }
                 }
                 
@@ -54,7 +52,7 @@ struct ProductListView: View {
         }
         .navigationTitle("Product List")
         .onAppear {
-            if viewModel.products.isEmpty {
+            if viewModel.productCellViewModels.isEmpty {
                 print("🔹 onAppear Calling loadProducts()")
                 viewModel.loadProducts()
             } else {

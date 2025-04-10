@@ -8,7 +8,7 @@
 import Foundation
 
 class ProductListViewModel: ObservableObject {
-    @Published var products: [Product] = []
+    @Published var productCellViewModels: [ProductCellViewModel] = []
     @Published var likedProducts: [String: Bool] = [:] // ✅ Lưu trạng thái like
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
@@ -28,11 +28,11 @@ class ProductListViewModel: ObservableObject {
     }
     
     func addProduct() {
-        let product4 = Product(id: UUID().uuidString,
-                               name: "Laptop", price: 1200.0,
-                               imageURL: "https://picsum.photos/id/240/200/300",
-                               isLiked: true)
-        products.append(product4)
+//        let product4 = Product(id: UUID().uuidString,
+//                               name: "Laptop", price: 1200.0,
+//                               imageURL: "https://picsum.photos/id/240/200/300",
+//                               isLiked: true)
+//        products.append(product4)
     }
 
     func loadProducts() {
@@ -40,11 +40,15 @@ class ProductListViewModel: ObservableObject {
             switch result {
             case .success(let products):
                 DispatchQueue.main.async {
-                    print(products)
-                    self?.products = products.map { product in
+                    self?.productCellViewModels = products.map { product in
                         let updatedProduct = product
                         updatedProduct.isLiked = self?.likedProducts[product.id] ?? false
-                        return updatedProduct
+                        
+                        let cellVM = ProductCellViewModel(product: updatedProduct)
+                        cellVM.onSelect = { [weak self] in
+                            self?.goToProductDetail(cellVM: cellVM)
+                        }
+                        return cellVM
                     }
                 }
             case .failure(let error):
@@ -52,16 +56,9 @@ class ProductListViewModel: ObservableObject {
             }
         }
     }
-    
-    func toggleLike(for productID: String) {
-        if let index = products.firstIndex(where: { $0.id == productID }) {
-            products[index].toggleLike()
-            likedProducts[productID] = products[index].isLiked
-        }
-    }
 
-    func goToProductDetail(product: Product) {
-        coordinator.goToProductDetail(product: product, viewModel: self)
+    func goToProductDetail(cellVM: ProductCellViewModel) {
+        coordinator.goToProductDetail(cellVM: cellVM)
     }
     
 }

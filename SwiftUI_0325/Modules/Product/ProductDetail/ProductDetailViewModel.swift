@@ -10,7 +10,7 @@ import SwiftUI
 
 final class ProductDetailViewModel: ObservableObject {
     private let coordinator: ProductCoordinator
-    @ObservedObject var product: Product // Theo dõi đối tượng ProductModel
+    var product: Product // Theo dõi đối tượng ProductModel
     @Published var isLiked: Bool // Cheating to trigger UI update as press button
 
     init(product: Product, coordinator: ProductCoordinator) {
@@ -21,6 +21,6 @@ final class ProductDetailViewModel: ObservableObject {
     
     func toggleLike() {
         isLiked.toggle()
-        product.toggleLike() // Cập nhật giá trị trong product
+        self.product.isLiked.toggle()
     }
 }

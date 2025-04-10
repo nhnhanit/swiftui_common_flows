@@ -6,8 +6,8 @@
 //
 
 final class ProductDetailModule {
-    static func build(product: Product, coordinator: ProductCoordinator) -> ProductDetailView {
+    static func build(cellVM: ProductCellViewModel) -> ProductDetailView {
         
-        return ProductDetailView(product: product, coordinator: coordinator)
+        return ProductDetailView(cellVM: cellVM)
     }
 }

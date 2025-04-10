@@ -1,5 +1,5 @@
 //
-//  ProductRowView.swift
+//  ProductCellView.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 26/3/25.
@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-struct ProductRowView: View {
-    @ObservedObject var product: Product
+struct ProductCellView: View {
+    @ObservedObject var viewModel: ProductCellViewModel
     @StateObject private var imageLoader = ImageLoader()
-    let onSelect: ((Product) -> Void)?
     
     var body: some View {
         HStack {
@@ -26,27 +25,31 @@ struct ProductRowView: View {
             }
             
             VStack(alignment: .leading) {
-                Text(product.name)
+                Text(viewModel.product.name)
                     .font(.headline)
-                Text("$\(product.price, specifier: "%.2f")")
+                Text("$\(viewModel.product.price, specifier: "%.2f")")
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
             Spacer()
             
-            // Nút Like
-            Button(action: {
-                product.toggleLike()
-            }) {
-                Image(systemName: product.isLiked ? "heart.fill" : "heart")
-                    .foregroundColor(product.isLiked ? .red : .gray)
+            if viewModel.isLoading {
+                ProgressView()
+            } else {
+                Button(action: {
+                    viewModel.toggleLike()
+                }) {
+                    Image(systemName: viewModel.product.isLiked ? "heart.fill" : "heart")
+                        .foregroundColor(.red)
+                }
+                .buttonStyle(PlainButtonStyle()) // ✅ Để không ảnh hưởng đến tap gesture
+                .contentShape(Rectangle()) // Đảm bảo khu vực nhấn của nút
             }
-            .buttonStyle(PlainButtonStyle()) // ✅ Để không ảnh hưởng đến tap gesture
-            .contentShape(Rectangle()) // Đảm bảo khu vực nhấn của nút
+            Spacer()
             
             // Nút Chuyển tiếp
             Button(action: {
-                onSelect?(product)
+                viewModel.select()
             }) {
                 Image(systemName: "chevron.right")
                     .foregroundColor(.blue)
@@ -59,8 +62,8 @@ struct ProductRowView: View {
         .onTapGesture {
             // Không làm gì nếu tap ở nút like
             // Phải đảm bảo rằng sự kiện tap không chạy khi nhấn vào nút like
-            if !product.isLiked {
-                onSelect?(product) // Kích hoạt onSelect
+            if !viewModel.product.isLiked {
+                viewModel.select()
             }
         }
         .background(
@@ -71,7 +74,7 @@ struct ProductRowView: View {
                 }
         )
         .onAppear {
-            imageLoader.loadImage(from: product.imageURL)
+            imageLoader.loadImage(from: viewModel.product.imageURL)
         }
     }
 }

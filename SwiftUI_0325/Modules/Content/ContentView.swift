@@ -24,7 +24,7 @@ struct ContentView: View {
                     Text(product.name)
                     Spacer()
                     Button(action: {
-                        product.toggleLike()
+                        product.isLiked.toggle()
                     }) {
                         Image(systemName: product.isLiked ? "heart.fill" : "heart")
                     }
