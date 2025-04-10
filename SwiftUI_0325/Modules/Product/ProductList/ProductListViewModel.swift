@@ -34,7 +34,7 @@ class ProductListViewModel: ObservableObject {
                                isLiked: false)
         let cellVM = ProductCellViewModel(product: product4)
         cellVM.onSelect = { [weak self] in
-            self?.goToProductDetail(cellVM: cellVM)
+            self?.goToProductDetail(product: cellVM.product)
         }
         productCellViewModels.append(cellVM)
     }
@@ -50,7 +50,7 @@ class ProductListViewModel: ObservableObject {
                         
                         let cellVM = ProductCellViewModel(product: updatedProduct)
                         cellVM.onSelect = { [weak self] in
-                            self?.goToProductDetail(cellVM: cellVM)
+                            self?.goToProductDetail(product: cellVM.product)
                         }
                         return cellVM
                     }
@@ -61,8 +61,8 @@ class ProductListViewModel: ObservableObject {
         }
     }
 
-    func goToProductDetail(cellVM: ProductCellViewModel) {
-        coordinator.goToProductDetail(cellVM: cellVM)
+    func goToProductDetail(product: Product) {
+        coordinator.goToProductDetail(product: product)
     }
     
 }

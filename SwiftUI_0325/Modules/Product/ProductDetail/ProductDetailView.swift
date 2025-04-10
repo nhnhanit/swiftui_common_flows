@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct ProductDetailView: View {
-//    @StateObject var viewModel: ProductDetailViewModel
-    @ObservedObject var cellVM: ProductCellViewModel
+    @StateObject var viewModel: ProductDetailViewModel
     
-//    init(product: Product, coordinator: ProductCoordinator) {
-//        _viewModel = StateObject(wrappedValue: ProductDetailViewModel(product: product, coordinator: coordinator))
-//    }
+    init(product: Product, coordinator: ProductCoordinator) {
+        _viewModel = StateObject(wrappedValue: ProductDetailViewModel(product: product, coordinator: coordinator))
+    }
     
     var body: some View {
         VStack {
-            AsyncImage(url: URL(string: cellVM.product.imageURL)) { phase in
+            AsyncImage(url: URL(string: viewModel.product.imageURL)) { phase in
                 switch phase {
                 case .empty:
                     ProgressView()
@@ -37,28 +36,28 @@ struct ProductDetailView: View {
                 }
             }
             
-            Text(cellVM.product.name)
+            Text(viewModel.product.name)
                 .font(.title)
                 .padding()
             
-            Text("$\(cellVM.product.price, specifier: "%.2f")")
+            Text("$\(viewModel.product.price, specifier: "%.2f")")
                 .font(.headline)
                 .foregroundColor(.gray)
                 .padding(.bottom)
             
             Button(action: {
-                cellVM.toggleLike()
+                viewModel.toggleLike()
             }) {
                 HStack {
-                    Image(systemName: cellVM.product.isLiked ? "heart.fill" : "heart")
-                        .foregroundColor(cellVM.product.isLiked ? .red : .gray)
-                    Text(cellVM.product.isLiked ? "Unlike" : "Like")
+                    Image(systemName: viewModel.product.isLiked ? "heart.fill" : "heart")
+                        .foregroundColor(viewModel.product.isLiked ? .red : .gray)
+                    Text(viewModel.product.isLiked ? "Unlike" : "Like")
                         .foregroundColor(.white)
                         .bold()
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(cellVM.product.isLiked ? Color.red : Color.blue)
+                .background(viewModel.product.isLiked ? Color.red : Color.blue)
                 .cornerRadius(8)
             }
             .padding()
@@ -74,8 +73,7 @@ struct ProductDetailView: View {
     var alertManager = GlobalAlertManager()
     let mockCoordinator = AppCoordinator(alertManager: alertManager)
     let mockProductCoordinator = ProductCoordinator(appCoordinator: mockCoordinator)
-    let product = Product(id: "1", name: "Sample Product", price: 29.99, imageURL: "http://example.com/image.jpg")
-    let mockCellVM = ProductCellViewModel(product: product)
+    let mockProduct = Product(id: "1", name: "Sample Product", price: 29.99, imageURL: "http://example.com/image.jpg")
     
-    ProductDetailView(cellVM: mockCellVM)
+    return ProductDetailView(product: mockProduct, coordinator: mockProductCoordinator)
 }

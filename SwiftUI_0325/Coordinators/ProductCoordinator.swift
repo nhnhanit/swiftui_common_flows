@@ -14,9 +14,9 @@ final class ProductCoordinator: ObservableObject {
         self.appCoordinator = appCoordinator
     }
 
-    func goToProductDetail(cellVM: ProductCellViewModel) {
+    func goToProductDetail(product: Product) {
         if let appCoordinator = appCoordinator {
-            appCoordinator.navigate(to: .productRoute(.productDetail(cellVM: cellVM)))
+            appCoordinator.navigate(to: .productRoute(.productDetail(product: product)))
         } else {
             print("appCoordinator is nil")
         }
@@ -25,7 +25,7 @@ final class ProductCoordinator: ObservableObject {
 
 enum ProductRoute: Hashable {
     
-    case productDetail(cellVM: ProductCellViewModel)
+    case productDetail(product: Product)
     
     // Để enum này conform Hashable, cần bỏ closure/delegate khi so sánh
     static func == (lhs: ProductRoute, rhs: ProductRoute) -> Bool {

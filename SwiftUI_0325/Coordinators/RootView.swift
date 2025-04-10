@@ -64,8 +64,8 @@ extension RootView {
     @ViewBuilder
     private func handleProductRoute(_ route: ProductRoute) -> some View {
         switch route {
-        case .productDetail(let cellVM):
-            ProductDetailModule.build(cellVM: cellVM)
+        case .productDetail(let product):
+            ProductDetailModule.build(product: product, coordinator: ProductCoordinator(appCoordinator: coordinator))
             
         @unknown default:
             Text("Undefined")
