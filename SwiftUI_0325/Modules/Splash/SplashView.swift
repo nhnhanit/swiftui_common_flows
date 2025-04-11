@@ -9,6 +9,10 @@ import SwiftUI
 
 struct SplashView: View {
     @StateObject var viewModel: SplashViewModel
+    
+    init(coordinator: AppCoordinator) {
+        _viewModel = StateObject(wrappedValue: SplashViewModel(coordinator: coordinator))
+    }
 
     var body: some View {
         VStack {

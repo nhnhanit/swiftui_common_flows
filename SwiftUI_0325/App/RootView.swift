@@ -47,7 +47,7 @@ extension RootView {
     private func handleSettingsRoute(_ route: SettingsRoute) -> some View {
         switch route {
         case .userProfile(let user, let onSaveUser):
-            ProfileModule.build(user: user, coordinator: SettingsCoordinator(appCoordinator: coordinator), onSaveUser: onSaveUser)
+            ProfileModule.build(user: user, onSaveUser: onSaveUser)
             
         @unknown default:
             Text("Undefined")

@@ -10,6 +10,10 @@ import SwiftUI
 struct ProfileView: View {
     @StateObject var viewModel: ProfileViewModel
     
+    init(user: User, onSaveUser: ((User) -> Void)? = nil) {
+        _viewModel = StateObject(wrappedValue: ProfileViewModel(user: user, onSaveUser: onSaveUser))
+    }
+    
     var body: some View {
         VStack(spacing: 20) {
             TextField("Enter name", text: $viewModel.user.name)

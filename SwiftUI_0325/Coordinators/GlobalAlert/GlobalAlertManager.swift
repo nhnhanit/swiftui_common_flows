@@ -6,7 +6,6 @@
 //
 
 
-// GlobalAlertManager.swift
 import SwiftUI
 
 final class GlobalAlertManager: ObservableObject {
