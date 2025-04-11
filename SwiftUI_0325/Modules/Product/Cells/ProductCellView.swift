@@ -37,7 +37,7 @@ struct ProductCellView: View {
                 ProgressView()
             } else {
                 Button(action: {
-                    viewModel.toggleLike()
+                    viewModel.likeButtonTapped()
                 }) {
                     Image(systemName: viewModel.product.isLiked ? "heart.fill" : "heart")
                         .foregroundColor(.red)
@@ -49,7 +49,7 @@ struct ProductCellView: View {
             
             // Nút Chuyển tiếp
             Button(action: {
-                viewModel.select()
+                viewModel.cellTapped()
             }) {
                 Image(systemName: "chevron.right")
                     .foregroundColor(.blue)
@@ -63,7 +63,7 @@ struct ProductCellView: View {
             // Không làm gì nếu tap ở nút like
             // Phải đảm bảo rằng sự kiện tap không chạy khi nhấn vào nút like
             if !viewModel.product.isLiked {
-                viewModel.select()
+                viewModel.cellTapped()
             }
         }
         .background(

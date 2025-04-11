@@ -19,7 +19,7 @@ final class ProductDetailViewModel: ObservableObject {
         self.isLiked = product.isLiked
     }
     
-    func toggleLike() {
+    func likeButtonTapped() {
         isLiked.toggle()
         self.product.isLiked.toggle()
     }

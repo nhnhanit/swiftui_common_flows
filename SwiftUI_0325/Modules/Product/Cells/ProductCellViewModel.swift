@@ -12,13 +12,13 @@ class ProductCellViewModel: ObservableObject, Identifiable {
     let product: Product
 
     @Published var isLoading: Bool = false
-    var onSelect: (() -> Void)?
+    var onSelectCell: (() -> Void)?
 
     init(product: Product) {
         self.product = product
     }
 
-    func toggleLike() {
+    func likeButtonTapped() {
         isLoading = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.isLoading = false
@@ -26,7 +26,7 @@ class ProductCellViewModel: ObservableObject, Identifiable {
         }
     }
     
-    func select() {
-        onSelect?()
+    func cellTapped() {
+        onSelectCell?()
     }
 }

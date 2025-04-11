@@ -46,7 +46,7 @@ struct ProductDetailView: View {
                 .padding(.bottom)
             
             Button(action: {
-                viewModel.toggleLike()
+                viewModel.likeButtonTapped()
             }) {
                 HStack {
                     Image(systemName: viewModel.product.isLiked ? "heart.fill" : "heart")
