@@ -10,39 +10,48 @@ import SwiftUI
 @MainActor
 final class ProductDetailViewModel: ObservableObject {
     @Published var product: Product
+    private let productService: ProductService
     @Published var shop: Shop?
     @Published var reviewCellViewModels: [ReviewCellViewModel] = []
+    @Published var isLoading = false
+    @Published var errorMessage: String?
     var onUpdate: ((Product) -> Void)?
-    private let service: ProductServiceProtocol
-
-    init(product: Product, service: ProductServiceProtocol) {
+    
+    init(product: Product, service: ProductService) {
         self.product = product
-        self.service = service
+        self.productService = service
+        
         Task {
             await loadDetails()
         }
     }
-
+    
     func toggleLike() {
-        service.toggleLike(for: product)
+        //        service.toggleLike(for: product)
         product.isLiked.toggle()
         onUpdate?(product)
     }
-
+    
     func loadDetails() async {
+        isLoading = true
+        errorMessage = nil
+        
         do {
-            async let reviews = try service.fetchReviews(for: product)
-            async let shop = try service.fetchShop(for: product)
-
-            let (fetchedReviews, fetchedShop) = try await (reviews, shop)
+            async let shopResponse = try productService.fetchShop(shopID: "\(product.id)")
+            async let reviewsResponse = try productService.fetchReviews(productID: "\(product.id)")
             
-            self.shop = fetchedShop
-            self.reviewCellViewModels = fetchedReviews.map {
+            let (shopResult, reviewsResult) = try await (shopResponse, reviewsResponse)
+            isLoading = false
+            shop = shopResult
+            reviewCellViewModels = reviewsResult.map {
                 ReviewCellViewModel(review: $0)
             }
         } catch {
-            print("Failed to load product details: \(error)")
+            errorMessage = "Failed to load details: \(error.localizedDescription)"
+            print(errorMessage!)
         }
+        
+        isLoading = false
     }
-
+    
 }

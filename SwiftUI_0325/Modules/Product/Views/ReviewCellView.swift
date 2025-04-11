@@ -12,8 +12,9 @@ struct ReviewCellView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(viewModel.userName).bold()
-            Text(viewModel.description)
+            Text(viewModel.author).bold()
+            Text(viewModel.comment).bold()
+            Text(viewModel.rating)
         }
     }
 }

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct Product: Identifiable, Hashable {
-    let id: UUID
+struct Product: Identifiable, Hashable, Decodable {
+    let id: String
     let name: String
     var isLiked: Bool
 }

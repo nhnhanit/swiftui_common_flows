@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct Review: Identifiable, Hashable {
-    let id: UUID
-    let userName: String
-    let description: String
+struct Review: Identifiable, Hashable, Decodable {
+    let id: String
+    let author: String
+    let comment: String
+    let rating: Int
 }

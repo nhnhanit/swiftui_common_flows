@@ -9,30 +9,46 @@ import SwiftUI
 
 @MainActor
 final class ProductListViewModel: ObservableObject {
-    @Published var productCells: [ProductCellViewModel] = []
-    private let service: ProductServiceProtocol
+    private let productService: ProductService
     private let coordinator: ProductCoordinator
-
-    init(service: ProductServiceProtocol, coordinator: ProductCoordinator) {
-        self.service = service
-        self.coordinator = coordinator
-        fetchProducts()
-        
+    @Published var productCells: [ProductCellViewModel] = []
+    @Published var isLoading = false
+    @Published var errorMessage: String?
+    
+    init(service: ProductService, coordinator: ProductCoordinator) {
         print("🔁 ProductListViewModel INIT")
+        
+        self.productService = service
+        self.coordinator = coordinator
+        
+        Task {
+            await fetchProducts()
+        }
     }
     
     deinit {
         print("❌ DEINIT ProductListViewModel")
     }
-
-    func fetchProducts() {
-        productCells = service.fetchProducts().map {
-            ProductCellViewModel(product: $0, service: service)
+    
+    func fetchProducts() async {
+        isLoading = true
+        errorMessage = nil
+        
+        do {
+            productCells = try await productService.fetchProducts().map {
+                ProductCellViewModel(product: $0, service: productService)
+            }
+        } catch {
+            errorMessage = "Failed to load products: \(error.localizedDescription)"
+            print(errorMessage as Any)
         }
+        
+        isLoading = false
     }
-
+    
+    
     @MainActor func selectProduct(_ product: Product) {
-        let detailVM = ProductDetailViewModel(product: product, service: service)
+        let detailVM = ProductDetailViewModel(product: product, service: productService)
         
         // 👇 Callback from Detail to List
         detailVM.onUpdate = { [weak self] updatedProduct in

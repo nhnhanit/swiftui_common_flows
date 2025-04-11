@@ -9,13 +9,15 @@ import SwiftUI
 
 @MainActor
 struct ReviewCellViewModel: Identifiable {
-    let id: UUID
-    let userName: String
-    let description: String
+    let id: String
+    let author: String
+    let comment: String
+    let rating: String
 
     init(review: Review) {
         self.id = review.id
-        self.userName = review.userName
-        self.description = review.description
+        self.author = "Author: " + review.author
+        self.comment = review.comment
+        self.rating = "Rating: \(review.rating)"
     }
 }

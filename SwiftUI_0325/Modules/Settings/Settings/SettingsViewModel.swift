@@ -23,7 +23,7 @@ final class SettingsViewModel: ObservableObject {
     }
 
     func loadUser() {
-        self.user = User(id: UUID(), name: "John Doe", email: "johndoe@example.com")
+        self.user = User(id: "1", name: "John Doe", email: "johndoe@example.com")
     }
     
     func logoutButtonTapped() {

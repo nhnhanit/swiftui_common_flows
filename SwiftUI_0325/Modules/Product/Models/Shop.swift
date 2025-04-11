@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct Shop: Hashable {
+struct Shop: Identifiable, Hashable, Decodable {
+    let id: String
     let name: String
     let address: String
 }

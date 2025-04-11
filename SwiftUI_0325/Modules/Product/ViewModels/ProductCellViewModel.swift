@@ -11,15 +11,15 @@ import SwiftUI
 final class ProductCellViewModel: ObservableObject, Identifiable {
     let id = UUID()
     @Published var product: Product
-    private let service: ProductServiceProtocol
+    private let service: ProductService
 
-    init(product: Product, service: ProductServiceProtocol) {
+    init(product: Product, service: ProductService) {
         self.product = product
         self.service = service
     }
 
     func toggleLike() {
-        service.toggleLike(for: product)
+//        service.toggleLike(for: product)
         product.isLiked.toggle()
     }
 }

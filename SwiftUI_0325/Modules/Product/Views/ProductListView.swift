@@ -10,7 +10,7 @@ import SwiftUI
 struct ProductListView: View {
     @StateObject var viewModel: ProductListViewModel
 
-    init(service: ProductServiceProtocol, coordinator: ProductCoordinator) {
+    init(service: ProductService, coordinator: ProductCoordinator) {
         _viewModel = StateObject(wrappedValue: ProductListViewModel(service: service, coordinator: coordinator))
     }
     
