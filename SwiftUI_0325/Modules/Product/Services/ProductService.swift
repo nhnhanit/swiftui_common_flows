@@ -7,7 +7,13 @@
 
 import SwiftUI
 
-final class ProductService {
+protocol ProductServicing {
+    func fetchProducts() async throws -> [Product]
+    func fetchShop(shopID: String) async throws -> Shop
+    func fetchReviews(productID: String) async throws -> [Review]
+}
+
+final class ProductService: ProductServicing {
     private let network: NetworkService
 
     init(network: NetworkService = DefaultNetworkService()) {

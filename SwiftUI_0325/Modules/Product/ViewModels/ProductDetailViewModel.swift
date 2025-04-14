@@ -10,14 +10,14 @@ import SwiftUI
 @MainActor
 final class ProductDetailViewModel: ObservableObject {
     @Published var product: Product
-    private let productService: ProductService
+    private let productService: ProductServicing
     @Published var shop: Shop?
     @Published var reviewCellViewModels: [ReviewCellViewModel] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
     var onUpdate: ((Product) -> Void)?
     
-    init(product: Product, service: ProductService) {
+    init(product: Product, service: ProductServicing) {
         self.product = product
         self.productService = service
         

@@ -8,7 +8,11 @@
 
 import SwiftUI
 
-final class AppCoordinator: ObservableObject {
+protocol Navigatable: AnyObject {
+    func navigate(to route: AppRoute)
+}
+
+final class AppCoordinator: ObservableObject, Navigatable {
     @Published var path = NavigationPath()
 
     let alertManager: GlobalAlertManager
@@ -37,6 +41,5 @@ enum AppRoute: Hashable {
     case main
     case productRoute(ProductRoute)
     case settingsRoute(SettingsRoute)
-    
 }
 

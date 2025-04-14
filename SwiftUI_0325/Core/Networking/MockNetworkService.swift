@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class MockNetworkService: NetworkService {
+final class MockNetworkService_: NetworkService {
     func request<T>(_ endpoint: APIRequest) async throws -> T where T : Decodable {
         switch endpoint {
         case is ProductAPI:

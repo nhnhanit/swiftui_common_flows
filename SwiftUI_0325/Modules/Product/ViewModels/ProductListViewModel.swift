@@ -9,13 +9,13 @@ import SwiftUI
 
 @MainActor
 final class ProductListViewModel: ObservableObject {
-    private let productService: ProductService
+    private let productService: ProductServicing
     private let coordinator: ProductCoordinator
     @Published var productCells: [ProductCellViewModel] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
     
-    init(service: ProductService, coordinator: ProductCoordinator) {
+    init(service: ProductServicing, coordinator: ProductCoordinator) {
         print("🔁 ProductListViewModel INIT")
         
         self.productService = service

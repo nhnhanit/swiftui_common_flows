@@ -8,9 +8,9 @@
 import SwiftUI
 
 final class ProductCoordinator: ObservableObject {
-    private weak var appCoordinator: AppCoordinator?
+    private weak var appCoordinator: Navigatable?
     
-    init(appCoordinator: AppCoordinator) {
+    init(appCoordinator: Navigatable) {
         self.appCoordinator = appCoordinator
     }
 

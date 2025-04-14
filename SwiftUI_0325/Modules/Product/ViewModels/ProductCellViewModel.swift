@@ -11,9 +11,9 @@ import SwiftUI
 final class ProductCellViewModel: ObservableObject, Identifiable {
     let id = UUID()
     @Published var product: Product
-    private let service: ProductService
+    private let service: ProductServicing
 
-    init(product: Product, service: ProductService) {
+    init(product: Product, service: ProductServicing) {
         self.product = product
         self.service = service
     }
