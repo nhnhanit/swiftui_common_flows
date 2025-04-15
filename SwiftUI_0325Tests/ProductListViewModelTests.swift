@@ -14,7 +14,6 @@ struct ProductListViewModelTests {
     
     @Test("Fetch products successfully updates view model")
     func testFetchProductsSuccess() async throws {
-        // Arrange
         let mockService = MockProductService()
         mockService.productsToReturn = [
             Product(id: "1", name: "Coffee", isLiked: false)

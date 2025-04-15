@@ -9,18 +9,18 @@ import SwiftUI
 @testable import SwiftUI_0325
 
 final class MockNetworkService: NetworkService {
-    var result: Any?
     var shouldFail = false
-    
+    var jsonFileName: String?
+
     func request<T: Decodable>(_ endpoint: APIRequest) async throws -> T {
         if shouldFail {
             throw URLError(.badServerResponse)
         }
-        
-        guard let result = result as? T else {
-            fatalError("MockNetworkService: result không đúng kiểu \(T.self)")
+
+        guard let fileName = jsonFileName else {
+            fatalError("MockNetworkService: Thiếu jsonFileName")
         }
-        
-        return result
+
+        return try JSONTestLoader.load(fileName)
     }
 }
