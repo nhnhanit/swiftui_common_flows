@@ -15,22 +15,35 @@ final class ProductListViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     
+    private var currentTask: Task<Void, Never>?
+    
     init(service: ProductServicing, coordinator: ProductCoordinator) {
         print("🔁 ProductListViewModel INIT")
         
         self.productService = service
         self.coordinator = coordinator
         
-        Task {
-            await fetchProducts()
-        }
+        loadProducts()
     }
     
     deinit {
         print("❌ DEINIT ProductListViewModel")
     }
     
-    func fetchProducts() async {
+    func loadProducts() {
+            // 🔒 Prevent multiple calls
+            guard currentTask == nil else {
+                print("⏳ Already fetching products...")
+                return
+            }
+
+            currentTask = Task {
+                await fetchProducts()
+                currentTask = nil
+            }
+        }
+    
+    private func fetchProducts() async {
         isLoading = true
         errorMessage = nil
         

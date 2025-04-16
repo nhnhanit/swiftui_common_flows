@@ -9,7 +9,8 @@
 import SwiftUI
 
 protocol Navigatable: AnyObject {
-    func navigate(to route: AppRoute)
+    func push(to route: AppRoute)
+    func resetAndPush(to route: AppRoute)
 }
 
 protocol AlertPresentable: AnyObject {
@@ -17,16 +18,22 @@ protocol AlertPresentable: AnyObject {
 }
 
 final class AppCoordinator: ObservableObject, Navigatable, AlertPresentable {
+    
     @Published var path = NavigationPath()
-
+    
     let alertManager: GlobalAlertManager
-
+    
     init(alertManager: GlobalAlertManager) {
         self.alertManager = alertManager
     }
     
-    // Navigate to any module
-    func navigate(to route: AppRoute) {
+    
+    func push(to route: AppRoute) {
+        path.append(route)
+    }
+    
+    func resetAndPush(to route: AppRoute) {
+        path = NavigationPath()
         path.append(route)
     }
     

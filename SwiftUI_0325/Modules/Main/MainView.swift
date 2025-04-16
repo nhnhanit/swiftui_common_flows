@@ -8,17 +8,39 @@
 import SwiftUI
 
 struct MainView: View {
-    @ObservedObject var viewModel: MainViewModel
+    @StateObject var viewModel: MainViewModel
     
+    init(coordinator: AppCoordinator) {
+        _viewModel = StateObject(wrappedValue: MainViewModel(coordinator: coordinator))
+    }
+    
+    @State private var selectedTab = MainTab.productList
+
+    enum MainTab {
+        case productList
+        case settings
+    }
+
     var body: some View {
-        TabView {
-            ProductListModule.build(coordinator: ProductCoordinator(appCoordinator: viewModel.coordinator))
-                .tabItem { Label("Products", systemImage: "list.bullet") }
-            SettingsModule.build(coordinator: SettingsCoordinator(appCoordinator: viewModel.coordinator))
-                .tabItem { Label("Settings", systemImage: "gearshape")
-                }
+        TabView(selection: $selectedTab) {
+//            NavigationStack {
+                ProductListModule.build(coordinator: ProductCoordinator(appCoordinator: viewModel.coordinator))
+//            }
+            .tabItem {
+                Label("Products", systemImage: "list.bullet")
+            }
+            .tag(MainTab.productList)
+            .navigationTitle("Products")
+
+//            NavigationStack {
+                SettingsModule.build(coordinator: SettingsCoordinator(appCoordinator: viewModel.coordinator))
+//            }
+            .tabItem {
+                Label("Settings", systemImage: "gearshape")
+            }
+            .tag(MainTab.settings)
+            .navigationTitle("Settings")
         }
-        .navigationBarBackButtonHidden(true)
     }
 }
 

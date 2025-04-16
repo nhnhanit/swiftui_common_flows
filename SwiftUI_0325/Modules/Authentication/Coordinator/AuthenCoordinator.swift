@@ -15,15 +15,15 @@ final class AuthenCoordinator: ObservableObject {
     }
 
     func goToMain() {
-        appCoordinator?.navigate(to: .main)
+        appCoordinator?.resetAndPush(to: .main)
     }
     
     func goToSignUp() {
-        appCoordinator?.navigate(to: .authenRoute(.signUp))
+        appCoordinator?.push(to: .authenRoute(.signUp))
     }
     
     func goToConfirmOTP() {
-        appCoordinator?.navigate(to: .authenRoute(.confirmOTP))
+        appCoordinator?.push(to: .authenRoute(.confirmOTP))
     }
     
 }

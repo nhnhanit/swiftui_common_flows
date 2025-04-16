@@ -17,7 +17,7 @@ enum ProductAPI: APIRequest {
     var path: String {
         switch self {
         case .fetchProducts:
-            return "/v3/9e9668bd-db92-4e94-9cd6-f01edd2596c3"
+            return "/v3/ac302462-42d7-4167-bf6f-dd2a1bd047a3"
         case .fetchShop:
             return "/v3/47b077d4-7900-436b-9e2a-f0e7e5980c08"
         case .fetchReviews:

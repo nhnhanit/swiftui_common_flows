@@ -56,6 +56,6 @@ struct SettingsView: View {
                 print("SettingsView onAppear dont refresh data")
             }
         }
-        .navigationTitle("Settings")
+        .navigationTitle("Settings-2")
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MockNetworkService.swift
+//  MockNetworkServiceForPreview.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 11/4/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class MockNetworkService_: NetworkService {
+final class MockNetworkServiceForPreview: NetworkService {
     func request<T>(_ endpoint: APIRequest) async throws -> T where T : Decodable {
         switch endpoint {
         case is ProductAPI:

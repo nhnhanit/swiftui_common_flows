@@ -7,9 +7,8 @@
 
 final class MainModule {
     static func build(coordinator: AppCoordinator) -> MainView {
-        let viewModel = MainViewModel(coordinator: coordinator)
         
-        return MainView(viewModel: viewModel)
+        return MainView(coordinator: coordinator)
     }
 }
 
