@@ -15,30 +15,32 @@ struct ProductListView: View {
     }
     
     var body: some View {
-        List(viewModel.productCells, id: \.id) { cellVM in
-            ProductCellView(viewModel: cellVM)
-                .onTapGesture {
-                    viewModel.selectProduct(cellVM.product)
-                }
-        }
-        .refreshable {
-            viewModel.loadProducts()
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
+        VStack(spacing: 0) {
+            TopBarView(
+                title: "Products",
+                rightIcon: "arrow.clockwise",
+                rightAction: {
                     viewModel.loadProducts()
-                } label: {
-                    Image(systemName: "arrow.clockwise")
                 }
-                .disabled(viewModel.isLoading) // prevent spam
+            )
+            
+            List(viewModel.productCells, id: \.id) { cellVM in
+                ProductCellView(viewModel: cellVM)
+                    .onTapGesture {
+                        viewModel.selectProduct(cellVM.product)
+                    }
+            }
+            .refreshable {
+                viewModel.loadProducts()
             }
         }
-        .navigationTitle("Products-2")
         .onAppear() {
             if viewModel.productCells.isEmpty {
                 viewModel.loadProducts()
             }
+        }
+        .onDisappear() {
+            viewModel.cancelLoading()
         }
     }
 }

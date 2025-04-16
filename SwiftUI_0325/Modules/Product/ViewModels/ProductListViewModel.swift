@@ -31,17 +31,22 @@ final class ProductListViewModel: ObservableObject {
     }
     
     func loadProducts() {
-            // 🔒 Prevent multiple calls
-            guard currentTask == nil else {
-                print("⏳ Already fetching products...")
-                return
-            }
-
-            currentTask = Task {
-                await fetchProducts()
-                currentTask = nil
-            }
+        // 🔒 Prevent multiple calls
+        guard currentTask == nil else {
+            print("⏳ Already fetching products...")
+            return
         }
+        
+        currentTask = Task { [weak self] in
+            guard let self else { return }
+            await fetchProducts()
+            self.currentTask = nil
+        }
+    }
+    
+    func cancelLoading() {
+        currentTask?.cancel()
+    }
     
     private func fetchProducts() async {
         isLoading = true
@@ -51,7 +56,10 @@ final class ProductListViewModel: ObservableObject {
             productCells = try await productService.fetchProducts().map {
                 ProductCellViewModel(product: $0, service: productService)
             }
-        } catch {
+        } catch is CancellationError {
+            print("❌ Task was cancelled intentionally.")
+        }
+        catch {
             errorMessage = "Failed to load products: \(error.localizedDescription)"
             print(errorMessage as Any)
             coordinator.showErrorAlert(title: "Call networking error", message: error.localizedDescription)
