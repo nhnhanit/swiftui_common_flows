@@ -16,7 +16,10 @@ struct GlobalAlertView: View {
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()
                     .onTapGesture {
-                        alertManager.dismiss()
+                        if alert.secondaryAction?.role == .cancel {
+                            alertManager.dismiss()
+                            alert.secondaryAction?.action()
+                        }
                     }
 
                 VStack(spacing: 16) {
@@ -31,21 +34,24 @@ struct GlobalAlertView: View {
                             .padding(.horizontal)
                     }
 
-                    HStack {
-                        if let secondaryText = alert.secondaryText, let onSecondary = alert.onSecondary {
-                            Button(secondaryText) {
+                    HStack(spacing: 12) {
+                        if let secondary = alert.secondaryAction {
+                            Button(secondary.title) {
                                 alertManager.dismiss()
-                                onSecondary()
+                                secondary.action()
                             }
                             .padding()
+                            .background(color(for: secondary.role))
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
                         }
 
-                        Button(alert.primaryText) {
+                        Button(alert.primaryAction.title) {
                             alertManager.dismiss()
-                            alert.onPrimary()
+                            alert.primaryAction.action()
                         }
                         .padding()
-                        .background(Color.blue)
+                        .background(color(for: alert.primaryAction.role))
                         .foregroundColor(.white)
                         .cornerRadius(8)
                     }
@@ -57,6 +63,17 @@ struct GlobalAlertView: View {
                 .padding(40)
             }
             .transition(.opacity)
+        }
+    }
+
+    private func color(for role: GlobalAlert.AlertRole?) -> Color {
+        switch role {
+        case .cancel:
+            return .gray
+        case .destructive:
+            return .red
+        default:
+            return .blue
         }
     }
 }

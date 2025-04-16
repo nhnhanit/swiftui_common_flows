@@ -12,7 +12,11 @@ protocol Navigatable: AnyObject {
     func navigate(to route: AppRoute)
 }
 
-final class AppCoordinator: ObservableObject, Navigatable {
+protocol AlertPresentable: AnyObject {
+    var alertManager: GlobalAlertManager { get }
+}
+
+final class AppCoordinator: ObservableObject, Navigatable, AlertPresentable {
     @Published var path = NavigationPath()
 
     let alertManager: GlobalAlertManager

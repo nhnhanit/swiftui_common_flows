@@ -8,12 +8,20 @@
 import SwiftUI
 
 final class ProductCoordinator: ObservableObject {
-    private weak var appCoordinator: Navigatable?
+    private weak var appCoordinator: (Navigatable & AlertPresentable)?
     
-    init(appCoordinator: Navigatable) {
+    init(appCoordinator: (Navigatable & AlertPresentable)) {
         self.appCoordinator = appCoordinator
     }
-
+    
+    func showErrorAlert(title: String, message: String) {
+        appCoordinator?.alertManager.showAlert(
+            title: title,
+            message: message,
+            primary: .init(title: "OK", role: .cancel)
+        )
+    }
+    
     func goToProductDetail(productID: String, detailVM: ProductDetailViewModel) {
         if let appCoordinator = appCoordinator {
             appCoordinator.navigate(to: .productRoute(.productDetail(productID: productID, detailVM: detailVM)))
@@ -21,6 +29,7 @@ final class ProductCoordinator: ObservableObject {
             print("appCoordinator is nil")
         }
     }
+    
 }
 
 enum ProductRoute: Hashable {

@@ -9,10 +9,29 @@ import SwiftUI
 
 struct GlobalAlert: Identifiable {
     var id = UUID()
+    
     let title: String
     let message: String?
-    let primaryText: String
-    let secondaryText: String?
-    let onPrimary: () -> Void
-    let onSecondary: (() -> Void)?
+    
+    let primaryAction: AlertAction
+    let secondaryAction: AlertAction?
+
+    struct AlertAction {
+        let title: String
+        let role: AlertRole?
+        let action: () -> Void
+
+        init(title: String, role: AlertRole? = nil, action: @escaping () -> Void = {}) {
+            self.title = title
+            self.role = role
+            self.action = action
+        }
+    }
+
+    enum AlertRole {
+        case cancel
+        case destructive
+        case normal
+    }
 }
+

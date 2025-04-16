@@ -13,7 +13,7 @@ final class SettingsCoordinator: ObservableObject {
     init(appCoordinator: AppCoordinator) {
         self.appCoordinator = appCoordinator
     }
-
+    
     func goToUserProfile(user: User, onSaveUser: ((User) -> Void)?) {
         if let appCoordinator = appCoordinator {
             appCoordinator.navigate(to: .settingsRoute(.userProfile(user: user, onSaveUser: onSaveUser)))
@@ -23,19 +23,18 @@ final class SettingsCoordinator: ObservableObject {
     }
     
     func presentSignOutConfirmation(onConfirm: @escaping () -> Void) {
-        appCoordinator?.alertManager.showAlert(GlobalAlert(
+        appCoordinator?.alertManager.showAlert(
             title: "Sign Out?",
             message: "Are you sure you want to sign out?",
-            primaryText: "Confirm",
-            secondaryText: "Cancel",
-            onPrimary: {
+            primary: .init(title: "Ok", role: .destructive, action: {
                 print("✅ Signed out")
                 onConfirm()
-            },
-            onSecondary: {
-                print("❌ Cancelled")
-            }
-        ))
+            }),
+            secondary: .init(title: "Cancel", role: .cancel, action: {
+                print("❌ Cancelled delete")
+            })
+        )
+        
     }
     
     func popTopSplash() {
@@ -56,7 +55,7 @@ enum SettingsRoute: Hashable {
             return p1.id == p2.id
         }
     }
-
+    
     func hash(into hasher: inout Hasher) {
         switch self {
         case let .userProfile(user, _):

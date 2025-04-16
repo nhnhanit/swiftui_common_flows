@@ -41,6 +41,8 @@ final class ProductListViewModel: ObservableObject {
         } catch {
             errorMessage = "Failed to load products: \(error.localizedDescription)"
             print(errorMessage as Any)
+            coordinator.showErrorAlert(title: "Call networking error", message: error.localizedDescription)
+            
         }
         
         isLoading = false

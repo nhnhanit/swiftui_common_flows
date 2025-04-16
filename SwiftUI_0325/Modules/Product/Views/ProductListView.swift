@@ -22,5 +22,12 @@ struct ProductListView: View {
                 }
         }
         .navigationTitle("Products")
+        .onAppear() {
+            if viewModel.productCells.isEmpty {
+                Task {
+                    await viewModel.fetchProducts()
+                }
+            }
+        }
     }
 }
