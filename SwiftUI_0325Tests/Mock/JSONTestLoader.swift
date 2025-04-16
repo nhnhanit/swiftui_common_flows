@@ -5,7 +5,6 @@
 //  Created by hongnhan on 14/4/25.
 //
 
-
 import Foundation
 
 enum JSONTestLoader {

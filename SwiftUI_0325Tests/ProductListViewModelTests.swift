@@ -31,19 +31,23 @@ struct ProductListViewModelTests {
         #expect(viewModel.productCells[0].product.name == "Coffee")
     }
     
-    @Test("Fetch products fails and sets errorMessage")
+    @Test("Fetch products fails and triggers coordinator alert")
     func testFetchProductsFailure() async throws {
         let mockService = MockProductService()
         mockService.shouldThrowError = true
-        let coordinator = ProductCoordinator(appCoordinator: MockAppCoordinator())
 
+        let coordinator = MockProductCoordinator(appCoordinator: MockAppCoordinator())
         let viewModel = ProductListViewModel(service: mockService, coordinator: coordinator)
+
+        // Wait for async task to finish
         try? await Task.sleep(nanoseconds: 200_000_000)
 
         #expect(viewModel.productCells.isEmpty)
         #expect(viewModel.isLoading == false)
-        #expect(viewModel.errorMessage?.contains("Failed to load products") == true)
+        #expect(coordinator.didShowError == true)
+        #expect(coordinator.lastErrorTitle?.contains("Call networking error") == true)
     }
+
     
     @Test("Selecting product triggers navigation")
     func testSelectProductNavigatesToDetail() async throws {

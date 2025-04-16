@@ -50,7 +50,7 @@ final class ProductListViewModel: ObservableObject {
     
     private func fetchProducts() async {
         isLoading = true
-        errorMessage = nil
+//        errorMessage = nil
         
         do {
             productCells = try await productService.fetchProducts().map {
@@ -60,8 +60,8 @@ final class ProductListViewModel: ObservableObject {
             print("❌ Task was cancelled intentionally.")
         }
         catch {
-            errorMessage = "Failed to load products: \(error.localizedDescription)"
-            print(errorMessage as Any)
+//            errorMessage = "Failed to load products: \(error.localizedDescription)"
+//            print(errorMessage as Any)
             coordinator.showErrorAlert(title: "Call networking error", message: error.localizedDescription)
             
         }

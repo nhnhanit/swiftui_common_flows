@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class ProductCoordinator: ObservableObject {
+class ProductCoordinator: ObservableObject {
     private weak var appCoordinator: (Navigatable & AlertPresentable)?
     
     init(appCoordinator: (Navigatable & AlertPresentable)) {

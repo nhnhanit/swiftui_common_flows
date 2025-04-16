@@ -66,9 +66,8 @@ struct ProductListView: View {
 
 #Preview {
     let mockCoordinator = ProductCoordinator(appCoordinator: AppCoordinator(alertManager: GlobalAlertManager()))
-    
     let mockNetwork = MockNetworkServiceForPreview()
-    mockNetwork.returnEmptyProducts = true
+//    mockNetwork.returnEmptyProducts = true
     
     let mockProductService = ProductService(network: mockNetwork)
     
