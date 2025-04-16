@@ -8,11 +8,13 @@
 import SwiftUI
 
 final class MockNetworkServiceForPreview: NetworkService {
+    var returnEmptyProducts: Bool = false
+    
     func request<T>(_ endpoint: APIRequest) async throws -> T where T : Decodable {
         switch endpoint {
         case is ProductAPI:
             if T.self == [Product].self {
-                let sample = [Product(id: "1", name: "Mock Product", isLiked: false)]
+                let sample: [Product] = (returnEmptyProducts ? [] : [Product(id: "1", name: "Mock Product", isLiked: false)])
                 return sample as! T
             } else if T.self == Shop.self {
                 let shop = Shop(id: "1", name: "Mock Shop", address: "123 Mock St")

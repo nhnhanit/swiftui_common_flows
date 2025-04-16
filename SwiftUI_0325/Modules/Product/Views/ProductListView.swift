@@ -15,31 +15,50 @@ struct ProductListView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            TopBarView(
-                title: "Products",
-                rightIcon: "arrow.clockwise",
-                rightAction: {
-                    viewModel.loadProducts()
-                }
-            )
-            
-            List(viewModel.productCells, id: \.id) { cellVM in
-                ProductCellView(viewModel: cellVM)
-                    .onTapGesture {
-                        viewModel.selectProduct(cellVM.product)
+        ZStack {
+            VStack(spacing: 0) {
+                TopBarView(
+                    title: "Products",
+                    rightIcon: "arrow.clockwise",
+                    rightAction: {
+                        viewModel.loadProducts()
                     }
+                )
+
+                if viewModel.productCells.isEmpty && !viewModel.isLoading {
+                    Spacer()
+                    EmptyStateView(
+                        title: "No Products",
+                        message: "You can refresh or try again later.",
+                        imageName: "shippingbox",
+                        retryAction: {
+                            viewModel.loadProducts()
+                        }
+                    )
+                    Spacer()
+                } else {
+                    List(viewModel.productCells, id: \.id) { cellVM in
+                        ProductCellView(viewModel: cellVM)
+                            .onTapGesture {
+                                viewModel.selectProduct(cellVM.product)
+                            }
+                    }
+                    .refreshable {
+                        viewModel.loadProducts()
+                    }
+                }
             }
-            .refreshable {
-                viewModel.loadProducts()
+
+            if viewModel.isLoading {
+                LoadingView(message: "Loading products...")
             }
         }
-        .onAppear() {
+        .onAppear {
             if viewModel.productCells.isEmpty {
                 viewModel.loadProducts()
             }
         }
-        .onDisappear() {
+        .onDisappear {
             viewModel.cancelLoading()
         }
     }
@@ -47,7 +66,10 @@ struct ProductListView: View {
 
 #Preview {
     let mockCoordinator = ProductCoordinator(appCoordinator: AppCoordinator(alertManager: GlobalAlertManager()))
+    
     let mockNetwork = MockNetworkServiceForPreview()
+    mockNetwork.returnEmptyProducts = true
+    
     let mockProductService = ProductService(network: mockNetwork)
     
     return ProductListView(service: mockProductService, coordinator: mockCoordinator)
