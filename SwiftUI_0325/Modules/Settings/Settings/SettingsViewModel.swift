@@ -8,7 +8,7 @@
 import Foundation
 
 final class SettingsViewModel: ObservableObject {
-    @Published var user: User?
+    @Published var user: UserProfile?
     
     let coordinator: SettingsCoordinator
     let alertManager: GlobalAlertManager
@@ -25,7 +25,7 @@ final class SettingsViewModel: ObservableObject {
     }
 
     func loadUser() {
-        self.user = User(id: "1", name: "John Doe", email: "johndoe@example.com")
+        self.user = UserProfile(id: "1", name: "John Doe", email: "johndoe@example.com")
     }
     
     func logoutButtonTapped() {
@@ -61,7 +61,7 @@ final class SettingsViewModel: ObservableObject {
         SessionManager.shared.logOut()
     }
     
-    func updateUserInfo() {
+    func updateUserProfile() {
         if let user = self.user {
             coordinator.goToUserProfile(user: user) { user in
                 print("New user name : \(user.name)")

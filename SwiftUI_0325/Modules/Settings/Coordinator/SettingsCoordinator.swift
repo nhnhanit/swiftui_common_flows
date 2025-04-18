@@ -14,7 +14,7 @@ final class SettingsCoordinator: ObservableObject {
         self.appCoordinator = appCoordinator
     }
     
-    func goToUserProfile(user: User, onSaveUser: ((User) -> Void)?) {
+    func goToUserProfile(user: UserProfile, onSaveUser: ((UserProfile) -> Void)?) {
         if let appCoordinator = appCoordinator {
             appCoordinator.push(to: .settingsRoute(.userProfile(user: user, onSaveUser: onSaveUser)))
         } else {
@@ -31,7 +31,7 @@ final class SettingsCoordinator: ObservableObject {
 // MARK: - SettingsRoute
 
 enum SettingsRoute: Hashable {
-    case userProfile(user: User, onSaveUser: ((User) -> Void)?)
+    case userProfile(user: UserProfile, onSaveUser: ((UserProfile) -> Void)?)
     
     // Để enum này conform Hashable, cần bỏ closure/delegate khi so sánh
     static func == (lhs: SettingsRoute, rhs: SettingsRoute) -> Bool {

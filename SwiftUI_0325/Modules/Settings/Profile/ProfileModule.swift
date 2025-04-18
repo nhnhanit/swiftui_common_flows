@@ -6,9 +6,7 @@
 //
 
 final class ProfileModule {
-    static func build(user: User, onSaveUser: ((User) -> Void)?) -> ProfileView {
-//        let viewModel = ProfileViewModel(user: user, coordinator: coordinator, onSaveUser: onSaveUser)
-        
+    static func build(user: UserProfile, onSaveUser: ((UserProfile) -> Void)?) -> ProfileView {        
         return ProfileView(user: user, onSaveUser: onSaveUser)
     }
 }

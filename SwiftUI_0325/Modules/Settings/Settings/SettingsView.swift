@@ -23,7 +23,7 @@ struct SettingsView: View {
                 ProgressView()
             }
             
-            Button(action: viewModel.updateUserInfo) {
+            Button(action: viewModel.updateUserProfile) {
                 Text("Update User Info")
                     .frame(maxWidth: .infinity)
                     .padding()

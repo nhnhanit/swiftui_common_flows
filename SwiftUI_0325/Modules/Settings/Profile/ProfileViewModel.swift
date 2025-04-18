@@ -8,10 +8,10 @@
 import Foundation
 
 final class ProfileViewModel: ObservableObject {
-    @Published var user: User
-    var onSaveUser: ((User) -> Void)?
+    @Published var user: UserProfile
+    var onSaveUser: ((UserProfile) -> Void)?
         
-    init(user: User, onSaveUser: ((User) -> Void)? = nil) {
+    init(user: UserProfile, onSaveUser: ((UserProfile) -> Void)? = nil) {
         self.user = user
         self.onSaveUser = onSaveUser
     }

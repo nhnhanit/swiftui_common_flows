@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     @StateObject var viewModel: ProfileViewModel
     
-    init(user: User, onSaveUser: ((User) -> Void)? = nil) {
+    init(user: UserProfile, onSaveUser: ((UserProfile) -> Void)? = nil) {
         _viewModel = StateObject(wrappedValue: ProfileViewModel(user: user, onSaveUser: onSaveUser))
     }
     

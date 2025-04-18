@@ -17,7 +17,7 @@ struct RootView: View {
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .login:
-                        LoginModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator))
+                        LoginModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator), alertManager: alertManager)
                         
                     case .authenRoute(let authenRoute):
                         handleAuthenRoute(authenRoute)
