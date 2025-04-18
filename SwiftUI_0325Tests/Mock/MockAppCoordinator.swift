@@ -8,8 +8,7 @@
 import SwiftUI
 @testable import SwiftUI_0325
 
-final class MockAppCoordinator: Navigatable, AlertPresentable {
-    var alertManager = SwiftUI_0325.GlobalAlertManager()
+final class MockAppCoordinator: Navigatable {
     var lastNavigatedRoute: AppRoute?
     
     func push(to route: SwiftUI_0325.AppRoute) {

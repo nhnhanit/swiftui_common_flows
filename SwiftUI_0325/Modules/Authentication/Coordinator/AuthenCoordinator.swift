@@ -14,10 +14,6 @@ final class AuthenCoordinator: ObservableObject {
         self.appCoordinator = appCoordinator
     }
 
-    func goToMain() {
-        appCoordinator?.resetAndPush(to: .main)
-    }
-    
     func goToSignUp() {
         appCoordinator?.push(to: .authenRoute(.signUp))
     }

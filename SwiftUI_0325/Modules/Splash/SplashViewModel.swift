@@ -20,21 +20,20 @@ class SplashViewModel: ObservableObject {
     func checkLoginStatus() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             guard let self = self else { return }
-            let isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
-//            let isLoggedIn = false
             
-            if isLoggedIn {
+            if SessionManager.shared.isLoggedIn {
                 self.coordinator.resetAndPush(to: .main)
             } else {
-                self.alertManager.showAlert(
-                    title: "Not logged in",
-                    message: "Please log in to continue.",
-                    primary: .init(title: "OK", role: .cancel, action: { [weak self] in
-                        guard let self = self else { return }
-                        self.coordinator.resetAndPush(to: .login)
-                    }),
-                    secondary: nil
-                )
+//                self.alertManager.showAlert(
+//                    title: "Not logged in",
+//                    message: "Please log in to continue.",
+//                    primary: .init(title: "OK", role: .cancel, action: { [weak self] in
+//                        guard let self = self else { return }
+//                        self.coordinator.resetAndPush(to: .login)
+//                    }),
+//                    secondary: nil
+//                )
+                self.coordinator.resetAndPush(to: .login)
             }
         }
     }

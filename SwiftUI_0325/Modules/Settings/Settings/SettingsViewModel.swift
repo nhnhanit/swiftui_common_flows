@@ -52,8 +52,13 @@ final class SettingsViewModel: ObservableObject {
         print("✅ User signed out.")
         // Gọi API / clear token / navigate to login...
         
+        //old way:
         UserDefaults.standard.set(false, forKey: "isLoggedIn") // Clear login state
         coordinator.popTopSplash()
+
+        // new way:
+        // update isLoggedIn will emit to AppCoorditor and navigate
+        SessionManager.shared.logOut()
     }
     
     func updateUserInfo() {

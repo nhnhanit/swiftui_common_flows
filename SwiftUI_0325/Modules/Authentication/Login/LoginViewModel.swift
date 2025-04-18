@@ -15,8 +15,13 @@ final class LoginViewModel: ObservableObject {
     }
 
     func login() {
-        UserDefaults.standard.set(true, forKey: "isLoggedIn")
-        coordinator.goToMain()
+        // old way:
+        //UserDefaults.standard.set(true, forKey: "isLoggedIn")
+        //coordinator.goToMain()
+
+        // new way:
+        // update isLoggedIn will emit to AppCoorditor and navigate
+        SessionManager.shared.logIn(with: "accessToken")
     }
     
     func goToSignUp() {

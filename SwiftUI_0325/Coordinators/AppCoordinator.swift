@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 
 protocol Navigatable: AnyObject {
     func push(to route: AppRoute)
@@ -16,7 +17,26 @@ protocol Navigatable: AnyObject {
 final class AppCoordinator: ObservableObject, Navigatable {
     
     @Published var path = NavigationPath()
+    private var cancellables = Set<AnyCancellable>()
         
+    init() {
+        observeSession()
+    }
+    
+    private func observeSession() {
+        SessionManager.shared.$isLoggedIn
+            .dropFirst() // ignore the fist emit when init
+            .sink { [weak self] isLoggedIn in
+                guard let self else { return }
+                if isLoggedIn {
+                    self.resetAndPush(to: .main)
+                } else {
+                    self.popToRoot()
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
     func push(to route: AppRoute) {
         path.append(route)
     }
