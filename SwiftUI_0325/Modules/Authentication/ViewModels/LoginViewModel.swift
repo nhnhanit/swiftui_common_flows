@@ -47,6 +47,6 @@ final class LoginViewModel: ObservableObject {
 //    }
     
     func goToSignUpTapped() {
-        coordinator.goToSignUp()
+//        coordinator.goToSignUp()
     }
 }

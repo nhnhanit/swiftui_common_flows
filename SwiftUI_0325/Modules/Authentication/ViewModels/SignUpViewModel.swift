@@ -15,6 +15,6 @@ final class SignUpViewModel: ObservableObject {
     }
 
     func signUp() {
-        coordinator.goToConfirmOTP()
+//        coordinator.goToConfirmOTP()
     }
 }

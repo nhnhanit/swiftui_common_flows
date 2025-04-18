@@ -29,11 +29,11 @@ class SplashViewModel: ObservableObject {
 //                    message: "Please log in to continue.",
 //                    primary: .init(title: "OK", role: .cancel, action: { [weak self] in
 //                        guard let self = self else { return }
-//                        self.coordinator.resetAndPush(to: .login)
+//                        self.coordinator.resetAndPush(to: .phoneLogin)
 //                    }),
 //                    secondary: nil
 //                )
-                self.coordinator.resetAndPush(to: .login)
+                self.coordinator.resetAndPush(to: .phoneLogin)
             }
         }
     }
