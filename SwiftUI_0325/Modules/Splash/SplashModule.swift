@@ -6,8 +6,8 @@
 //
 
 final class SplashModule {
-    static func build(coordinator: AppCoordinator) -> SplashView {
+    static func build(coordinator: AppCoordinator, alertManager: GlobalAlertManager) -> SplashView {
         
-        return SplashView(coordinator: coordinator)
+        return SplashView(coordinator: coordinator, alertManager: alertManager)
     }
 }

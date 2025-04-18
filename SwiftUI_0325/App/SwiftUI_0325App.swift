@@ -9,16 +9,16 @@ import SwiftUI
 
 @main
 struct SwiftUI_0325App: App {
+    @StateObject private var coordinator = AppCoordinator()
     @StateObject private var alertManager = GlobalAlertManager()
-    
+
     var body: some Scene {
-        
         WindowGroup {
             ZStack {
-                //ContentView()
-                RootView(coordinator: AppCoordinator(alertManager: alertManager))
-                GlobalAlertView() // 👈 Hiển thị alert toàn app
+                RootView()
+                GlobalAlertView()
             }
+            .environmentObject(coordinator)
             .environmentObject(alertManager)
         }
     }

@@ -10,8 +10,8 @@ import SwiftUI
 struct ProductListView: View {
     @StateObject var viewModel: ProductListViewModel
     
-    init(service: ProductService, coordinator: ProductCoordinator) {
-        _viewModel = StateObject(wrappedValue: ProductListViewModel(service: service, coordinator: coordinator))
+    init(service: ProductService, coordinator: ProductCoordinator, alertManager: GlobalAlertManager) {
+        _viewModel = StateObject(wrappedValue: ProductListViewModel(service: service, coordinator: coordinator, alertManager: alertManager))
     }
     
     var body: some View {
@@ -65,11 +65,13 @@ struct ProductListView: View {
 }
 
 #Preview {
-    let mockCoordinator = ProductCoordinator(appCoordinator: AppCoordinator(alertManager: GlobalAlertManager()))
+    let mockAlertManager = GlobalAlertManager()
+    let mockCoordinator = ProductCoordinator(appCoordinator: AppCoordinator())
+    
     let mockNetwork = MockNetworkServiceForPreview()
 //    mockNetwork.returnEmptyProducts = true
     
     let mockProductService = ProductService(network: mockNetwork)
     
-    return ProductListView(service: mockProductService, coordinator: mockCoordinator)
+    return ProductListView(service: mockProductService, coordinator: mockCoordinator, alertManager: mockAlertManager)
 }

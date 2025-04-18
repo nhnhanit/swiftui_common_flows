@@ -22,21 +22,6 @@ final class SettingsCoordinator: ObservableObject {
         }
     }
     
-    func presentSignOutConfirmation(onConfirm: @escaping () -> Void) {
-        appCoordinator?.alertManager.showAlert(
-            title: "Sign Out?",
-            message: "Are you sure you want to sign out?",
-            primary: .init(title: "Ok", role: .destructive, action: {
-                print("✅ Signed out")
-                onConfirm()
-            }),
-            secondary: .init(title: "Cancel", role: .cancel, action: {
-                print("❌ Cancelled delete")
-            })
-        )
-        
-    }
-    
     func popTopSplash() {
         appCoordinator?.popToRoot()
     }

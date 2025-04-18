@@ -9,10 +9,9 @@ import SwiftUI
 
 struct SettingsView: View {
     @StateObject var viewModel: SettingsViewModel
-    @EnvironmentObject var alertManager: GlobalAlertManager
     
-    init(coordinator: SettingsCoordinator) {
-        _viewModel = StateObject(wrappedValue: SettingsViewModel(coordinator: coordinator))
+    init(coordinator: SettingsCoordinator, alertManager: GlobalAlertManager) {
+        _viewModel = StateObject(wrappedValue: SettingsViewModel(coordinator: coordinator, alertManager: alertManager))
     }
     
     var body: some View {
@@ -58,4 +57,17 @@ struct SettingsView: View {
         }
         .navigationTitle("Settings-2")
     }
+}
+
+#Preview {    // Mock AlertManager
+    let alertManager = GlobalAlertManager()
+
+    // Mock Coordinator
+    let mockCoordinator = SettingsCoordinator(
+        appCoordinator: AppCoordinator()
+    )
+    
+    SettingsView(coordinator: mockCoordinator, alertManager: alertManager)
+        .environmentObject(mockCoordinator)
+        .environmentObject(alertManager)
 }

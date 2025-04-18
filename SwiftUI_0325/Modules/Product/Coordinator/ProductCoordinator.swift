@@ -8,18 +8,10 @@
 import SwiftUI
 
 class ProductCoordinator: ObservableObject {
-    private weak var appCoordinator: (Navigatable & AlertPresentable)?
+    private weak var appCoordinator: (Navigatable)?
     
-    init(appCoordinator: (Navigatable & AlertPresentable)) {
+    init(appCoordinator: (Navigatable)) {
         self.appCoordinator = appCoordinator
-    }
-    
-    func showErrorAlert(title: String, message: String) {
-        appCoordinator?.alertManager.showAlert(
-            title: title,
-            message: message,
-            primary: .init(title: "OK", role: .cancel)
-        )
     }
     
     func goToProductDetail(productID: String, detailVM: ProductDetailViewModel) {

@@ -8,9 +8,11 @@
 import Foundation
 
 final class MainViewModel: ObservableObject {
-    var coordinator: AppCoordinator
-    
-    init(coordinator: AppCoordinator) {
+    let coordinator: AppCoordinator
+    let alertManager: GlobalAlertManager
+
+    init(coordinator: AppCoordinator, alertManager: GlobalAlertManager) {
         self.coordinator = coordinator
+        self.alertManager = alertManager
     }
 }

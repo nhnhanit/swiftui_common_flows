@@ -16,12 +16,14 @@ final class ProductListViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private var currentTask: Task<Void, Never>?
+    private let alertManager: GlobalAlertManager
     
-    init(service: ProductServicing, coordinator: ProductCoordinator) {
+    init(service: ProductServicing, coordinator: ProductCoordinator, alertManager: GlobalAlertManager) {
         print("🔁 ProductListViewModel INIT")
         
         self.productService = service
         self.coordinator = coordinator
+        self.alertManager = alertManager
         
         loadProducts()
     }
@@ -62,14 +64,21 @@ final class ProductListViewModel: ObservableObject {
         catch {
 //            errorMessage = "Failed to load products: \(error.localizedDescription)"
 //            print(errorMessage as Any)
-            coordinator.showErrorAlert(title: "Call networking error", message: error.localizedDescription)
+            self.showErrorAlert(title: "Call networking error", message: error.localizedDescription)
             
         }
         
         isLoading = false
     }
     
-    
+    private func showErrorAlert(title: String, message: String) {
+        alertManager.showAlert(
+            title: title,
+            message: message,
+            primary: .init(title: "OK", role: .cancel)
+        )
+    }
+
     @MainActor func selectProduct(_ product: Product) {
         let detailVM = ProductDetailViewModel(product: product, service: productService)
         

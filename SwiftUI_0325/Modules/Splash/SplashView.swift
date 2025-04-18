@@ -10,8 +10,9 @@ import SwiftUI
 struct SplashView: View {
     @StateObject var viewModel: SplashViewModel
     
-    init(coordinator: AppCoordinator) {
-        _viewModel = StateObject(wrappedValue: SplashViewModel(coordinator: coordinator))
+    init(coordinator: AppCoordinator, alertManager: GlobalAlertManager) {
+        _viewModel = StateObject(wrappedValue: SplashViewModel(coordinator: coordinator,
+                                                    alertManager: alertManager))
     }
 
     var body: some View {
@@ -22,5 +23,12 @@ struct SplashView: View {
             viewModel.checkLoginStatus()
         }
     }
+}
+
+#Preview {
+    @Previewable let appCoordinator = AppCoordinator()
+    @Previewable let alertManager = GlobalAlertManager()
+    
+    return SplashModule.build(coordinator: appCoordinator, alertManager: alertManager)
 }
 

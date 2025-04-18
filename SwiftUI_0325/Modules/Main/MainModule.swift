@@ -6,9 +6,9 @@
 //
 
 final class MainModule {
-    static func build(coordinator: AppCoordinator) -> MainView {
+    static func build(coordinator: AppCoordinator, alertManager: GlobalAlertManager) -> MainView {
         
-        return MainView(coordinator: coordinator)
+        return MainView(coordinator: coordinator, alertManager: alertManager)
     }
 }
 

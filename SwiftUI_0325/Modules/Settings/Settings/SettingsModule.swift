@@ -8,7 +8,8 @@
 import SwiftUICore
 
 final class SettingsModule {
-    static func build(coordinator: SettingsCoordinator) -> SettingsView {        
-        return SettingsView(coordinator: coordinator)
+    static func build(coordinator: SettingsCoordinator, alertManager: GlobalAlertManager) -> SettingsView {
+        
+        return SettingsView(coordinator: coordinator, alertManager: alertManager)
     }
 }

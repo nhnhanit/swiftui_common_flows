@@ -9,10 +9,10 @@
 import SwiftUI
 
 final class ProductListModule {
-    static func build(coordinator: ProductCoordinator) -> ProductListView {
+    static func build(coordinator: ProductCoordinator, alertManager: GlobalAlertManager) -> ProductListView {
         let network = DefaultNetworkService()
         let productService = ProductService(network: network)
         
-        return ProductListView(service: productService, coordinator: coordinator)
+        return ProductListView(service: productService, coordinator: coordinator, alertManager: alertManager)
     }
 }

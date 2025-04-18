@@ -13,21 +13,10 @@ protocol Navigatable: AnyObject {
     func resetAndPush(to route: AppRoute)
 }
 
-protocol AlertPresentable: AnyObject {
-    var alertManager: GlobalAlertManager { get }
-}
-
-final class AppCoordinator: ObservableObject, Navigatable, AlertPresentable {
+final class AppCoordinator: ObservableObject, Navigatable {
     
     @Published var path = NavigationPath()
-    
-    let alertManager: GlobalAlertManager
-    
-    init(alertManager: GlobalAlertManager) {
-        self.alertManager = alertManager
-    }
-    
-    
+        
     func push(to route: AppRoute) {
         path.append(route)
     }

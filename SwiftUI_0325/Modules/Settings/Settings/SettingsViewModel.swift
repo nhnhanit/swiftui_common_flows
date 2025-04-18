@@ -10,10 +10,12 @@ import Foundation
 final class SettingsViewModel: ObservableObject {
     @Published var user: User?
     
-    private let coordinator: SettingsCoordinator
-    
-    init(coordinator: SettingsCoordinator) {
+    let coordinator: SettingsCoordinator
+    let alertManager: GlobalAlertManager
+
+    init(coordinator: SettingsCoordinator, alertManager: GlobalAlertManager) {
         self.coordinator = coordinator
+        self.alertManager = alertManager
         
         print("🔁 SettingsCoordinator INIT")
     }
@@ -27,9 +29,23 @@ final class SettingsViewModel: ObservableObject {
     }
     
     func logoutButtonTapped() {
-        coordinator.presentSignOutConfirmation {
+        self.presentSignOutConfirmation {
             self.performSignOut()
         }
+    }
+    
+    private func presentSignOutConfirmation(onConfirm: @escaping () -> Void) {
+        alertManager.showAlert(
+            title: "Sign Out?",
+            message: "Are you sure you want to sign out?",
+            primary: .init(title: "Ok", role: .destructive, action: {
+                print("✅ Signed out")
+                onConfirm()
+            }),
+            secondary: .init(title: "Cancel", role: .cancel, action: {
+                print("❌ Cancelled delete")
+            })
+        )
     }
     
     private func performSignOut() {

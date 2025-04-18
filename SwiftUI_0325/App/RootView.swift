@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct RootView: View {
-    @StateObject var coordinator: AppCoordinator
+    @EnvironmentObject var coordinator: AppCoordinator
+    @EnvironmentObject var alertManager: GlobalAlertManager
         
     var body: some View {
-        NavigationStack(path: $coordinator.path) { // ✅ Only 1 NavigationStack
-            SplashModule.build(coordinator: coordinator)
+        NavigationStack(path: $coordinator.path) {
+            SplashModule.build(coordinator: coordinator, alertManager: alertManager)
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .login:
@@ -22,7 +23,7 @@ struct RootView: View {
                         handleAuthenRoute(authenRoute)
                         
                     case .main:
-                        MainModule.build(coordinator: coordinator)
+                        MainModule.build(coordinator: coordinator, alertManager: alertManager)
                         
                     case .productRoute(let productRoute):
                         handleProductRoute(productRoute)
@@ -39,65 +40,11 @@ struct RootView: View {
     
 }
 
-// MARK: - Handle Settings Route
-
-extension RootView {
-    
-    @ViewBuilder
-    private func handleSettingsRoute(_ route: SettingsRoute) -> some View {
-        switch route {
-        case .userProfile(let user, let onSaveUser):
-            ProfileModule.build(user: user, onSaveUser: onSaveUser)
-            
-        @unknown default:
-            Text("Undefined")
-                .foregroundColor(.red)
-
-        }
-    }
-}
-
-// MARK: - Handle Product Route
-
-extension RootView {
-    
-    @ViewBuilder
-    private func handleProductRoute(_ route: ProductRoute) -> some View {
-        switch route {
-        case .productDetail(_, let detailVM):
-            ProductDetailView(viewModel: detailVM)
-            
-        @unknown default:
-            Text("Undefined")
-                .foregroundColor(.red)
-
-        }
-    }
-}
-
-// MARK: - Handle Authen Route
-
-extension RootView {
-    
-    @ViewBuilder
-    private func handleAuthenRoute(_ route: AuthenRoute) -> some View {
-        switch route {
-        case .signUp:
-            SignUpModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator))
-            
-        case .confirmOTP:
-            ConfirmOTPModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator))
-            
-        @unknown default:
-            Text("Undefined")
-                .foregroundColor(.red)
-
-        }
-    }
-}
-
 #Preview {
-    @Previewable @StateObject var alertManager = GlobalAlertManager()
-    return RootView(coordinator: AppCoordinator(alertManager: alertManager))
+    @Previewable let appCoordinator = AppCoordinator()
+    @Previewable let alertManager = GlobalAlertManager()
+    
+    return RootView()
+        .environmentObject(appCoordinator)
         .environmentObject(alertManager)
 }
