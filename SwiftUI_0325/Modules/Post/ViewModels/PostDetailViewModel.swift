@@ -26,8 +26,8 @@ final class PostDetailViewModel: ObservableObject {
         }
     }
     
-    func toggleLike() {
-//        service.toggleLike(for: post)
+    func toggleFavorite() {
+        post.isFavorite.toggle()
         onUpdate?(post)
     }
     

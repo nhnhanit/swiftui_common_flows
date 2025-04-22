@@ -17,9 +17,14 @@ struct PostCellView: View {
                 Text(viewModel.post.body).lineLimit(2).font(.subheadline).foregroundColor(.secondary)
             }
             Spacer()
-            Button(action: viewModel.toggleLike) {
+            Button(action: {
+                viewModel.toggleFavorite()
+            }) {
+                Image(systemName: viewModel.post.isFavorite ? "star.fill" : "star")
+                    .foregroundColor(viewModel.post.isFavorite ? .yellow : .gray)
             }
-            .buttonStyle(BorderlessButtonStyle())
+            .buttonStyle(.borderless)
         }
+        .contentShape(Rectangle())
     }
 }

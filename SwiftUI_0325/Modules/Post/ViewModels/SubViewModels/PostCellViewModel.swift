@@ -17,8 +17,9 @@ final class PostCellViewModel: ObservableObject, Identifiable {
         self.post = post
         self.service = service
     }
-
-    func toggleLike() {
-        print("toggleLike")
+    
+    func toggleFavorite() {
+        post.isFavorite.toggle()
     }
+
 }

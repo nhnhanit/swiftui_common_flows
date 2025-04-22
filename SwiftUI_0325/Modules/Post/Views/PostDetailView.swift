@@ -13,28 +13,54 @@ struct PostDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // Post Info
-                Text(viewModel.post.title)
-                    .font(.title2)
-                    .fontWeight(.bold)
 
-                Text(viewModel.post.body)
-                    .font(.body)
-            
-                // Author Info
-                if let userInfo = viewModel.userInfo {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Author name: \(userInfo.name)").font(.headline)
-                        Text("Phone: \(userInfo.phone)").font(.subheadline)
+                // Post Header: Title + Favorite
+                HStack {
+                    Text(viewModel.post.title)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Spacer()
+                    Button(action: {
+                        viewModel.toggleFavorite()
+                    }) {
+                        Image(systemName: viewModel.post.isFavorite ? "star.fill" : "star")
+                            .foregroundColor(viewModel.post.isFavorite ? .yellow : .gray)
                     }
-                } else {
-                    ProgressView("Loading user info...")
+                    .buttonStyle(.plain)
                 }
 
-                // Comment list
-                Text("Comments").font(.headline)
-                ForEach(viewModel.commentCellViewModels) { cellVM in
-                    CommentCellView(viewModel: cellVM)
+                // Body
+                Text(viewModel.post.body)
+                    .font(.body)
+
+                // Author Info
+                Group {
+                    Text("Author").font(.headline)
+                    if let userInfo = viewModel.userInfo {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Name: \(userInfo.name)")
+                            Text("Phone: \(userInfo.phone)")
+                        }
+                        .font(.subheadline)
+                    } else {
+                        ProgressView("Loading user info...")
+                    }
+                }
+
+                // Comment Summary
+                HStack {
+                    Text("Comments").font(.headline)
+                    Spacer()
+                    Text("\(viewModel.commentCellViewModels.count)")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+
+                // Comment List
+                VStack(spacing: 8) {
+                    ForEach(viewModel.commentCellViewModels) { cellVM in
+                        CommentCellView(viewModel: cellVM)
+                    }
                 }
             }
             .padding()

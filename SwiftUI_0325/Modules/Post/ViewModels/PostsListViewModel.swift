@@ -81,6 +81,7 @@ final class PostsListViewModel: ObservableObject {
         // 👇 Callback from Detail to List
         detailVM.onUpdate = { [weak self] updatedPost in
             guard let self else { return }
+            
             if let index = self.postCells.firstIndex(where: { $0.post.id == updatedPost.id }) {
                 self.postCells[index].post = updatedPost
             }
