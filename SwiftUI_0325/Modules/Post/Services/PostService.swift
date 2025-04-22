@@ -8,6 +8,7 @@
 import SwiftUI
 
 protocol PostServicing {
+    func loadCachedPosts() -> [Post]
     func fetchPosts() async throws -> [Post]
     func fetchUser(by postId: String) async throws -> UserInfo
     func fetchComments(by postId: String) async throws -> [Comment]
@@ -15,13 +16,24 @@ protocol PostServicing {
 
 final class PostService: PostServicing {
     private let network: NetworkService
-
-    init(network: NetworkService = DefaultNetworkService()) {
+    private let localStore: PostLocalStoring
+    
+    init(
+        network: NetworkService = DefaultNetworkService(),
+        localStore: PostLocalStoring = PostLocalStore()
+    ) {
         self.network = network
+        self.localStore = localStore
     }
-        
+    
+    func loadCachedPosts() -> [Post] {
+        return localStore.loadCachedPosts()
+    }
+    
     func fetchPosts() async throws -> [Post] {
-        try await network.request(PostAPI.fetchPosts)
+        let posts: [Post] = try await network.request(PostAPI.fetchPosts)
+        try localStore.save(posts: posts)
+        return posts
     }
     
     func fetchComments(by postId: String) async throws -> [Comment] {

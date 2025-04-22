@@ -39,9 +39,18 @@ final class PostsListViewModel: ObservableObject {
             return
         }
         
+        // 1️⃣ Show cached data immediately
+        let cachedPosts = postService.loadCachedPosts()
+        if !cachedPosts.isEmpty {
+            postCells = cachedPosts.map {
+                PostCellViewModel(post: $0, service: postService)
+            }
+        }
+        
+        // 2️⃣ Then try refreshing from network
         currentTask = Task { [weak self] in
             guard let self else { return }
-            await fetchPosts()
+            await fetchPostsFromNetwork()
             self.currentTask = nil
         }
     }
@@ -50,18 +59,18 @@ final class PostsListViewModel: ObservableObject {
         currentTask?.cancel()
     }
     
-    private func fetchPosts() async {
+    private func fetchPostsFromNetwork() async {
         isLoading = true
         
         do {
-            postCells = try await postService.fetchPosts().map {
+            let freshPosts = try await postService.fetchPosts()
+            postCells = freshPosts.map {
                 PostCellViewModel(post: $0, service: postService)
             }
         } catch is CancellationError {
             print("❌ Task was cancelled intentionally.")
-        }
-        catch {
-            self.showErrorAlert(title: "Call networking error", message: error.localizedDescription)
+        } catch {
+            self.showErrorAlert(title: "Can not load new posts", message: error.localizedDescription)
         }
         
         isLoading = false
