@@ -11,10 +11,11 @@ enum PostAPI: APIRequest, AuthorizedRequestBuilder {
     case fetchPosts
     case fetchComments(postId: String)
     case fetchUser(userId: String)
+    case patchFavorite(postId: Int, isFavorite: Bool)
     
     var requiresAuthorization: Bool {
         switch self {
-        case .fetchPosts:
+        case .fetchPosts, .patchFavorite:
             return false // API public dont need accessToken
         case .fetchComments, .fetchUser:
             return true
@@ -33,6 +34,8 @@ enum PostAPI: APIRequest, AuthorizedRequestBuilder {
             return "/posts/\(postId)/comments"
         case .fetchUser(let userId):
             return "/users/\(userId)"
+        case .patchFavorite(let postId, _):
+            return "/posts/\(postId)"
         }
     }
     
@@ -40,6 +43,8 @@ enum PostAPI: APIRequest, AuthorizedRequestBuilder {
         switch self {
         case .fetchPosts, .fetchComments, .fetchUser:
             return "GET"
+        case .patchFavorite:
+            return "PATCH"
         }
     }
     
@@ -49,5 +54,13 @@ enum PostAPI: APIRequest, AuthorizedRequestBuilder {
     
     var queryItems: [URLQueryItem]? { nil }
     
-    var body: Data? { nil }
+    var body: Data? {
+        switch self {
+        case .patchFavorite(_, let isFavorite):
+            let body = ["isFavorite": isFavorite]
+            return try? JSONEncoder().encode(body)
+        default:
+            return nil
+        }
+    }
 }

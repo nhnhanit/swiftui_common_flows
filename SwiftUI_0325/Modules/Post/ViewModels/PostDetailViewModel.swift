@@ -16,6 +16,7 @@ final class PostDetailViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     var onUpdate: ((Post) -> Void)?
+    private var isProcessing = false
     
     init(post: Post, service: PostServicing) {
         self.post = post
@@ -27,8 +28,29 @@ final class PostDetailViewModel: ObservableObject {
     }
     
     func toggleFavorite() {
-        post.isFavorite.toggle()
-        onUpdate?(post)
+        guard !isProcessing else { return }
+        isProcessing = true
+        
+        let currentFavorite = post.isFavorite
+        let newFavoriteState = !post.isFavorite
+
+        Task {
+            do {
+                var updatedPost = try await service.patchFavorite(postId: post.id, isFavorite: newFavoriteState)
+                
+#warning("Hardcode updatedPost.isFavorite = true")
+                if !currentFavorite {
+                    updatedPost.isFavorite = true
+                }
+                
+                post.isFavorite = updatedPost.isFavorite
+                onUpdate?(post)
+            } catch {
+                print("Failed to patch favorite: \(error)")
+            }
+            isProcessing = false
+        }
+        
     }
     
     func loadDetails() async {
