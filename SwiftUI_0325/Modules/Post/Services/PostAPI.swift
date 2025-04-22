@@ -7,11 +7,20 @@
 
 import SwiftUI
 
-enum PostAPI: APIRequest {
+enum PostAPI: APIRequest, AuthorizedRequestBuilder {
     case fetchPosts
     case fetchComments(postId: String)
     case fetchUser(userId: String)
-
+    
+    var requiresAuthorization: Bool {
+        switch self {
+        case .fetchPosts:
+            return false // API public dont need accessToken
+        case .fetchComments, .fetchUser:
+            return true
+        }
+    }
+    
     var baseURL: URL {
         URL(string: "https://jsonplaceholder.typicode.com")!
     }
@@ -35,7 +44,7 @@ enum PostAPI: APIRequest {
     }
     
     var headers: [String : String]? {
-        ["Content-Type": "application/json; charset=UTF-8"]
+        authorizedHeaders(baseHeaders: ["Content-Type": "application/json; charset=UTF-8"])
     }
     
     var queryItems: [URLQueryItem]? { nil }
