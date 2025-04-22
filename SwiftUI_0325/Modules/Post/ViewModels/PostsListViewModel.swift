@@ -83,8 +83,8 @@ final class PostsListViewModel: ObservableObject {
             primary: .init(title: "OK", role: .cancel)
         )
     }
-
-    @MainActor func selectPost(_ post: Post) {
+    
+    func selectPost(_ post: Post) {
         let detailVM = PostDetailViewModel(post: post, service: postService)
         
         // 👇 Callback from Detail to List
@@ -97,5 +97,19 @@ final class PostsListViewModel: ObservableObject {
         }
         
         coordinator.goToPostDetail(postId: post.id, detailVM: detailVM)
+    }
+    
+    func deletePost(at indexSet: IndexSet) {
+        for index in indexSet {
+            let postVM = postCells[index]
+            Task {
+                do {
+                    try await postService.deletePost(postId: postVM.post.id)
+                    postCells.remove(at: index)
+                } catch {
+                    self.showErrorAlert(title: "Failed to delete post.", message: error.localizedDescription)
+                }
+            }
+        }
     }
 }

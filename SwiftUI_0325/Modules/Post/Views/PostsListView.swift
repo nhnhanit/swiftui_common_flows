@@ -37,11 +37,14 @@ struct PostsListView: View {
                     )
                     Spacer()
                 } else {
-                    List(viewModel.postCells, id: \.id) { cellVM in
-                        PostCellView(viewModel: cellVM)
-                            .onTapGesture {
-                                viewModel.selectPost(cellVM.post)
+                    List {
+                        ForEach(viewModel.postCells, id: \.id) { cellVM in
+                                PostCellView(viewModel: cellVM)
+                                    .onTapGesture {
+                                        viewModel.selectPost(cellVM.post)
+                                    }
                             }
+                            .onDelete(perform: viewModel.deletePost)
                     }
                     .refreshable {
                         viewModel.loadPosts()

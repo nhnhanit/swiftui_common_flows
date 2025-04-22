@@ -13,6 +13,7 @@ protocol PostServicing {
     func fetchUser(by postId: String) async throws -> UserInfo
     func fetchComments(by postId: String) async throws -> [Comment]
     func patchFavorite(postId: Int, isFavorite: Bool) async throws -> Post
+    func deletePost(postId: Int) async throws
 }
 
 final class PostService: PostServicing {
@@ -48,4 +49,9 @@ final class PostService: PostServicing {
     func patchFavorite(postId: Int, isFavorite: Bool) async throws -> Post {
         try await network.request(PostAPI.patchFavorite(postId: postId, isFavorite: isFavorite))
     }
+
+    func deletePost(postId: Int) async throws {
+        _ = try await network.request(PostAPI.deletePost(postId: postId)) as EmptyResponse
+    }
+
 }

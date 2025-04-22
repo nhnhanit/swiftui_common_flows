@@ -12,12 +12,13 @@ enum PostAPI: APIRequest, AuthorizedRequestBuilder {
     case fetchComments(postId: String)
     case fetchUser(userId: String)
     case patchFavorite(postId: Int, isFavorite: Bool)
+    case deletePost(postId: Int)
     
     var requiresAuthorization: Bool {
         switch self {
         case .fetchPosts, .patchFavorite:
             return false // API public dont need accessToken
-        case .fetchComments, .fetchUser:
+        case .fetchComments, .fetchUser, .deletePost:
             return true
         }
     }
@@ -36,6 +37,8 @@ enum PostAPI: APIRequest, AuthorizedRequestBuilder {
             return "/users/\(userId)"
         case .patchFavorite(let postId, _):
             return "/posts/\(postId)"
+        case .deletePost(let postId):
+            return "/posts/\(postId)"
         }
     }
     
@@ -45,6 +48,8 @@ enum PostAPI: APIRequest, AuthorizedRequestBuilder {
             return "GET"
         case .patchFavorite:
             return "PATCH"
+        case .deletePost:
+            return "DELETE"
         }
     }
     
