@@ -16,23 +16,18 @@ struct RootView: View {
             SplashModule.build(coordinator: coordinator, alertManager: alertManager)
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
-//                    case .login:
-//                        LoginModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator), alertManager: alertManager)
                     case .phoneLogin:
                         PhoneLoginModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator), alertManager: alertManager)
-                        
                     case .authenRoute(let authenRoute):
                         handleAuthenRoute(authenRoute)
-                        
                     case .main:
-                        MainModule.build(coordinator: coordinator, alertManager: alertManager)
-                        
-                    case .productRoute(let productRoute):
-                        handleProductRoute(productRoute)
-                        
+                        MainTabModule.build(coordinator: coordinator, alertManager: alertManager)
+                    case .postRoute(let postRoute):
+                        handlePostRoute(postRoute)
                     case .settingsRoute(let settingsRoute):
                         handleSettingsRoute(settingsRoute)
-                        
+                    case .productRoute(let productRoute):
+                        handleProductRoute(productRoute)
                     @unknown default:
                         EmptyView()
                     }

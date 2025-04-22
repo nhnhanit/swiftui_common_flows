@@ -45,7 +45,7 @@ final class DefaultNetworkService: NetworkService {
         
         do {
             let startTime = Date()
-            let (data, response) = try await URLSession.shared.data(for: request)
+            let (data, _) = try await URLSession.shared.data(for: request)
             let duration = Date().timeIntervalSince(startTime)
             NetworkLogger.log(duration: duration)
             

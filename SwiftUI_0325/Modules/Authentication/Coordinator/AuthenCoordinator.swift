@@ -13,14 +13,6 @@ final class AuthenCoordinator: ObservableObject {
     init(appCoordinator: AppCoordinator) {
         self.appCoordinator = appCoordinator
     }
-
-//    func goToSignUp() {
-//        appCoordinator?.push(to: .authenRoute(.signUp))
-//    }
-//    
-//    func goToConfirmOTP() {
-//        appCoordinator?.push(to: .authenRoute(.confirmOTP))
-//    }
     
     func goToOTPVerify(phone: String) {
         appCoordinator?.push(to: .authenRoute(.OTPVerity(phone: phone)))
@@ -29,8 +21,6 @@ final class AuthenCoordinator: ObservableObject {
 }
 
 enum AuthenRoute: Hashable {
-//    case signUp
-//    case confirmOTP
     case OTPVerity(phone: String)
 }
 

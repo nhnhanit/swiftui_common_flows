@@ -56,12 +56,12 @@ final class AppCoordinator: ObservableObject, Navigatable {
 }
 
 enum AppRoute: Hashable {
-//    case login
     case phoneLogin
-    case OTPVerify
-    case authenRoute(AuthenRoute)
     case main
-    case productRoute(ProductRoute)
     case settingsRoute(SettingsRoute)
+    case authenRoute(AuthenRoute)
+    case postRoute(PostRoute)
+                       
+    case productRoute(ProductRoute)
 }
 
