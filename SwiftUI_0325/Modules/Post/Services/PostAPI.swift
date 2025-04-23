@@ -9,8 +9,8 @@ import SwiftUI
 
 enum PostAPI: APIRequest, AuthorizedRequestBuilder {
     case fetchPosts
-    case fetchComments(postId: String)
-    case fetchUser(userId: String)
+    case fetchComments(postId: Int)
+    case fetchUser(userId: Int)
     case patchFavorite(postId: Int, isFavorite: Bool)
     case deletePost(postId: Int)
     

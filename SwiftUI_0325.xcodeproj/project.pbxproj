@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3B1418372DB778E7006D41FE /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3B1418362DB778E7006D41FE /* RealmSwift */; };
 		3B1418382DB77954006D41FE /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3B1418362DB778E7006D41FE /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3B141A1B2DB8A30A006D41FE /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3B141A1A2DB8A30A006D41FE /* RealmSwift */; };
 		575BCBD3AE7DDEA5D678195C /* Pods_SwiftUI_0325.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB7CEDE3140B44692851375 /* Pods_SwiftUI_0325.framework */; };
 		8B4B7E4C2EC3E012F43F1401 /* Pods_SwiftUI_0325_SwiftUI_0325UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21343739A14FEAC80CE69482 /* Pods_SwiftUI_0325_SwiftUI_0325UITests.framework */; };
 		EAB93D9CC8F9EBFD7A939AF3 /* Pods_SwiftUI_0325Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50DB9DBF876112F6730E18F2 /* Pods_SwiftUI_0325Tests.framework */; };
@@ -83,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B141A1B2DB8A30A006D41FE /* RealmSwift in Frameworks */,
 				3B1418372DB778E7006D41FE /* RealmSwift in Frameworks */,
 				575BCBD3AE7DDEA5D678195C /* Pods_SwiftUI_0325.framework in Frameworks */,
 			);
@@ -702,6 +704,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		3B1418362DB778E7006D41FE /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B1418352DB778E7006D41FE /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		3B141A1A2DB8A30A006D41FE /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3B1418352DB778E7006D41FE /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;

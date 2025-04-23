@@ -13,7 +13,7 @@ struct CommentCellViewModel: Identifiable {
     let name: String
     let body: String
 
-    init(comment: Comment) {
+    init(comment: PostComment) {
         self.id = comment.id
         self.name = "Name: " + comment.name
         self.body = comment.body

@@ -58,8 +58,8 @@ final class PostDetailViewModel: ObservableObject {
         errorMessage = nil
         
         do {
-            async let userResponse = try service.fetchUser(by: "\(post.userId)")
-            async let commentsResponse = try service.fetchComments(by: "\(post.id)")
+            async let userResponse = try service.fetchUser(by: post.userId)
+            async let commentsResponse = try service.fetchPostComments(by: post.id)
             
             let (userResult, commentsResult) = try await (userResponse, commentsResponse)
             isLoading = false

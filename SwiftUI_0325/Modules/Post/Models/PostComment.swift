@@ -1,5 +1,5 @@
 //
-//  Comment.swift
+//  PostComment.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 22/4/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Comment: Identifiable, Codable {
+struct PostComment: Identifiable, Codable {
     let id: Int
     let postId: Int
     let body: String

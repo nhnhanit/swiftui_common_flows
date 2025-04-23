@@ -47,7 +47,7 @@ struct PostDetailView: View {
                     }
                 }
 
-                // Comment Summary
+                // PostComment Summary
                 HStack {
                     Text("Comments").font(.headline)
                     Spacer()
@@ -56,7 +56,7 @@ struct PostDetailView: View {
                         .foregroundColor(.secondary)
                 }
 
-                // Comment List
+                // PostComment List
                 VStack(spacing: 8) {
                     ForEach(viewModel.commentCellViewModels) { cellVM in
                         CommentCellView(viewModel: cellVM)

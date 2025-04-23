@@ -10,8 +10,8 @@ import SwiftUI
 protocol PostServicing {
     func loadCachedPosts() -> [Post]
     func fetchPosts() async throws -> [Post]
-    func fetchUser(by postId: String) async throws -> UserInfo
-    func fetchComments(by postId: String) async throws -> [Comment]
+    func fetchUser(by postId: Int) async throws -> UserInfo
+    func fetchPostComments(by postId: Int) async throws -> [PostComment]
     func patchFavorite(postId: Int, isFavorite: Bool) async throws -> Post
     func deletePost(postId: Int) async throws
 }
@@ -38,11 +38,11 @@ final class PostService: PostServicing {
         return posts
     }
     
-    func fetchComments(by postId: String) async throws -> [Comment] {
+    func fetchPostComments(by postId: Int) async throws -> [PostComment] {
         try await network.request(PostAPI.fetchComments(postId: postId))
     }
     
-    func fetchUser(by userId: String) async throws -> UserInfo {
+    func fetchUser(by userId: Int) async throws -> UserInfo {
         try await network.request(PostAPI.fetchUser(userId: userId))
     }
     

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class GlobalAlertManager: ObservableObject {
+class GlobalAlertManager: ObservableObject {
     @Published var currentAlert: GlobalAlert?
 
     func showAlert(title: String,
