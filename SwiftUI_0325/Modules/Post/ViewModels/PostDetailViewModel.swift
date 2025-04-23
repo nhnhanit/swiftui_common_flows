@@ -21,10 +21,28 @@ final class PostDetailViewModel: ObservableObject {
     init(post: Post, service: PostServicing) {
         self.post = post
         self.service = service
+    }
+    
+    func loadDetails() async {
+        isLoading = true
+        errorMessage = nil
         
-        Task {
-            await loadDetails()
+        do {
+            async let userResponse = try service.fetchUser(by: post.userId)
+            async let commentsResponse = try service.fetchPostComments(by: post.id)
+            
+            let (userResult, commentsResult) = try await (userResponse, commentsResponse)
+            isLoading = false
+            userInfo = userResult
+            commentCellViewModels = commentsResult.map {
+                CommentCellViewModel(comment: $0)
+            }
+        } catch {
+            errorMessage = "Failed to load details: \(error.localizedDescription)"
+            print(errorMessage!)
         }
+        
+        isLoading = false
     }
     
     func toggleFavorite() {
@@ -51,28 +69,6 @@ final class PostDetailViewModel: ObservableObject {
             isProcessing = false
         }
         
-    }
-    
-    func loadDetails() async {
-        isLoading = true
-        errorMessage = nil
-        
-        do {
-            async let userResponse = try service.fetchUser(by: post.userId)
-            async let commentsResponse = try service.fetchPostComments(by: post.id)
-            
-            let (userResult, commentsResult) = try await (userResponse, commentsResponse)
-            isLoading = false
-            userInfo = userResult
-            commentCellViewModels = commentsResult.map {
-                CommentCellViewModel(comment: $0)
-            }
-        } catch {
-            errorMessage = "Failed to load details: \(error.localizedDescription)"
-            print(errorMessage!)
-        }
-        
-        isLoading = false
     }
     
 }

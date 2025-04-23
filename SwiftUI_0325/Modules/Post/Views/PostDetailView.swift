@@ -9,11 +9,11 @@ import SwiftUI
 
 struct PostDetailView: View {
     @ObservedObject var viewModel: PostDetailViewModel
-
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-
+                
                 // Post Header: Title + Favorite
                 HStack {
                     Text(viewModel.post.title)
@@ -28,11 +28,11 @@ struct PostDetailView: View {
                     }
                     .buttonStyle(.plain)
                 }
-
+                
                 // Body
                 Text(viewModel.post.body)
                     .font(.body)
-
+                
                 // Author Info
                 Group {
                     Text("Author").font(.headline)
@@ -46,7 +46,7 @@ struct PostDetailView: View {
                         ProgressView("Loading user info...")
                     }
                 }
-
+                
                 // PostComment Summary
                 HStack {
                     Text("Comments").font(.headline)
@@ -55,7 +55,7 @@ struct PostDetailView: View {
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
-
+                
                 // PostComment List
                 VStack(spacing: 8) {
                     ForEach(viewModel.commentCellViewModels) { cellVM in
@@ -64,6 +64,11 @@ struct PostDetailView: View {
                 }
             }
             .padding()
+        }
+        .onAppear {
+            Task {
+                await viewModel.loadDetails()
+            }
         }
         .navigationTitle("Post Detail")
         .navigationBarTitleDisplayMode(.inline)
