@@ -12,24 +12,25 @@ import Testing
 @MainActor
 struct ProductListViewModelTests {
     
-//    @Test("Fetch products successfully updates view model")
-//    func testFetchProductsSuccess() async throws {
-//        let mockService = MockProductService()
-//        mockService.productsToReturn = [
-//            Product(id: "1", name: "Coffee", isLiked: false)
-//        ]
-//        let coordinator = ProductCoordinator(appCoordinator: MockAppCoordinator())
-//        
-//        // Act
-//        let viewModel = ProductListViewModel(service: mockService, coordinator: coordinator)
-//        try? await Task.sleep(nanoseconds: 200_000_000) // Đợi init
-//        
-//        // Assert
-//        #expect(viewModel.isLoading == false)
-//        #expect(viewModel.errorMessage == nil)
-//        #expect(viewModel.productCells.count == 1)
-//        #expect(viewModel.productCells[0].product.name == "Coffee")
-//    }
+    @Test("Fetch products successfully updates view model")
+    func testFetchProductsSuccess() async throws {
+        let mockService = MockProductService()
+        mockService.productsToReturn = [
+            Product(id: "1", name: "Coffee", isLiked: false)
+        ]
+        let coordinator = ProductCoordinator(appCoordinator: MockAppCoordinator())
+        let mockAlertManager = MockAlertManager()
+        // Act
+        let viewModel = ProductListViewModel(service: mockService, coordinator: coordinator, alertManager: mockAlertManager)
+        
+        try? await Task.sleep(nanoseconds: 200_000_000) // Đợi init
+        
+        // Assert
+        #expect(viewModel.isLoading == false)
+        #expect(viewModel.errorMessage == nil)
+        #expect(viewModel.productCells.count == 1)
+        #expect(viewModel.productCells[0].product.name == "Coffee111")
+    }
 //    
 //    @Test("Fetch products fails and triggers coordinator alert")
 //    func testFetchProductsFailure() async throws {

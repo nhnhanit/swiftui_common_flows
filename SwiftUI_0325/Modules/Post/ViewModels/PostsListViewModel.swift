@@ -14,6 +14,7 @@ final class PostsListViewModel: ObservableObject {
     @Published var postCells: [PostCellViewModel] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
+    private var hasLoaded = false
     
     private var currentTask: Task<Void, Never>?
     private let alertManager: GlobalAlertManager
@@ -24,12 +25,16 @@ final class PostsListViewModel: ObservableObject {
         self.postService = service
         self.coordinator = coordinator
         self.alertManager = alertManager
-        
-        loadPosts()
     }
     
     deinit {
         print("❌ DEINIT PostsListViewModel")
+    }
+    
+    func loadPostsIfNeeded()  {
+        guard !hasLoaded else { return }
+        hasLoaded = true
+        loadPosts()
     }
     
     func loadPosts() {
@@ -99,16 +104,14 @@ final class PostsListViewModel: ObservableObject {
         coordinator.goToPostDetail(postId: post.id, detailVM: detailVM)
     }
     
-    func deletePost(at indexSet: IndexSet) {
-        for index in indexSet {
-            let postVM = postCells[index]
-            Task {
-                do {
-                    try await postService.deletePost(postId: postVM.post.id)
-                    postCells.remove(at: index)
-                } catch {
-                    self.showErrorAlert(title: "Failed to delete post.", message: error.localizedDescription)
-                }
+    func deletePost(at indexSet: IndexSet) async {
+        for index in indexSet.sorted(by: >) {
+            let postCellVM = postCells[index]
+            do {
+                try await postService.deletePost(postId: postCellVM.post.id)
+                postCells.remove(at: index)
+            } catch {
+                showErrorAlert(title: "Failed to delete", message: error.localizedDescription)
             }
         }
     }

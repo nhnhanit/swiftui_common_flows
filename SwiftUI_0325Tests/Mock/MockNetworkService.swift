@@ -18,7 +18,7 @@ final class MockNetworkService: NetworkService {
         }
 
         guard let fileName = jsonFileName else {
-            fatalError("MockNetworkService: Thiếu jsonFileName")
+            fatalError("MockNetworkService: Miss jsonFileName")
         }
 
         return try JSONTestLoader.load(fileName)

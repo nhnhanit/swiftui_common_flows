@@ -44,7 +44,11 @@ struct PostsListView: View {
                                         viewModel.selectPost(cellVM.post)
                                     }
                             }
-                            .onDelete(perform: viewModel.deletePost)
+                        .onDelete { indexSet in
+                            Task {
+                                await viewModel.deletePost(at: indexSet)
+                            }
+                        }
                     }
                     .refreshable {
                         viewModel.loadPosts()
@@ -57,9 +61,7 @@ struct PostsListView: View {
             }
         }
         .onAppear {
-            if viewModel.postCells.isEmpty {
-                viewModel.loadPosts()
-            }
+            viewModel.loadPostsIfNeeded()
         }
         .onDisappear {
             viewModel.cancelLoading()

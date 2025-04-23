@@ -10,7 +10,6 @@ import Testing
 import Foundation
 
 @MainActor
-@Suite
 struct PostsListViewModelTests {
     @Test
     func testLoadPosts_withCachedAndNetworkData() async {
@@ -71,8 +70,8 @@ struct PostsListViewModelTests {
         )
 
         // Đợi async load
-        try? await Task.sleep(nanoseconds: 50_000_000)
-        viewModel.deletePost(at: IndexSet(integer: 0))
+        viewModel.loadPosts()
+        await viewModel.deletePost(at: IndexSet(integer: 0))
 
         #expect(viewModel.postCells.map(\.post.id) == [2])
         #expect(mockService.deletedPostIds == [1])

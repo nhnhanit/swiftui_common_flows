@@ -49,9 +49,9 @@
 /* Begin PBXFileReference section */
 		159F472FEE54665CC58BB22D /* Pods-SwiftUI_0325-SwiftUI_0325UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUI_0325-SwiftUI_0325UITests.debug.xcconfig"; path = "Target Support Files/Pods-SwiftUI_0325-SwiftUI_0325UITests/Pods-SwiftUI_0325-SwiftUI_0325UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		21343739A14FEAC80CE69482 /* Pods_SwiftUI_0325_SwiftUI_0325UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUI_0325_SwiftUI_0325UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B55686E2D939DB200D18433 /* SwiftUI_0325.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUI_0325.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B55687E2D939DB500D18433 /* SwiftUI_0325Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUI_0325Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B5568882D939DB500D18433 /* SwiftUI_0325UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUI_0325UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B55686E2D939DB200D18433 /* SwiftUI_0325.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SwiftUI_0325.app; path = "/Users/sonicnit11/Developments/2025/Demo/SwiftUI_0325/build/Debug-iphoneos/SwiftUI_0325.app"; sourceTree = "<absolute>"; };
+		3B55687E2D939DB500D18433 /* SwiftUI_0325Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SwiftUI_0325Tests.xctest; path = "/Users/sonicnit11/Developments/2025/Demo/SwiftUI_0325/build/Debug-iphoneos/SwiftUI_0325.app/PlugIns/SwiftUI_0325Tests.xctest"; sourceTree = "<absolute>"; };
+		3B5568882D939DB500D18433 /* SwiftUI_0325UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SwiftUI_0325UITests.xctest; path = "/Users/sonicnit11/Developments/2025/Demo/SwiftUI_0325/build/Debug-iphoneos/SwiftUI_0325UITests-Runner.app/PlugIns/SwiftUI_0325UITests.xctest"; sourceTree = "<absolute>"; };
 		3E1A68C246D1561B29095109 /* Pods-SwiftUI_0325-SwiftUI_0325UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUI_0325-SwiftUI_0325UITests.release.xcconfig"; path = "Target Support Files/Pods-SwiftUI_0325-SwiftUI_0325UITests/Pods-SwiftUI_0325-SwiftUI_0325UITests.release.xcconfig"; sourceTree = "<group>"; };
 		42850BD65BA753D46828432E /* Pods-SwiftUI_0325.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUI_0325.debug.xcconfig"; path = "Target Support Files/Pods-SwiftUI_0325/Pods-SwiftUI_0325.debug.xcconfig"; sourceTree = "<group>"; };
 		50DB9DBF876112F6730E18F2 /* Pods_SwiftUI_0325Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUI_0325Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,20 +115,9 @@
 				3B5568702D939DB200D18433 /* SwiftUI_0325 */,
 				3B5568812D939DB500D18433 /* SwiftUI_0325Tests */,
 				3B55688B2D939DB500D18433 /* SwiftUI_0325UITests */,
-				3B55686F2D939DB200D18433 /* Products */,
 				76ABD67E60E9D8AE8C81F9A4 /* Pods */,
 				F83969D6CC582E8CF5EA43E0 /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		3B55686F2D939DB200D18433 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3B55686E2D939DB200D18433 /* SwiftUI_0325.app */,
-				3B55687E2D939DB500D18433 /* SwiftUI_0325Tests.xctest */,
-				3B5568882D939DB500D18433 /* SwiftUI_0325UITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		76ABD67E60E9D8AE8C81F9A4 /* Pods */ = {
@@ -259,7 +248,7 @@
 				3B1418352DB778E7006D41FE /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 3B55686F2D939DB200D18433 /* Products */;
+			productRefGroup = 3B5568652D939DB200D18433;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
