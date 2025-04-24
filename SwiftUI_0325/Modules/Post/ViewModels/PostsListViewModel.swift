@@ -14,7 +14,7 @@ final class PostsListViewModel: ObservableObject {
     @Published var postCells: [PostCellViewModel] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
-    private var hasLoaded = false
+    var hasLoaded = false
     
     private var currentTask: Task<Void, Never>?
     private let alertManager: GlobalAlertManager
