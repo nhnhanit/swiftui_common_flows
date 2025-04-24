@@ -26,8 +26,6 @@ struct RootView: View {
                         handlePostRoute(postRoute)
                     case .settingsRoute(let settingsRoute):
                         handleSettingsRoute(settingsRoute)
-                    case .productRoute(let productRoute):
-                        handleProductRoute(productRoute)
                     @unknown default:
                         EmptyView()
                     }

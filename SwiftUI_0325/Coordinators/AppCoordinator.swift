@@ -61,7 +61,5 @@ enum AppRoute: Hashable {
     case settingsRoute(SettingsRoute)
     case authenRoute(AuthenRoute)
     case postRoute(PostRoute)
-                       
-    case productRoute(ProductRoute)
 }
 

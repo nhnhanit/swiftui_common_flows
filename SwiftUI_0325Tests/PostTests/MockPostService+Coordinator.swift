@@ -1,5 +1,5 @@
 //
-//  MockPostService.swift
+//  MockPostService+Coordinator.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 23/4/25.
@@ -46,27 +46,5 @@ final class MockPostCoordinator: PostCoordinator {
     
     override func goToPostDetail(postId: Int, detailVM: PostDetailViewModel) {
         navigatedToPostId = postId
-    }
-}
-
-final class MockAlertManager: GlobalAlertManager {
-    var didShowAlert = false
-    var shownTitle: String?
-    var shownMessage: String?
-    var shownPrimaryTitle: String?
-    var shownSecondaryTitle: String?
-
-    override func showAlert(title: String,
-                            message: String? = nil,
-                            primary: GlobalAlert.AlertAction,
-                            secondary: GlobalAlert.AlertAction? = nil) {
-        super.showAlert(title: title, message: message, primary: primary, secondary: secondary)
-
-        // Lưu lại nội dung để test
-        didShowAlert = true
-        shownTitle = title
-        shownMessage = message
-        shownPrimaryTitle = primary.title
-        shownSecondaryTitle = secondary?.title
     }
 }

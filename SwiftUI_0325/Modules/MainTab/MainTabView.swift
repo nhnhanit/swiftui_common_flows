@@ -18,14 +18,11 @@ struct MainTabView: View {
     @State private var selectedTab = MainTab.postList
     
     enum MainTab {
-        //case productList
         case postList
         case settings
         
         var title: String {
             switch self {
-//            case .productList:
-//                return "Products"
             case .postList:
                 return "Posts"
             case .settings:
@@ -37,11 +34,6 @@ struct MainTabView: View {
     var body: some View {
         VStack(spacing: 0) {
             TabView(selection: $selectedTab) {
-//                ProductListModule.build(coordinator: ProductCoordinator(appCoordinator: viewModel.coordinator), alertManager: viewModel.alertManager)
-//                    .tabItem {
-//                        Label("Products", systemImage: "list.bullet")
-//                    }
-//                    .tag(MainTab.productList)
                 PostsListModule.build(coordinator: PostCoordinator(appCoordinator: viewModel.coordinator), alertManager: viewModel.alertManager)
                     .tabItem {
                         Label("Posts", systemImage: "list.bullet")

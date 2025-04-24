@@ -1,5 +1,5 @@
 //
-//  MockProductService.swift
+//  MockNetworkService.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 14/4/25.
