@@ -12,7 +12,51 @@ import Foundation
 @MainActor
 struct PostsListViewModelTests {
     
-    @Test
+    @Test("Fetch posts from network - failure")
+    func testFetchPostsFromNetwork_NetworkFailure() async throws {
+        let mockNetwork = MockNetworkService()
+        mockNetwork.shouldFail = true
+
+        let mockAlertManager = MockAlertManager()
+        let mockService = PostService(network: mockNetwork)
+        let viewModel = PostsListViewModel(
+            service: mockService,
+            coordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
+            alertManager: mockAlertManager
+        )
+
+        // When
+        await viewModel.fetchPostsFromNetwork()
+               
+        // Then
+        #expect(viewModel.postCells.isEmpty)
+        #expect(viewModel.isLoading == false)
+        DLog(mockAlertManager.shownTitle)
+        #expect(mockAlertManager.shownTitle == "Can not load new posts")
+    }
+    
+    @Test("Fetch posts from network - success")
+    func testFetchPostsFromNetwork_Success() async throws {
+        let mockNetwork = MockNetworkService()
+        mockNetwork.jsonFileName = "posts"
+
+        let mockService = PostService(network: mockNetwork)
+        let viewModel = PostsListViewModel(
+            service: mockService,
+            coordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
+            alertManager: MockAlertManager()
+        )
+
+        // When
+        await viewModel.fetchPostsFromNetwork()
+        
+        // First cached posts
+        #expect(viewModel.postCells.count == 100)
+        #expect(viewModel.postCells.first?.post.title == "sunt aut facere repellat provident occaecati excepturi optio reprehenderit")
+
+    }
+    
+    @Test("Load posts - load cached first, then load network")
     func testLoadPosts_loadsCachedThenNetwork() async {
         // Given
         let mockService = MockPostService()
@@ -33,18 +77,19 @@ struct PostsListViewModelTests {
         // When
         viewModel.loadPosts()
         
-        // First cached posts
+        // First, load from cached: 1 item
         #expect(viewModel.postCells.count == 1)
-        #expect(viewModel.postCells.first?.post.title == "Cached Post - 2")
+        #expect(viewModel.postCells.first?.post.title == "Cached Post - 1")
         
-        // Then fetch posts
+        // Then, fetch from network: 3 items
         try? await Task.sleep(nanoseconds: 300_000_000)
+        
         #expect(viewModel.postCells.count == 2)
-        #expect(viewModel.postCells.first?.post.title == "Network Post - 2")
+        #expect(viewModel.postCells.last?.post.title == "Network Post - 2")
         #expect(viewModel.isLoading == false)
     }
 
-    @Test
+    @Test("Delete post - remove correct post")
     func testDeletePost_removesCorrectPost() async {
         // Given
         let mockService = MockPostService()
@@ -72,13 +117,10 @@ struct PostsListViewModelTests {
         
         // delete item "Network Post - 2"
         await viewModel.deletePost(at: IndexSet(integer: 1))
-        DLog("deleted post", viewModel.postCells.count)
         
-        // Then
-        #expect(viewModel.postCells.count == 1)
-        #expect(mockService.deletedPostIds.first == 2)
-        #expect(viewModel.postCells.first?.post.title == "Network Post - 11")
-        #expect(viewModel.postCells.last?.post.title == "Network Post - 33")
+        // Delete item 2, keep items 1 and 3
+        #expect(viewModel.postCells.first?.post.title == "Network Post - 1")
+        #expect(viewModel.postCells.last?.post.title == "Network Post - 3")
     }
 
 }

@@ -64,7 +64,7 @@ final class PostsListViewModel: ObservableObject {
         currentTask?.cancel()
     }
     
-    private func fetchPostsFromNetwork() async {
+    func fetchPostsFromNetwork() async {
         isLoading = true
         
         do {
