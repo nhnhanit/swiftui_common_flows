@@ -1,1 +1,2 @@
-Practice new technologies
+- Explore new techniquals
+- Build common app flows
