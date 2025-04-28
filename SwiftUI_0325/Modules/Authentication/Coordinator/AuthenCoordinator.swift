@@ -20,7 +20,5 @@ final class AuthenCoordinator: ObservableObject {
     
 }
 
-enum AuthenRoute: Hashable {
-    case OTPVerity(phone: String)
-}
+
 
