@@ -16,12 +16,13 @@ struct PostsListViewModelTests {
     func testFetchPostsFromNetwork_NetworkFailure() async throws {
         let mockNetwork = MockNetworkService()
         mockNetwork.shouldFail = true
-
+        let postRepository = DefaultPostRepository(network: mockNetwork, localStore: DefaultPostLocalStore())
+        let mockPostUseCase = DefaultPostUseCase(repository: postRepository)
         let mockAlertManager = MockAlertManager()
-        let mockService = PostService(network: mockNetwork)
+        
         let viewModel = PostsListViewModel(
-            service: mockService,
-            coordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
+            postUseCase: mockPostUseCase,
+            coordinator: MockPostCoordinator(),
             alertManager: mockAlertManager
         )
 
@@ -40,10 +41,12 @@ struct PostsListViewModelTests {
         let mockNetwork = MockNetworkService()
         mockNetwork.jsonFileName = "MockDataPosts"
 
-        let mockService = PostService(network: mockNetwork)
+        let postRepository = DefaultPostRepository(network: mockNetwork, localStore: DefaultPostLocalStore())
+        let mockPostUseCase = DefaultPostUseCase(repository: postRepository)
+        
         let viewModel = PostsListViewModel(
-            service: mockService,
-            coordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
+            postUseCase: mockPostUseCase,
+            coordinator: MockPostCoordinator(),
             alertManager: MockAlertManager()
         )
 
@@ -59,27 +62,25 @@ struct PostsListViewModelTests {
     @Test("Load posts - load cached first, then load network")
     func testLoadPosts_loadsCachedThenNetwork() async {
         // Given
-        let mockService = MockPostService()
-        mockService.cachedPosts = [
+        let mockPostRepository = MockPostRepository()
+        mockPostRepository.cachedPosts = [
             Post(userId: 1, id: 1, title: "Cached Post - 1", body: "", isFavorite: false)
         ]
-        mockService.fetchedPosts = [
+        mockPostRepository.fetchedPosts = [
             Post(userId: 1, id: 1, title: "Network Post - 1", body: "", isFavorite: false),
             Post(userId: 2, id: 2, title: "Network Post - 2", body: "", isFavorite: false)
         ]
+        
+        let mockPostUseCase = DefaultPostUseCase(repository: mockPostRepository)
 
         let viewModel = PostsListViewModel(
-            service: mockService,
-            coordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
+            postUseCase: mockPostUseCase,
+            coordinator: MockPostCoordinator(),
             alertManager: MockAlertManager()
         )
 
         // When
         viewModel.loadPosts()
-        
-        // First, load from cached: 1 item
-        #expect(viewModel.postCells.count == 1)
-        #expect(viewModel.postCells.first?.post.title == "Cached Post - 1")
         
         // Then, fetch from network: 3 items
         try? await Task.sleep(nanoseconds: 300_000_000)
@@ -92,23 +93,23 @@ struct PostsListViewModelTests {
     @Test("Delete post - remove correct post")
     func testDeletePost_removesCorrectPost() async {
         // Given
-        let mockService = MockPostService()
-        mockService.cachedPosts = [
+        let mockPostRepository = MockPostRepository()
+        mockPostRepository.cachedPosts = [
             Post(userId: 1, id: 1, title: "Cache Post - 1", body: "", isFavorite: false)
         ]
-        mockService.fetchedPosts = [
+        mockPostRepository.fetchedPosts = [
             Post(userId: 1, id: 1, title: "Network Post - 1", body: "", isFavorite: false),
             Post(userId: 2, id: 2, title: "Network Post - 2", body: "", isFavorite: false),
             Post(userId: 3, id: 3, title: "Network Post - 3", body: "", isFavorite: false),
         ]
         
-        let mockCoordinator = MockPostCoordinator(appCoordinator: MockAppCoordinator())
-        let mockAlertManager = MockAlertManager()
+        let mockPostUseCase = DefaultPostUseCase(repository: mockPostRepository)
+
         
         let viewModel = PostsListViewModel(
-            service: mockService,
-            coordinator: mockCoordinator,
-            alertManager: mockAlertManager
+            postUseCase: mockPostUseCase,
+            coordinator: MockPostCoordinator(),
+            alertManager: MockAlertManager()
         )
         
         // When
@@ -119,8 +120,8 @@ struct PostsListViewModelTests {
         await viewModel.deletePost(at: IndexSet(integer: 1))
         
         // Delete item 2, keep items 1 and 3
-        #expect(viewModel.postCells.first?.post.title == "Network Post - 111")
-        #expect(viewModel.postCells.last?.post.title == "Network Post - 333")
+        #expect(viewModel.postCells.first?.post.title == "Network Post - 1")
+        #expect(viewModel.postCells.last?.post.title == "Network Post - 3")
     }
 
 }

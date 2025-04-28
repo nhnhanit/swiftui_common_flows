@@ -11,12 +11,12 @@ import SwiftUI
 final class PostCellViewModel: ObservableObject, Identifiable {
     let id = UUID()
     @Published var post: Post
-    private let service: PostServicing
+    private let postUseCase: PostUseCase
     private var isProcessing = false
 
-    init(post: Post, service: PostServicing) {
+    init(post: Post, postUseCase: PostUseCase) {
         self.post = post
-        self.service = service
+        self.postUseCase = postUseCase
     }
     
     func toggleFavorite() {
@@ -28,7 +28,7 @@ final class PostCellViewModel: ObservableObject, Identifiable {
 
         Task {
             do {
-                var updatedPost = try await service.patchFavorite(postId: post.id, isFavorite: newFavoriteState)
+                var updatedPost = try await postUseCase.patchFavorite(postId: post.id, isFavorite: newFavoriteState)
                 
 #warning("Hardcode updatedPost.isFavorite = true")
                 if !currentFavorite {

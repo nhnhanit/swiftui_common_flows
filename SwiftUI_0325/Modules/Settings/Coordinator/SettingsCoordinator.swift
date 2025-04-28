@@ -27,25 +27,3 @@ final class SettingsCoordinator: ObservableObject {
     }
     
 }
-
-// MARK: - SettingsRoute
-
-enum SettingsRoute: Hashable {
-    case userProfile(user: UserProfile, onSaveUser: ((UserProfile) -> Void)?)
-    
-    // Để enum này conform Hashable, cần bỏ closure/delegate khi so sánh
-    static func == (lhs: SettingsRoute, rhs: SettingsRoute) -> Bool {
-        switch (lhs, rhs) {
-        case let (.userProfile(p1, _), .userProfile(p2, _)):
-            return p1.id == p2.id
-        }
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        switch self {
-        case let .userProfile(user, _):
-            hasher.combine(user.id)
-        }
-    }
-}
-

@@ -34,7 +34,7 @@ struct MainTabView: View {
     var body: some View {
         VStack(spacing: 0) {
             TabView(selection: $selectedTab) {
-                PostsListModule.build(coordinator: PostCoordinator(appCoordinator: viewModel.coordinator), alertManager: viewModel.alertManager)
+                PostsListModule.build(coordinator: DefaultPostCoordinator(appCoordinator: viewModel.coordinator), alertManager: viewModel.alertManager)
                     .tabItem {
                         Label("Posts", systemImage: "list.bullet")
                     }

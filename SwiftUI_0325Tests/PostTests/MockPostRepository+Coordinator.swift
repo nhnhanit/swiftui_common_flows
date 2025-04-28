@@ -9,7 +9,7 @@ import Testing
 @testable import SwiftUI_0325
 import Foundation
 
-final class MockPostService: PostServicing {
+final class MockPostRepository: PostRepository {
     var cachedPosts: [Post] = []
     var fetchedPosts: [Post] = []
     var deletedPostIds: [Int] = []
@@ -44,7 +44,7 @@ final class MockPostService: PostServicing {
 final class MockPostCoordinator: PostCoordinator {
     var navigatedToPostId: Int?
     
-    override func goToPostDetail(postId: Int, detailVM: PostDetailViewModel) {
+    func goToPostDetail(postId: Int, detailVM: PostDetailViewModel) {
         navigatedToPostId = postId
     }
 }

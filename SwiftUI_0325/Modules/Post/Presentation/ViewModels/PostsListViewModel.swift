@@ -9,26 +9,32 @@ import SwiftUI
 
 @MainActor
 final class PostsListViewModel: ObservableObject {
-    private let postService: PostServicing
+    //    private let postService: PostServicing
+    private let postUseCase: PostUseCase
     private let coordinator: PostCoordinator
+    private let alertManager: GlobalAlertManager
+    
     @Published var postCells: [PostCellViewModel] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
-    var hasLoaded = false
     
     private var currentTask: Task<Void, Never>?
-    private let alertManager: GlobalAlertManager
+    var hasLoaded = false
     
-    init(service: PostServicing, coordinator: PostCoordinator, alertManager: GlobalAlertManager) {
+    init(postUseCase: PostUseCase, coordinator: PostCoordinator, alertManager: GlobalAlertManager) {
         print("🔁 PostsListViewModel INIT")
         
-        self.postService = service
+        self.postUseCase = postUseCase
         self.coordinator = coordinator
         self.alertManager = alertManager
     }
     
     deinit {
         print("❌ DEINIT PostsListViewModel")
+    }
+    
+    func cancelLoading() {
+        currentTask?.cancel()
     }
     
     func loadPostsIfNeeded()  {
@@ -44,34 +50,30 @@ final class PostsListViewModel: ObservableObject {
             return
         }
         
-        // 1️⃣ Show cached data immediately
-        let cachedPosts = postService.loadCachedPosts()
-        if !cachedPosts.isEmpty {
-            postCells = cachedPosts.map {
-                PostCellViewModel(post: $0, service: postService)
-            }
-        }
-        
         // 2️⃣ Then try refreshing from network
         currentTask = Task { [weak self] in
             guard let self else { return }
-            await fetchPostsFromNetwork()
+            
+            do {
+                let cached = try await postUseCase.loadCachedPostCells()
+                if !cached.isEmpty {
+                    postCells = cached
+                }
+                await fetchPostsFromNetwork()
+            } catch {
+                print("⚠️ Failed to load cached posts: \(error)")
+                await fetchPostsFromNetwork()
+            }
             self.currentTask = nil
         }
-    }
-    
-    func cancelLoading() {
-        currentTask?.cancel()
     }
     
     func fetchPostsFromNetwork() async {
         isLoading = true
         
         do {
-            let freshPosts = try await postService.fetchPosts()
-            postCells = freshPosts.map {
-                PostCellViewModel(post: $0, service: postService)
-            }
+            let freshPosts = try await postUseCase.fetchPostCells()
+            postCells = freshPosts
         } catch is CancellationError {
             print("❌ Task was cancelled intentionally.")
         } catch {
@@ -90,7 +92,7 @@ final class PostsListViewModel: ObservableObject {
     }
     
     func selectPost(_ post: Post) {
-        let detailVM = PostDetailViewModel(post: post, service: postService)
+        let detailVM = PostDetailViewModel(post: post, postUseCase: postUseCase)
         
         // 👇 Callback from Detail to List
         detailVM.onUpdate = { [weak self] updatedPost in
@@ -108,7 +110,7 @@ final class PostsListViewModel: ObservableObject {
         for index in indexSet.sorted(by: >) {
             let postCellVM = postCells[index]
             do {
-                try await postService.deletePost(postId: postCellVM.post.id)
+                try await postUseCase.deletePost(postId: postCellVM.post.id)
                 postCells.remove(at: index)
             } catch {
                 showErrorAlert(title: "Failed to delete", message: error.localizedDescription)
