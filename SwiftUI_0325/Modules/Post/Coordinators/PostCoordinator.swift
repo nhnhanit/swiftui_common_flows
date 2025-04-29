@@ -8,9 +8,9 @@
 import SwiftUI
 
 class PostCoordinator: ObservableObject {
-    private weak var appCoordinator: (Navigatable)?
+    private weak var appCoordinator: Navigatable?
     
-    init(appCoordinator: (Navigatable)) {
+    init(appCoordinator: Navigatable) {
         self.appCoordinator = appCoordinator
     }
     
