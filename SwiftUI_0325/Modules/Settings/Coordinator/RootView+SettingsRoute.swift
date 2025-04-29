@@ -28,7 +28,7 @@ enum SettingsRoute: Hashable {
 
 extension RootView {
     @ViewBuilder
-    func handleSettingsRoute(_ route: SettingsRoute) -> some View {
+    func settingsRouteView(_ route: SettingsRoute) -> some View {
         switch route {
         case .userProfile(let user, let onSaveUser):
             ProfileModule.build(user: user, onSaveUser: onSaveUser)

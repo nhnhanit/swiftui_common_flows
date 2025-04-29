@@ -28,7 +28,7 @@ enum PostRoute: Hashable {
 
 extension RootView {
     @ViewBuilder
-    func handlePostRoute(_ route: PostRoute) -> some View {
+    func postRouteView(_ route: PostRoute) -> some View {
         switch route {
         case .postDetail(_, let detailVM):
             PostDetailView(viewModel: detailVM)

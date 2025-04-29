@@ -13,7 +13,7 @@ enum AuthenRoute: Hashable {
 
 extension RootView {
     @ViewBuilder
-    func handleAuthenRoute(_ route: AuthenRoute) -> some View {
+    func authenRouteView(_ route: AuthenRoute) -> some View {
         switch route {
         case .OTPVerity(let phone):
             OTPVerifyModule.build(phone: phone, coordinator: AuthenCoordinator(appCoordinator: coordinator), alertManager: alertManager)
