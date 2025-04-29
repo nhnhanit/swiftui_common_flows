@@ -10,8 +10,8 @@ import SwiftUI
 struct PostsListView: View {
     @StateObject var viewModel: PostsListViewModel
     
-    init(service: PostService, coordinator: PostCoordinator, alertManager: GlobalAlertManager) {
-        _viewModel = StateObject(wrappedValue: PostsListViewModel(service: service, coordinator: coordinator, alertManager: alertManager))
+    init(postRepository: PostRepository, coordinator: PostCoordinator, alertManager: GlobalAlertManager) {
+        _viewModel = StateObject(wrappedValue: PostsListViewModel(postRepository: postRepository, coordinator: coordinator, alertManager: alertManager))
     }
     
     var body: some View {

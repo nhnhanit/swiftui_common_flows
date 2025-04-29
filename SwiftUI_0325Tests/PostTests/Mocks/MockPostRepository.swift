@@ -1,5 +1,5 @@
 //
-//  MockPostService+Coordinator.swift
+//  MockPostRepository.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 23/4/25.
@@ -9,7 +9,7 @@ import Testing
 @testable import SwiftUI_0325
 import Foundation
 
-final class MockPostService: PostServicing {
+final class MockPostRepository: PostRepository {
     var cachedPosts: [Post] = []
     var fetchedPosts: [Post] = []
     var deletedPostIds: [Int] = []

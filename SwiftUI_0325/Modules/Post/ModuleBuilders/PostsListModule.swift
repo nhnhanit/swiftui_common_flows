@@ -10,8 +10,8 @@ import SwiftUI
 final class PostsListModule {
     static func build(coordinator: PostCoordinator, alertManager: GlobalAlertManager) -> PostsListView {
         let network = DefaultNetworkService()
-        let postService = PostService(network: network)
+        let postRepository = DefaultPostRepository(network: network)
         
-        return PostsListView(service: postService, coordinator: coordinator, alertManager: alertManager)
+        return PostsListView(postRepository: postRepository, coordinator: coordinator, alertManager: alertManager)
     }
 }

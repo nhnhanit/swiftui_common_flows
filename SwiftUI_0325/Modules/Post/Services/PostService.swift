@@ -1,5 +1,5 @@
 //
-//  PostService.swift
+//  PostRepository.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 22/4/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-protocol PostServicing {
+protocol PostRepository {
     func loadCachedPosts() -> [Post]
     func fetchPosts() async throws -> [Post]
     func fetchUser(by postId: Int) async throws -> UserInfo
@@ -16,7 +16,7 @@ protocol PostServicing {
     func deletePost(postId: Int) async throws
 }
 
-final class PostService: PostServicing {
+final class DefaultPostRepository: PostRepository {
     private let network: NetworkService
     private let localStore: PostLocalStoring
     

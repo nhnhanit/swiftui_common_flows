@@ -9,7 +9,7 @@ import SwiftUI
 
 @MainActor
 final class PostsListViewModel: ObservableObject {
-    private let postService: PostServicing
+    private let postRepository: PostRepository
     private let coordinator: PostCoordinator
     @Published var postCells: [PostCellViewModel] = []
     @Published var isLoading = false
@@ -19,10 +19,10 @@ final class PostsListViewModel: ObservableObject {
     private var currentTask: Task<Void, Never>?
     private let alertManager: GlobalAlertManager
     
-    init(service: PostServicing, coordinator: PostCoordinator, alertManager: GlobalAlertManager) {
+    init(postRepository: PostRepository, coordinator: PostCoordinator, alertManager: GlobalAlertManager) {
         print("🔁 PostsListViewModel INIT")
         
-        self.postService = service
+        self.postRepository = postRepository
         self.coordinator = coordinator
         self.alertManager = alertManager
     }
@@ -45,10 +45,10 @@ final class PostsListViewModel: ObservableObject {
         }
         
         // 1️⃣ Show cached data immediately
-        let cachedPosts = postService.loadCachedPosts()
+        let cachedPosts = postRepository.loadCachedPosts()
         if !cachedPosts.isEmpty {
             postCells = cachedPosts.map {
-                PostCellViewModel(post: $0, service: postService)
+                PostCellViewModel(post: $0, postRepository: postRepository)
             }
         }
         
@@ -68,9 +68,9 @@ final class PostsListViewModel: ObservableObject {
         isLoading = true
         
         do {
-            let freshPosts = try await postService.fetchPosts()
+            let freshPosts = try await postRepository.fetchPosts()
             postCells = freshPosts.map {
-                PostCellViewModel(post: $0, service: postService)
+                PostCellViewModel(post: $0, postRepository: postRepository)
             }
         } catch is CancellationError {
             print("❌ Task was cancelled intentionally.")
@@ -90,7 +90,7 @@ final class PostsListViewModel: ObservableObject {
     }
     
     func selectPost(_ post: Post) {
-        let detailVM = PostDetailViewModel(post: post, service: postService)
+        let detailVM = PostDetailViewModel(post: post, postRepository: postRepository)
         
         // 👇 Callback from Detail to List
         detailVM.onUpdate = { [weak self] updatedPost in
@@ -108,7 +108,7 @@ final class PostsListViewModel: ObservableObject {
         for index in indexSet.sorted(by: >) {
             let postCellVM = postCells[index]
             do {
-                try await postService.deletePost(postId: postCellVM.post.id)
+                try await postRepository.deletePost(postId: postCellVM.post.id)
                 postCells.remove(at: index)
             } catch {
                 showErrorAlert(title: "Failed to delete", message: error.localizedDescription)

@@ -10,7 +10,7 @@ import SwiftUI
 @MainActor
 final class PostDetailViewModel: ObservableObject {
     @Published var post: Post
-    private let service: PostServicing
+    private let postRepository: PostRepository
     @Published var userInfo: UserInfo?
     @Published var commentCellViewModels: [CommentCellViewModel] = []
     @Published var isLoading = false
@@ -18,9 +18,9 @@ final class PostDetailViewModel: ObservableObject {
     var onUpdate: ((Post) -> Void)?
     private var isProcessing = false
     
-    init(post: Post, service: PostServicing) {
+    init(post: Post, postRepository: PostRepository) {
         self.post = post
-        self.service = service
+        self.postRepository = postRepository
     }
     
     func loadDetails() async {
@@ -28,8 +28,8 @@ final class PostDetailViewModel: ObservableObject {
         errorMessage = nil
         
         do {
-            async let userResponse = try service.fetchUser(by: post.userId)
-            async let commentsResponse = try service.fetchPostComments(by: post.id)
+            async let userResponse = try postRepository.fetchUser(by: post.userId)
+            async let commentsResponse = try postRepository.fetchPostComments(by: post.id)
             
             let (userResult, commentsResult) = try await (userResponse, commentsResponse)
             isLoading = false
@@ -54,7 +54,7 @@ final class PostDetailViewModel: ObservableObject {
 
         Task {
             do {
-                var updatedPost = try await service.patchFavorite(postId: post.id, isFavorite: newFavoriteState)
+                var updatedPost = try await postRepository.patchFavorite(postId: post.id, isFavorite: newFavoriteState)
                 
 #warning("Hardcode updatedPost.isFavorite = true")
                 if !currentFavorite {
