@@ -40,11 +40,3 @@ final class MockPostService: PostServicing {
         .init(userId: 1, id: postId, title: "Fav", body: "Fav", isFavorite: isFavorite)
     }
 }
-
-final class MockPostCoordinator: PostCoordinator {
-    var navigatedToPostId: Int?
-    
-    override func goToPostDetail(postId: Int, detailVM: PostDetailViewModel) {
-        navigatedToPostId = postId
-    }
-}
