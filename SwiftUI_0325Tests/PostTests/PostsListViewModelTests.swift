@@ -120,8 +120,8 @@ struct PostsListViewModelTests {
         await viewModel.deletePost(at: IndexSet(integer: 1))
         
         // Delete item 2, keep items 1 and 3
-        #expect(viewModel.postCells.first?.post.title == "Network Post - 1")
-        #expect(viewModel.postCells.last?.post.title == "Network Post - 3")
+        #expect(viewModel.postCells.first?.post.title == "Network Post - 111")
+        #expect(viewModel.postCells.last?.post.title == "Network Post - 333")
     }
 
 }
