@@ -8,9 +8,9 @@
 import SwiftUI
 
 final class AuthenCoordinator: ObservableObject {
-    weak var appCoordinator: AppCoordinator?
+    private weak var appCoordinator: Navigatable?
     
-    init(appCoordinator: AppCoordinator) {
+    init(appCoordinator: Navigatable) {
         self.appCoordinator = appCoordinator
     }
     

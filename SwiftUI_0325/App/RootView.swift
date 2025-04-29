@@ -19,13 +19,13 @@ struct RootView: View {
                     case .phoneLogin:
                         PhoneLoginModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator), alertManager: alertManager)
                     case .authenRoute(let authenRoute):
-                        authenRouteView(authenRoute)
+                        AuthenRouteViewBuilder.view(for: authenRoute, coordinator: coordinator, alertManager: alertManager)
                     case .main:
                         MainTabModule.build(coordinator: coordinator, alertManager: alertManager)
                     case .postRoute(let postRoute):
-                        postRouteView(postRoute)
-                    case .settingsRoute(let settingsRoute):
-                        settingsRouteView(settingsRoute)
+                        PostRouteViewBuilder.view(for: postRoute)
+                    case .settingRoute(let settingRoute):
+                        SettingRouteViewBuilder.view(for: settingRoute)
                     @unknown default:
                         EmptyView()
                     }

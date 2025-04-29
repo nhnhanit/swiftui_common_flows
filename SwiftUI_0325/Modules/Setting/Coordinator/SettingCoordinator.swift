@@ -16,7 +16,7 @@ final class SettingsCoordinator: ObservableObject {
     
     func goToUserProfile(user: UserProfile, onSaveUser: ((UserProfile) -> Void)?) {
         if let appCoordinator = appCoordinator {
-            appCoordinator.push(to: .settingsRoute(.userProfile(user: user, onSaveUser: onSaveUser)))
+            appCoordinator.push(to: .settingRoute(.userProfile(user: user, onSaveUser: onSaveUser)))
         } else {
             print("appCoordinator is nil")
         }
