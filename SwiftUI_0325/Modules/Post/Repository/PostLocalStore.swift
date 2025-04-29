@@ -1,5 +1,5 @@
 //
-//  PostLocalStoring.swift
+//  DefaultPostLocalStore.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 22/4/25.
@@ -8,12 +8,12 @@
 import SwiftUI
 import RealmSwift
 
-protocol PostLocalStoring {
+protocol PostLocalStore {
     func save(posts: [Post]) throws
     func loadCachedPosts() -> [Post]
 }
 
-final class PostLocalStore: PostLocalStoring {
+final class DefaultPostLocalStore: PostLocalStore {
     
     func save(posts: [Post]) throws {
         let realm = try Realm()

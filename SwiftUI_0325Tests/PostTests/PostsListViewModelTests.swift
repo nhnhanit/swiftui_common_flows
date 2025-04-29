@@ -18,7 +18,7 @@ struct PostsListViewModelTests {
         mockNetwork.shouldFail = true
 
         let mockAlertManager = MockAlertManager()
-        let postRepository = DefaultPostRepository(network: mockNetwork)
+        let postRepository = DefaultPostRepository(network: mockNetwork, postLocalStore: DefaultPostLocalStore())
         let viewModel = PostsListViewModel(
             postRepository: postRepository,
             coordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
@@ -40,7 +40,7 @@ struct PostsListViewModelTests {
         let mockNetwork = MockNetworkService()
         mockNetwork.jsonFileName = "MockDataPosts"
 
-        let postRepository = DefaultPostRepository(network: mockNetwork)
+        let postRepository = DefaultPostRepository(network: mockNetwork, postLocalStore: DefaultPostLocalStore())
         let viewModel = PostsListViewModel(
             postRepository: postRepository,
             coordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),

@@ -18,23 +18,20 @@ protocol PostRepository {
 
 final class DefaultPostRepository: PostRepository {
     private let network: NetworkService
-    private let localStore: PostLocalStoring
+    private let postLocalStore: PostLocalStore
     
-    init(
-        network: NetworkService = DefaultNetworkService(),
-        localStore: PostLocalStoring = PostLocalStore()
-    ) {
+    init(network: NetworkService, postLocalStore: PostLocalStore) {
         self.network = network
-        self.localStore = localStore
+        self.postLocalStore = postLocalStore
     }
     
     func loadCachedPosts() -> [Post] {
-        return localStore.loadCachedPosts()
+        return postLocalStore.loadCachedPosts()
     }
     
     func fetchPosts() async throws -> [Post] {
         let posts: [Post] = try await network.request(PostAPI.fetchPosts)
-        try localStore.save(posts: posts)
+        try postLocalStore.save(posts: posts)
         return posts
     }
     

@@ -47,7 +47,9 @@ final class PostsListViewModel: ObservableObject {
         // 1️⃣ Show cached data immediately
         let cachedPosts = postRepository.loadCachedPosts()
         if !cachedPosts.isEmpty {
-            postCells = cachedPosts.map {
+            postCells = cachedPosts
+                .prefix(3) // only need to show 3 items from cache
+                .map {
                 PostCellViewModel(post: $0, postRepository: postRepository)
             }
         }
@@ -58,6 +60,7 @@ final class PostsListViewModel: ObservableObject {
             await fetchPostsFromNetwork()
             self.currentTask = nil
         }
+        
     }
     
     func cancelLoading() {
