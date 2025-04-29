@@ -63,22 +63,9 @@
 		B66D9181C5E8DB9B4126B71B /* Pods-SwiftUI_0325Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUI_0325Tests.release.xcconfig"; path = "Target Support Files/Pods-SwiftUI_0325Tests/Pods-SwiftUI_0325Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		3B15BF0F2DBF5E5B00F0D23C /* Exceptions for "SwiftUI_0325" folder in "SwiftUI_0325" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Modules/Post/Coordinator/Untitled.swift,
-			);
-			target = 3B55686D2D939DB200D18433 /* SwiftUI_0325 */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3B5568702D939DB200D18433 /* SwiftUI_0325 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				3B15BF0F2DBF5E5B00F0D23C /* Exceptions for "SwiftUI_0325" folder in "SwiftUI_0325" target */,
-			);
 			path = SwiftUI_0325;
 			sourceTree = "<group>";
 		};
