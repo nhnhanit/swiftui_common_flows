@@ -24,7 +24,7 @@ struct PostsListView: View {
                         viewModel.loadPosts()
                     }
                 )
-
+                
                 if viewModel.postCells.isEmpty && !viewModel.isLoading {
                     Spacer()
                     EmptyStateView(
@@ -39,11 +39,11 @@ struct PostsListView: View {
                 } else {
                     List {
                         ForEach(viewModel.postCells, id: \.id) { cellVM in
-                                PostCellView(viewModel: cellVM)
-                                    .onTapGesture {
-                                        viewModel.selectPost(cellVM.post)
-                                    }
-                            }
+                            PostCellView(viewModel: cellVM)
+                                .onTapGesture {
+                                    viewModel.selectPost(cellVM.post)
+                                }
+                        }
                         .onDelete { indexSet in
                             Task {
                                 await viewModel.deletePost(at: indexSet)
@@ -55,7 +55,7 @@ struct PostsListView: View {
                     }
                 }
             }
-
+            
             if viewModel.isLoading {
                 LoadingView(message: "Loading posts...")
             }
@@ -69,3 +69,13 @@ struct PostsListView: View {
     }
 }
 
+
+struct PostsListView_Previews: PreviewProvider {
+    static var previews: some View {
+        let preViewPostRepository = PreviewPostRepository()
+        
+        PostsListView(postRepository: preViewPostRepository,
+                      coordinator: PostCoordinator(appCoordinator: AppCoordinator()),
+                      alertManager: GlobalAlertManager())
+    }
+}
