@@ -10,9 +10,9 @@ import SwiftUI
 struct MainTabView: View {
     @StateObject var viewModel: MainViewModel
     
-    init(coordinator: AppCoordinator, alertManager: GlobalAlertManager) {
-        _viewModel = StateObject(wrappedValue: MainViewModel(coordinator: coordinator,
-                                                             alertManager: alertManager))
+    init(appCoordinator: AppCoordinator, globalAlertManager: GlobalAlertManager) {
+        _viewModel = StateObject(wrappedValue: MainViewModel(appCoordinator: appCoordinator,
+                                                             globalAlertManager: globalAlertManager))
     }
     
     @State private var selectedTab = MainTab.postList
@@ -34,13 +34,15 @@ struct MainTabView: View {
     var body: some View {
         VStack(spacing: 0) {
             TabView(selection: $selectedTab) {
-                PostsListModule.build(coordinator: PostCoordinator(appCoordinator: viewModel.coordinator), alertManager: viewModel.alertManager)
+                PostsListModule.build(postCoordinator: PostCoordinator(appCoordinator: viewModel.appCoordinator),
+                                      globalAlertManager: viewModel.globalAlertManager)
                     .tabItem {
                         Label("Posts", systemImage: "list.bullet")
                     }
                     .tag(MainTab.postList)
                 
-                SettingsModule.build(coordinator: SettingsCoordinator(appCoordinator: viewModel.coordinator), alertManager: viewModel.alertManager)
+                SettingsModule.build(settingCoordinator: SettingCoordinator(appCoordinator: viewModel.appCoordinator),
+                                     globalAlertManager: viewModel.globalAlertManager)
                     .tabItem {
                         Label("Settings", systemImage: "gearshape")
                     }

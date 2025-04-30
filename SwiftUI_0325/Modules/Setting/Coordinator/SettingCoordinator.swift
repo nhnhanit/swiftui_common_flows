@@ -1,5 +1,5 @@
 //
-//  SettingsCoordinator.swift
+//  SettingCoordinator.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 2/4/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class SettingsCoordinator: ObservableObject {
+final class SettingCoordinator: ObservableObject {
     private weak var appCoordinator: AppCoordinator?
     
     init(appCoordinator: AppCoordinator) {

@@ -12,13 +12,13 @@ final class PhoneLoginViewModel: ObservableObject {
     @Published var phone: String = ""
     @Published var error: String?
 
-    private let coordinator: AuthenCoordinator
-    private let alertManager: GlobalAlertManager
+    private let authenCoordinator: AuthenCoordinator
+    private let globalAlertManager: GlobalAlertManager
     private let service: PhoneLoginAuthServicing
 
-    init(coordinator: AuthenCoordinator, alertManager: GlobalAlertManager, service: PhoneLoginAuthServicing = PhoneLoginAuthService()) {
-        self.coordinator = coordinator
-        self.alertManager = alertManager
+    init(authenCoordinator: AuthenCoordinator, globalAlertManager: GlobalAlertManager, service: PhoneLoginAuthServicing = PhoneLoginAuthService()) {
+        self.authenCoordinator = authenCoordinator
+        self.globalAlertManager = globalAlertManager
         self.service = service
     }
 
@@ -27,7 +27,7 @@ final class PhoneLoginViewModel: ObservableObject {
 #warning("hardcode phone")
             phone = "1-770-736-8031 x56442"
             try await service.requestOTP(for: phone)
-            coordinator.goToOTPVerify(phone: phone)
+            authenCoordinator.goToOTPVerify(phone: phone)
         } catch {
             self.error = error.localizedDescription
         }

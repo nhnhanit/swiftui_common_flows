@@ -18,11 +18,13 @@ struct PostsListViewModelTests {
         mockNetwork.shouldFail = true
 
         let mockAlertManager = MockAlertManager()
-        let postRepository = DefaultPostRepository(network: mockNetwork, postLocalStore: DefaultPostLocalStore())
+        let postRepository = DefaultPostRepository(network: mockNetwork,
+                                                   postLocalStore: DefaultPostLocalStore())
+        
         let viewModel = PostsListViewModel(
             postRepository: postRepository,
-            coordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
-            alertManager: mockAlertManager
+            postCoordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
+            globalAlertManager: mockAlertManager
         )
 
         // When
@@ -43,8 +45,8 @@ struct PostsListViewModelTests {
         let postRepository = DefaultPostRepository(network: mockNetwork, postLocalStore: DefaultPostLocalStore())
         let viewModel = PostsListViewModel(
             postRepository: postRepository,
-            coordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
-            alertManager: MockAlertManager()
+            postCoordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
+            globalAlertManager: MockAlertManager()
         )
 
         // When
@@ -70,8 +72,8 @@ struct PostsListViewModelTests {
 
         let viewModel = PostsListViewModel(
             postRepository: mockPostRepository,
-            coordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
-            alertManager: MockAlertManager()
+            postCoordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
+            globalAlertManager: MockAlertManager()
         )
 
         // When
@@ -107,8 +109,8 @@ struct PostsListViewModelTests {
         
         let viewModel = PostsListViewModel(
             postRepository: mockPostRepository,
-            coordinator: mockCoordinator,
-            alertManager: mockAlertManager
+            postCoordinator: mockCoordinator,
+            globalAlertManager: mockAlertManager
         )
         
         // When

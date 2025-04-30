@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct RootView: View {
-    @EnvironmentObject var coordinator: AppCoordinator
-    @EnvironmentObject var alertManager: GlobalAlertManager
+    @EnvironmentObject var appCoordinator: AppCoordinator
+    @EnvironmentObject var globalAlertManager: GlobalAlertManager
         
     var body: some View {
-        NavigationStack(path: $coordinator.path) {
-            SplashModule.build(coordinator: coordinator, alertManager: alertManager)
+        NavigationStack(path: $appCoordinator.path) {
+            SplashModule.build(appCoordinator: appCoordinator, globalAlertManager: globalAlertManager)
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .phoneLogin:
-                        PhoneLoginModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator), alertManager: alertManager)
+                        PhoneLoginModule.build(authenCoordinator: AuthenCoordinator(appCoordinator: appCoordinator), globalAlertManager: globalAlertManager)
                     case .authenRoute(let authenRoute):
-                        AuthenRouteViewBuilder.view(for: authenRoute, coordinator: coordinator, alertManager: alertManager)
+                        AuthenRouteViewBuilder.view(for: authenRoute, appCoordinator: appCoordinator, globalAlertManager: globalAlertManager)
                     case .main:
-                        MainTabModule.build(coordinator: coordinator, alertManager: alertManager)
+                        MainTabModule.build(appCoordinator: appCoordinator, globalAlertManager: globalAlertManager)
                     case .postRoute(let postRoute):
                         PostRouteViewBuilder.view(for: postRoute)
                     case .settingRoute(let settingRoute):
@@ -37,9 +37,9 @@ struct RootView: View {
 
 #Preview {
     @Previewable let appCoordinator = AppCoordinator()
-    @Previewable let alertManager = GlobalAlertManager()
+    @Previewable let globalAlertManager = GlobalAlertManager()
     
     return RootView()
         .environmentObject(appCoordinator)
-        .environmentObject(alertManager)
+        .environmentObject(globalAlertManager)
 }

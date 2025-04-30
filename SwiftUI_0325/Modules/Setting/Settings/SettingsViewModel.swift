@@ -10,18 +10,18 @@ import Foundation
 final class SettingsViewModel: ObservableObject {
     @Published var user: UserProfile?
     
-    let coordinator: SettingsCoordinator
-    let alertManager: GlobalAlertManager
+    let settingCoordinator: SettingCoordinator
+    let globalAlertManager: GlobalAlertManager
 
-    init(coordinator: SettingsCoordinator, alertManager: GlobalAlertManager) {
-        self.coordinator = coordinator
-        self.alertManager = alertManager
+    init(settingCoordinator: SettingCoordinator, globalAlertManager: GlobalAlertManager) {
+        self.settingCoordinator = settingCoordinator
+        self.globalAlertManager = globalAlertManager
         
-        print("🔁 SettingsCoordinator INIT")
+        print("🔁 SettingCoordinator INIT")
     }
     
     deinit {
-        print("❌ DEINIT SettingsCoordinator")
+        print("❌ DEINIT SettingCoordinator")
     }
 
     func loadUser() {
@@ -35,7 +35,7 @@ final class SettingsViewModel: ObservableObject {
     }
     
     private func presentSignOutConfirmation(onConfirm: @escaping () -> Void) {
-        alertManager.showAlert(
+        globalAlertManager.showAlert(
             title: "Sign Out?",
             message: "Are you sure you want to sign out?",
             primary: .init(title: "Ok", role: .destructive, action: {
@@ -54,7 +54,7 @@ final class SettingsViewModel: ObservableObject {
         
         //old way:
         UserDefaults.standard.set(false, forKey: "isLoggedIn") // Clear login state
-        coordinator.popTopSplash()
+        settingCoordinator.popTopSplash()
 
         // new way:
         // update isLoggedIn will emit to AppCoorditor and navigate
@@ -63,7 +63,7 @@ final class SettingsViewModel: ObservableObject {
     
     func updateUserProfile() {
         if let user = self.user {
-            coordinator.goToUserProfile(user: user) { user in
+            settingCoordinator.goToUserProfile(user: user) { user in
                 print("New user name : \(user.name)")
                 self.user = user
             }

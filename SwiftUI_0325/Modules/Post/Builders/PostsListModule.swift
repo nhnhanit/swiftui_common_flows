@@ -7,11 +7,19 @@
 
 import SwiftUI
 
-final class PostsListModule {
-    static func build(coordinator: PostCoordinator, alertManager: GlobalAlertManager) -> PostsListView {
+struct PostsListModule {
+    
+    @MainActor
+    static func build(postCoordinator: PostCoordinator, globalAlertManager: GlobalAlertManager) -> some View {
         let network = DefaultNetworkService()
-        let postRepository = DefaultPostRepository(network: network, postLocalStore: DefaultPostLocalStore())
+        let postRepository = DefaultPostRepository(network: network,
+                                                   postLocalStore: DefaultPostLocalStore())
+        let viewModel = PostsListViewModel(
+            postRepository: postRepository,
+            postCoordinator: postCoordinator,
+            globalAlertManager: globalAlertManager
+        )
         
-        return PostsListView(postRepository: postRepository, coordinator: coordinator, alertManager: alertManager)
+        return PostsListView(viewModel: viewModel)
     }
 }

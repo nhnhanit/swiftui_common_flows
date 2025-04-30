@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct GlobalAlertView: View {
-    @EnvironmentObject var alertManager: GlobalAlertManager
+    @EnvironmentObject var globalAlertManager: GlobalAlertManager
 
     var body: some View {
-        if let alert = alertManager.currentAlert {
+        if let alert = globalAlertManager.currentAlert {
             ZStack {
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()
                     .onTapGesture {
                         if alert.secondaryAction?.role == .cancel {
-                            alertManager.dismiss()
+                            globalAlertManager.dismiss()
                             alert.secondaryAction?.action()
                         }
                     }
@@ -37,7 +37,7 @@ struct GlobalAlertView: View {
                     HStack(spacing: 12) {
                         if let secondary = alert.secondaryAction {
                             Button(secondary.title) {
-                                alertManager.dismiss()
+                                globalAlertManager.dismiss()
                                 secondary.action()
                             }
                             .padding()
@@ -47,7 +47,7 @@ struct GlobalAlertView: View {
                         }
 
                         Button(alert.primaryAction.title) {
-                            alertManager.dismiss()
+                            globalAlertManager.dismiss()
                             alert.primaryAction.action()
                         }
                         .padding()

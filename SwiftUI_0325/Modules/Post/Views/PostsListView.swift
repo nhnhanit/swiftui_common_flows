@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct PostsListView: View {
-    @StateObject var viewModel: PostsListViewModel
-    
-    init(postRepository: PostRepository, coordinator: PostCoordinator, alertManager: GlobalAlertManager) {
-        _viewModel = StateObject(wrappedValue: PostsListViewModel(postRepository: postRepository, coordinator: coordinator, alertManager: alertManager))
+struct PostsListView<ViewModel: PostsListViewModeling>: View {
+    @StateObject private var viewModel: ViewModel
+
+    init(viewModel: @autoclosure @escaping () -> ViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel())
     }
     
     var body: some View {
@@ -72,10 +72,14 @@ struct PostsListView: View {
 
 struct PostsListView_Previews: PreviewProvider {
     static var previews: some View {
-        let preViewPostRepository = PreviewPostRepository()
+        let previewPostRepository = PreviewPostRepository()
         
-        PostsListView(postRepository: preViewPostRepository,
-                      coordinator: PostCoordinator(appCoordinator: AppCoordinator()),
-                      alertManager: GlobalAlertManager())
+        let viewModel = PostsListViewModel(
+            postRepository: previewPostRepository,
+            postCoordinator: PostCoordinator(appCoordinator: AppCoordinator()),
+            globalAlertManager: GlobalAlertManager()
+        )
+        
+        return PostsListView(viewModel: viewModel)
     }
 }

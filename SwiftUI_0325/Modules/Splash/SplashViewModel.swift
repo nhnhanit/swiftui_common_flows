@@ -9,12 +9,12 @@ import Foundation
 import SwiftUI
 
 class SplashViewModel: ObservableObject {
-    private let coordinator: AppCoordinator
-    private let alertManager: GlobalAlertManager
+    private let appCoordinator: AppCoordinator
+    private let globalAlertManager: GlobalAlertManager
 
-    init(coordinator: AppCoordinator, alertManager: GlobalAlertManager) {
-        self.coordinator = coordinator
-        self.alertManager = alertManager
+    init(appCoordinator: AppCoordinator, globalAlertManager: GlobalAlertManager) {
+        self.appCoordinator = appCoordinator
+        self.globalAlertManager = globalAlertManager
     }
     
     func checkLoginStatus() {
@@ -22,7 +22,7 @@ class SplashViewModel: ObservableObject {
             guard let self = self else { return }
             
             if SessionManager.shared.isLoggedIn {
-                self.coordinator.resetAndPush(to: .main)
+                self.appCoordinator.resetAndPush(to: .main)
             } else {
 //                self.alertManager.showAlert(
 //                    title: "Not logged in",
@@ -33,7 +33,7 @@ class SplashViewModel: ObservableObject {
 //                    }),
 //                    secondary: nil
 //                )
-                self.coordinator.resetAndPush(to: .phoneLogin)
+                self.appCoordinator.resetAndPush(to: .phoneLogin)
             }
         }
     }

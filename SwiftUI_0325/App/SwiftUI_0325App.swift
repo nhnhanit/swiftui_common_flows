@@ -9,8 +9,8 @@ import SwiftUI
 
 @main
 struct SwiftUI_0325App: App {
-    @StateObject private var coordinator = AppCoordinator()
-    @StateObject private var alertManager = GlobalAlertManager()
+    @StateObject private var appCoordinator = AppCoordinator()
+    @StateObject private var globalAlertManager = GlobalAlertManager()
 
     var body: some Scene {
         WindowGroup {
@@ -18,8 +18,8 @@ struct SwiftUI_0325App: App {
                 RootView()
                 GlobalAlertView()
             }
-            .environmentObject(coordinator)
-            .environmentObject(alertManager)
+            .environmentObject(appCoordinator)
+            .environmentObject(globalAlertManager)
         }
     }
 }

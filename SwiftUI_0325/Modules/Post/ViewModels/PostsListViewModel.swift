@@ -8,23 +8,36 @@
 import SwiftUI
 
 @MainActor
-final class PostsListViewModel: ObservableObject {
+protocol PostsListViewModeling: ObservableObject {
+    var postCells: [PostCellViewModel] { get }
+    var isLoading: Bool { get }
+    var errorMessage: String? { get }
+
+    func loadPostsIfNeeded()
+    func loadPosts()
+    func cancelLoading()
+    func selectPost(_ post: Post)
+    func deletePost(at indexSet: IndexSet) async
+}
+
+@MainActor
+final class PostsListViewModel: PostsListViewModeling {
     private let postRepository: PostRepository
-    private let coordinator: PostCoordinator
+    private let postCoordinator: PostCoordinator
     @Published var postCells: [PostCellViewModel] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
     var hasLoaded = false
     
     private var currentTask: Task<Void, Never>?
-    private let alertManager: GlobalAlertManager
+    private let globalAlertManager: GlobalAlertManager
     
-    init(postRepository: PostRepository, coordinator: PostCoordinator, alertManager: GlobalAlertManager) {
+    init(postRepository: PostRepository, postCoordinator: PostCoordinator, globalAlertManager: GlobalAlertManager) {
         print("🔁 PostsListViewModel INIT")
         
         self.postRepository = postRepository
-        self.coordinator = coordinator
-        self.alertManager = alertManager
+        self.postCoordinator = postCoordinator
+        self.globalAlertManager = globalAlertManager
     }
     
     deinit {
@@ -85,7 +98,7 @@ final class PostsListViewModel: ObservableObject {
     }
     
     private func showErrorAlert(title: String, message: String) {
-        alertManager.showAlert(
+        globalAlertManager.showAlert(
             title: title,
             message: message,
             primary: .init(title: "OK", role: .cancel)
@@ -104,7 +117,7 @@ final class PostsListViewModel: ObservableObject {
             }
         }
         
-        coordinator.goToPostDetail(postId: post.id, detailVM: detailVM)
+        postCoordinator.goToPostDetail(postId: post.id, detailVM: detailVM)
     }
     
     func deletePost(at indexSet: IndexSet) async {

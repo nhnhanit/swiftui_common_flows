@@ -6,7 +6,7 @@
 //
 
 final class PhoneLoginModule {
-    static func build(coordinator: AuthenCoordinator, alertManager: GlobalAlertManager) -> PhoneLoginView {
-        return PhoneLoginView(coordinator: coordinator, alertManager: alertManager)
+    static func build(authenCoordinator: AuthenCoordinator, globalAlertManager: GlobalAlertManager) -> PhoneLoginView {
+        return PhoneLoginView(authenCoordinator: authenCoordinator, globalAlertManager: globalAlertManager)
     }
 }

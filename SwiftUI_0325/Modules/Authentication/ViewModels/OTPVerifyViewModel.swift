@@ -12,14 +12,14 @@ final class OTPVerifyViewModel: ObservableObject {
     @Published var otp: String = ""
     @Published var error: String?
 
-    private let coordinator: AuthenCoordinator
-    private let alertManager: GlobalAlertManager
+    private let authenCoordinator: AuthenCoordinator
+    private let globalAlertManager: GlobalAlertManager
     private let service: PhoneLoginAuthServicing
     let phone: String
     
-    init(phone: String, coordinator: AuthenCoordinator, alertManager: GlobalAlertManager, service: PhoneLoginAuthServicing = PhoneLoginAuthService()) {
-        self.coordinator = coordinator
-        self.alertManager = alertManager
+    init(phone: String, authenCoordinator: AuthenCoordinator, globalAlertManager: GlobalAlertManager, service: PhoneLoginAuthServicing = PhoneLoginAuthService()) {
+        self.authenCoordinator = authenCoordinator
+        self.globalAlertManager = globalAlertManager
         self.service = service
         self.phone = phone
     }
