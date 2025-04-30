@@ -24,7 +24,7 @@ struct PostsListViewModelTests {
         let viewModel = PostsListViewModel(
             postRepository: postRepository,
             postCoordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
-            globalAlertManager: mockAlertManager
+            appAlertManager: mockAlertManager
         )
 
         // When
@@ -46,7 +46,7 @@ struct PostsListViewModelTests {
         let viewModel = PostsListViewModel(
             postRepository: postRepository,
             postCoordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
-            globalAlertManager: MockAlertManager()
+            appAlertManager: MockAlertManager()
         )
 
         // When
@@ -73,7 +73,7 @@ struct PostsListViewModelTests {
         let viewModel = PostsListViewModel(
             postRepository: mockPostRepository,
             postCoordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
-            globalAlertManager: MockAlertManager()
+            appAlertManager: MockAlertManager()
         )
 
         // When
@@ -110,7 +110,7 @@ struct PostsListViewModelTests {
         let viewModel = PostsListViewModel(
             postRepository: mockPostRepository,
             postCoordinator: mockCoordinator,
-            globalAlertManager: mockAlertManager
+            appAlertManager: mockAlertManager
         )
         
         // When
@@ -121,8 +121,8 @@ struct PostsListViewModelTests {
         await viewModel.deletePost(at: IndexSet(integer: 1))
         
         // Delete item 2, keep items 1 and 3
-        #expect(viewModel.postCells.first?.post.title == "Network Post - 111")
-        #expect(viewModel.postCells.last?.post.title == "Network Post - 333")
+        #expect(viewModel.postCells.first?.post.title == "Network Post - 1")
+        #expect(viewModel.postCells.last?.post.title == "Network Post - 3")
     }
 
 }

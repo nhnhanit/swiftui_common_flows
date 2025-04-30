@@ -1,5 +1,5 @@
 //
-//  GlobalAlertManager.swift
+//  AppAlertManager.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 8/4/25.
@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-class GlobalAlertManager: ObservableObject {
-    @Published var currentAlert: GlobalAlert?
+class AppAlertManager: ObservableObject {
+    @Published var currentAlert: AppAlert?
 
     func showAlert(title: String,
                    message: String? = nil,
-                   primary: GlobalAlert.AlertAction,
-                   secondary: GlobalAlert.AlertAction? = nil) {
-        let alert = GlobalAlert(title: title,
+                   primary: AppAlert.AlertAction,
+                   secondary: AppAlert.AlertAction? = nil) {
+        let alert = AppAlert(title: title,
                                 message: message,
                                 primaryAction: primary,
                                 secondaryAction: secondary)

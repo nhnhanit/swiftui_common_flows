@@ -13,12 +13,12 @@ final class PhoneLoginViewModel: ObservableObject {
     @Published var error: String?
 
     private let authenCoordinator: AuthenCoordinator
-    private let globalAlertManager: GlobalAlertManager
+    private let appAlertManager: AppAlertManager
     private let service: PhoneLoginAuthServicing
 
-    init(authenCoordinator: AuthenCoordinator, globalAlertManager: GlobalAlertManager, service: PhoneLoginAuthServicing = PhoneLoginAuthService()) {
+    init(authenCoordinator: AuthenCoordinator, appAlertManager: AppAlertManager, service: PhoneLoginAuthServicing = PhoneLoginAuthService()) {
         self.authenCoordinator = authenCoordinator
-        self.globalAlertManager = globalAlertManager
+        self.appAlertManager = appAlertManager
         self.service = service
     }
 

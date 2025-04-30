@@ -11,13 +11,13 @@ import SwiftUI
 struct AuthenRouteViewBuilder {
     static func view(for route: AuthenRoute,
                      appCoordinator: Navigatable,
-                     globalAlertManager: GlobalAlertManager) -> some View {
+                     appAlertManager: AppAlertManager) -> some View {
         switch route {
         case .OTPVerity(let phone):
             OTPVerifyModule.build(
                 phone: phone,
                 authenCoordinator: AuthenCoordinator(appCoordinator: appCoordinator),
-                globalAlertManager: globalAlertManager
+                appAlertManager: appAlertManager
             )
         }
     }

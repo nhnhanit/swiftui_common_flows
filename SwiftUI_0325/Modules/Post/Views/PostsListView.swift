@@ -77,7 +77,7 @@ struct PostsListView_Previews: PreviewProvider {
         let viewModel = PostsListViewModel(
             postRepository: previewPostRepository,
             postCoordinator: PostCoordinator(appCoordinator: AppCoordinator()),
-            globalAlertManager: GlobalAlertManager()
+            appAlertManager: AppAlertManager()
         )
         
         return PostsListView(viewModel: viewModel)

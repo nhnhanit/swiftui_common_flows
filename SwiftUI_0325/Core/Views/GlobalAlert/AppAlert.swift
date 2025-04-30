@@ -1,5 +1,5 @@
 //
-//  GlobalAlert.swift
+//  AppAlert.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 8/4/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GlobalAlert: Identifiable {
+struct AppAlert: Identifiable {
     var id = UUID()
     
     let title: String

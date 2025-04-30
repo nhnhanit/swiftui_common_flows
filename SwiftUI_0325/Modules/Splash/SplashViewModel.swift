@@ -10,11 +10,11 @@ import SwiftUI
 
 class SplashViewModel: ObservableObject {
     private let appCoordinator: AppCoordinator
-    private let globalAlertManager: GlobalAlertManager
+    private let appAlertManager: AppAlertManager
 
-    init(appCoordinator: AppCoordinator, globalAlertManager: GlobalAlertManager) {
+    init(appCoordinator: AppCoordinator, appAlertManager: AppAlertManager) {
         self.appCoordinator = appCoordinator
-        self.globalAlertManager = globalAlertManager
+        self.appAlertManager = appAlertManager
     }
     
     func checkLoginStatus() {

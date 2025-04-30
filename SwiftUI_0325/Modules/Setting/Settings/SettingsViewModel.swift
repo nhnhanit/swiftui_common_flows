@@ -11,11 +11,11 @@ final class SettingsViewModel: ObservableObject {
     @Published var user: UserProfile?
     
     let settingCoordinator: SettingCoordinator
-    let globalAlertManager: GlobalAlertManager
+    let appAlertManager: AppAlertManager
 
-    init(settingCoordinator: SettingCoordinator, globalAlertManager: GlobalAlertManager) {
+    init(settingCoordinator: SettingCoordinator, appAlertManager: AppAlertManager) {
         self.settingCoordinator = settingCoordinator
-        self.globalAlertManager = globalAlertManager
+        self.appAlertManager = appAlertManager
         
         print("🔁 SettingCoordinator INIT")
     }
@@ -35,7 +35,7 @@ final class SettingsViewModel: ObservableObject {
     }
     
     private func presentSignOutConfirmation(onConfirm: @escaping () -> Void) {
-        globalAlertManager.showAlert(
+        appAlertManager.showAlert(
             title: "Sign Out?",
             message: "Are you sure you want to sign out?",
             primary: .init(title: "Ok", role: .destructive, action: {

@@ -8,7 +8,7 @@
 import SwiftUI
 @testable import SwiftUI_0325
 
-final class MockAlertManager: GlobalAlertManager {
+final class MockAlertManager: AppAlertManager {
     var didShowAlert = false
     var shownTitle: String?
     var shownMessage: String?

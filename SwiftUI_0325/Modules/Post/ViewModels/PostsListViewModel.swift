@@ -30,14 +30,14 @@ final class PostsListViewModel: PostsListViewModeling {
     var hasLoaded = false
     
     private var currentTask: Task<Void, Never>?
-    private let globalAlertManager: GlobalAlertManager
+    private let appAlertManager: AppAlertManager
     
-    init(postRepository: PostRepository, postCoordinator: PostCoordinator, globalAlertManager: GlobalAlertManager) {
+    init(postRepository: PostRepository, postCoordinator: PostCoordinator, appAlertManager: AppAlertManager) {
         print("🔁 PostsListViewModel INIT")
         
         self.postRepository = postRepository
         self.postCoordinator = postCoordinator
-        self.globalAlertManager = globalAlertManager
+        self.appAlertManager = appAlertManager
     }
     
     deinit {
@@ -98,7 +98,7 @@ final class PostsListViewModel: PostsListViewModeling {
     }
     
     private func showErrorAlert(title: String, message: String) {
-        globalAlertManager.showAlert(
+        appAlertManager.showAlert(
             title: title,
             message: message,
             primary: .init(title: "OK", role: .cancel)

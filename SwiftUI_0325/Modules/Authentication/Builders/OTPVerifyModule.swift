@@ -6,7 +6,7 @@
 //
 
 final class OTPVerifyModule {
-    static func build(phone: String, authenCoordinator: AuthenCoordinator, globalAlertManager: GlobalAlertManager) -> OTPVerifyView {
-        return OTPVerifyView(phone: phone, authenCoordinator: authenCoordinator, globalAlertManager: globalAlertManager)
+    static func build(phone: String, authenCoordinator: AuthenCoordinator, appAlertManager: AppAlertManager) -> OTPVerifyView {
+        return OTPVerifyView(phone: phone, authenCoordinator: authenCoordinator, appAlertManager: appAlertManager)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  GlobalAlertView.swift
+//  AppAlertView.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 9/4/25.
@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct GlobalAlertView: View {
-    @EnvironmentObject var globalAlertManager: GlobalAlertManager
+struct AppAlertView: View {
+    @EnvironmentObject var appAlertManager: AppAlertManager
 
     var body: some View {
-        if let alert = globalAlertManager.currentAlert {
+        if let alert = appAlertManager.currentAlert {
             ZStack {
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()
                     .onTapGesture {
                         if alert.secondaryAction?.role == .cancel {
-                            globalAlertManager.dismiss()
+                            appAlertManager.dismiss()
                             alert.secondaryAction?.action()
                         }
                     }
@@ -37,7 +37,7 @@ struct GlobalAlertView: View {
                     HStack(spacing: 12) {
                         if let secondary = alert.secondaryAction {
                             Button(secondary.title) {
-                                globalAlertManager.dismiss()
+                                appAlertManager.dismiss()
                                 secondary.action()
                             }
                             .padding()
@@ -47,7 +47,7 @@ struct GlobalAlertView: View {
                         }
 
                         Button(alert.primaryAction.title) {
-                            globalAlertManager.dismiss()
+                            appAlertManager.dismiss()
                             alert.primaryAction.action()
                         }
                         .padding()
@@ -66,7 +66,7 @@ struct GlobalAlertView: View {
         }
     }
 
-    private func color(for role: GlobalAlert.AlertRole?) -> Color {
+    private func color(for role: AppAlert.AlertRole?) -> Color {
         switch role {
         case .cancel:
             return .gray
