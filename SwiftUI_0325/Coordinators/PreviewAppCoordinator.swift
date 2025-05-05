@@ -1,5 +1,5 @@
 //
-//  MockAppCoordinator.swift
+//  PreviewAppCoordinator.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 5/5/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class MockAppCoordinator: Navigatable {
+final class PreviewAppCoordinator: Navigatable {
     var lastNavigatedRoute: AppRoute?
     
     func push(to route: SwiftUI_0325.AppRoute) {
@@ -19,6 +19,5 @@ final class MockAppCoordinator: Navigatable {
     }
     
     func popToRoot() {
-        //
     }
 }

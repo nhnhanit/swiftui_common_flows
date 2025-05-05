@@ -9,6 +9,7 @@ import SwiftUI
 @testable import SwiftUI_0325
 
 final class MockAppCoordinator: Navigatable {
+    
     var lastNavigatedRoute: AppRoute?
     
     func push(to route: SwiftUI_0325.AppRoute) {
@@ -17,5 +18,8 @@ final class MockAppCoordinator: Navigatable {
     
     func resetAndPush(to route: SwiftUI_0325.AppRoute) {
         lastNavigatedRoute = route
+    }
+    
+    func popToRoot() {
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MockAlertManager.swift
+//  PreviewAppAlertManager.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 5/5/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class MockAlertManager: AppAlertManager {
+final class PreviewAppAlertManager: AppAlertManager {
     var didShowAlert = false
     var shownTitle: String?
     var shownMessage: String?

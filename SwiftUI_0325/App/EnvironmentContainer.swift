@@ -23,7 +23,7 @@ final class EnvironmentContainer {
                 return appCoordinator
             } else {
                 #if DEBUG
-                return MockAppCoordinator()
+                return PreviewAppCoordinator()
                 #else
                 fatalError("❌ AppCoordinator not initialized.")
                 #endif
@@ -35,7 +35,7 @@ final class EnvironmentContainer {
                 return alertManager
             } else {
                 #if DEBUG
-                return MockAlertManager()
+                return PreviewAppAlertManager()
                 #else
                 fatalError("❌ AppAlertManager not initialized.")
                 #endif
