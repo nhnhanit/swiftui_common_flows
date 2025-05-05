@@ -6,9 +6,8 @@
 //
 
 final class MainTabModule {
-    static func build(appCoordinator: AppCoordinator, appAlertManager: AppAlertManager) -> MainTabView {
-        
-        return MainTabView(appCoordinator: appCoordinator, appAlertManager: appAlertManager)
+    static func build() -> MainTabView {
+        return MainTabView()
     }
 }
 

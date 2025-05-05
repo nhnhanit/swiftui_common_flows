@@ -10,9 +10,8 @@ import SwiftUI
 struct PhoneLoginView: View {
     @StateObject var viewModel: PhoneLoginViewModel
 
-    init(authenCoordinator: AuthenCoordinator, appAlertManager: AppAlertManager) {
-        _viewModel = StateObject(wrappedValue: PhoneLoginViewModel(authenCoordinator: authenCoordinator,
-                                                                   appAlertManager: appAlertManager))
+    init(authenCoordinator: AuthenCoordinator) {
+        _viewModel = StateObject(wrappedValue: PhoneLoginViewModel(authenCoordinator: authenCoordinator))
     }
     
     var body: some View {

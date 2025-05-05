@@ -8,22 +8,12 @@
 import SwiftUI
 
 final class SettingCoordinator: ObservableObject {
-    private weak var appCoordinator: AppCoordinator?
-    
-    init(appCoordinator: AppCoordinator) {
-        self.appCoordinator = appCoordinator
-    }
     
     func goToUserProfile(user: UserProfile, onSaveUser: ((UserProfile) -> Void)?) {
-        if let appCoordinator = appCoordinator {
-            appCoordinator.push(to: .settingRoute(.userProfile(user: user, onSaveUser: onSaveUser)))
-        } else {
-            print("appCoordinator is nil")
-        }
+        EnvironmentContainer.appCoordinator.push(to: .settingRoute(.userProfile(user: user, onSaveUser: onSaveUser)))
     }
     
     func popTopSplash() {
-        appCoordinator?.popToRoot()
+        EnvironmentContainer.appCoordinator.popToRoot()
     }
-    
 }

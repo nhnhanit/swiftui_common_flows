@@ -13,15 +13,15 @@ struct RootView: View {
         
     var body: some View {
         NavigationStack(path: $appCoordinator.path) {
-            SplashModule.build(appCoordinator: appCoordinator, appAlertManager: appAlertManager)
+            SplashModule.build()
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .phoneLogin:
-                        PhoneLoginModule.build(authenCoordinator: AuthenCoordinator(appCoordinator: appCoordinator), appAlertManager: appAlertManager)
+                        PhoneLoginModule.build(authenCoordinator: AuthenCoordinator())
                     case .authenRoute(let authenRoute):
-                        AuthenRouteViewBuilder.view(for: authenRoute, appCoordinator: appCoordinator, appAlertManager: appAlertManager)
+                        AuthenRouteViewBuilder.view(for: authenRoute)
                     case .main:
-                        MainTabModule.build(appCoordinator: appCoordinator, appAlertManager: appAlertManager)
+                        MainTabModule.build()
                     case .postRoute(let postRoute):
                         PostRouteViewBuilder.view(for: postRoute)
                     case .settingRoute(let settingRoute):

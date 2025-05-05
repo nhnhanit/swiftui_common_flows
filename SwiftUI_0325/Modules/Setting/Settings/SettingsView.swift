@@ -10,8 +10,8 @@ import SwiftUI
 struct SettingsView: View {
     @StateObject var viewModel: SettingsViewModel
     
-    init(settingCoordinator: SettingCoordinator, appAlertManager: AppAlertManager) {
-        _viewModel = StateObject(wrappedValue: SettingsViewModel(settingCoordinator: settingCoordinator, appAlertManager: appAlertManager))
+    init(settingCoordinator: SettingCoordinator) {
+        _viewModel = StateObject(wrappedValue: SettingsViewModel(settingCoordinator: settingCoordinator))
     }
     
     var body: some View {
@@ -59,15 +59,8 @@ struct SettingsView: View {
     }
 }
 
-#Preview {    // Mock AlertManager
-    let appAlertManager = AppAlertManager()
-
-    // Mock Coordinator
-    let mockSettingCoordinator = SettingCoordinator(
-        appCoordinator: AppCoordinator()
-    )
+#Preview {
+    let settingCoordinator = SettingCoordinator()
     
-    SettingsView(settingCoordinator: mockSettingCoordinator, appAlertManager: appAlertManager)
-        .environmentObject(mockSettingCoordinator)
-        .environmentObject(appAlertManager)
+    SettingsView(settingCoordinator: settingCoordinator)
 }

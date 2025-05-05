@@ -12,6 +12,7 @@ import Combine
 protocol Navigatable: AnyObject {
     func push(to route: AppRoute)
     func resetAndPush(to route: AppRoute)
+    func popToRoot()
 }
 
 final class AppCoordinator: ObservableObject, Navigatable {

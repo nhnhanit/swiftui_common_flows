@@ -11,11 +11,9 @@ final class SettingsViewModel: ObservableObject {
     @Published var user: UserProfile?
     
     let settingCoordinator: SettingCoordinator
-    let appAlertManager: AppAlertManager
 
-    init(settingCoordinator: SettingCoordinator, appAlertManager: AppAlertManager) {
+    init(settingCoordinator: SettingCoordinator) {
         self.settingCoordinator = settingCoordinator
-        self.appAlertManager = appAlertManager
         
         print("🔁 SettingCoordinator INIT")
     }
@@ -35,7 +33,7 @@ final class SettingsViewModel: ObservableObject {
     }
     
     private func presentSignOutConfirmation(onConfirm: @escaping () -> Void) {
-        appAlertManager.showAlert(
+        EnvironmentContainer.appAlertManager.showAlert(
             title: "Sign Out?",
             message: "Are you sure you want to sign out?",
             primary: .init(title: "Ok", role: .destructive, action: {
@@ -50,11 +48,6 @@ final class SettingsViewModel: ObservableObject {
     
     private func performSignOut() {
         print("✅ User signed out.")
-        // Gọi API / clear token / navigate to login...
-        
-        //old way:
-        UserDefaults.standard.set(false, forKey: "isLoggedIn") // Clear login state
-        settingCoordinator.popTopSplash()
 
         // new way:
         // update isLoggedIn will emit to AppCoorditor and navigate

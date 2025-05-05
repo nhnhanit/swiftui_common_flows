@@ -10,9 +10,8 @@ import SwiftUI
 struct OTPVerifyView: View {
     @StateObject var viewModel: OTPVerifyViewModel
 
-    init(phone: String, authenCoordinator: AuthenCoordinator, appAlertManager: AppAlertManager) {
-        _viewModel = StateObject(wrappedValue: OTPVerifyViewModel(phone: phone, authenCoordinator: authenCoordinator,
-                                                                  appAlertManager: appAlertManager))
+    init(phone: String, authenCoordinator: AuthenCoordinator) {
+        _viewModel = StateObject(wrappedValue: OTPVerifyViewModel(phone: phone, authenCoordinator: authenCoordinator))
     }
     
     var body: some View {

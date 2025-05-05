@@ -2,11 +2,10 @@
 //  MockAlertManager.swift
 //  SwiftUI_0325
 //
-//  Created by hongnhan on 24/4/25.
+//  Created by hongnhan on 5/5/25.
 //
 
 import SwiftUI
-@testable import SwiftUI_0325
 
 final class MockAlertManager: AppAlertManager {
     var didShowAlert = false
