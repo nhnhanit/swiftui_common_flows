@@ -25,19 +25,19 @@ SwiftUI_0325
 │   │   ├── NetworkLogger.swift
 │   │   └── NetworkService.swift
 │   └── Utils
-│       ├── Constants.swift
-│       ├── ImageLoader.swift
-│       └── Utils.swift
-│
-├── Views
-│   ├── AppAlert
-│   │   ├── AppAlert.swift
-│   │   ├── AppAlertManager.swift
-│   │   ├── AppAlertView.swift
-│   │   └── PreviewAppAlertManager.swift
-│   ├── EmptyStateView.swift
-│   ├── LoadingView.swift
-│   └── TopBarView.swift
+│   │    ├── Constants.swift
+│   │    ├── ImageLoader.swift
+│   │    └── Utils.swift
+│   │
+│   ├── CustomViews
+│       ├── AppAlert
+│       │   ├── AppAlert.swift
+│       │   ├── AppAlertManager.swift
+│       │   ├── AppAlertView.swift
+│       │   └── PreviewAppAlertManager.swift
+│       ├── EmptyStateView.swift
+│       ├── LoadingView.swift
+│       └── TopBarView.swift
 │
 ├── Modules
 │   ├── Authentication
