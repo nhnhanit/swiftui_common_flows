@@ -12,7 +12,7 @@ protocol PostsListViewModeling: ObservableObject {
     var postCells: [PostCellViewModel] { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }
-
+    
     func loadPostsIfNeeded()
     func loadPosts()
     func cancelLoading()
@@ -23,6 +23,8 @@ protocol PostsListViewModeling: ObservableObject {
 @MainActor
 final class PostsListViewModel: PostsListViewModeling {
     private let postRepository: PostRepository
+    private let defaultPostRepository = DefaultPostRepository(network: DefaultNetworkService(),
+                                                              postLocalStore: DefaultPostLocalStore())
     private let postCoordinator: PostCoordinator
     @Published var postCells: [PostCellViewModel] = []
     @Published var isLoading = false
@@ -48,51 +50,35 @@ final class PostsListViewModel: PostsListViewModeling {
         loadPosts()
     }
     
+    
     func loadPosts() {
-        // 🔒 Prevent multiple calls
-        guard currentTask == nil else {
-            print("⏳ Already fetching posts...")
-            return
-        }
-        
-        // 1️⃣ Show cached data immediately
-        let cachedPosts = postRepository.loadCachedPosts()
-        if !cachedPosts.isEmpty {
-            postCells = cachedPosts
-                .prefix(3) // only need to show 3 items from cache
-                .map {
-                PostCellViewModel(post: $0, postRepository: postRepository)
-            }
-        }
-        
-        // 2️⃣ Then try refreshing from network
+        guard currentTask == nil else { return }
+
         currentTask = Task { [weak self] in
             guard let self else { return }
-            await fetchPostsFromNetwork()
-            self.currentTask = nil
+            isLoading = true
+            defer { isLoading = false; currentTask = nil }
+
+            do {
+                let cached = try await postRepository.getCachedThenRefreshPosts(limit: 3) { [weak self] fresh in
+                    guard let self else { return }
+                    
+                    self.postCells = fresh.map {
+                        PostCellViewModel(post: $0, postRepository: self.postRepository)
+                    }
+                }
+
+                postCells = cached.map {
+                    PostCellViewModel(post: $0, postRepository: self.postRepository)
+                }
+            } catch {
+                showErrorAlert(title: "Failed to load posts", message: error.localizedDescription)
+            }
         }
-        
     }
     
     func cancelLoading() {
         currentTask?.cancel()
-    }
-    
-    func fetchPostsFromNetwork() async {
-        isLoading = true
-        
-        do {
-            let freshPosts = try await postRepository.fetchPosts()
-            postCells = freshPosts.map {
-                PostCellViewModel(post: $0, postRepository: postRepository)
-            }
-        } catch is CancellationError {
-            print("❌ Task was cancelled intentionally.")
-        } catch {
-            self.showErrorAlert(title: "Can not load new posts", message: error.localizedDescription)
-        }
-        
-        isLoading = false
     }
     
     private func showErrorAlert(title: String, message: String) {

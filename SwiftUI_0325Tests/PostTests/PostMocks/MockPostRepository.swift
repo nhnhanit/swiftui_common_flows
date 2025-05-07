@@ -10,11 +10,16 @@ import Testing
 import Foundation
 
 final class MockPostRepository: PostRepository {
+    
     var cachedPosts: [Post] = []
     var fetchedPosts: [Post] = []
     var deletedPostIds: [Int] = []
     var shouldThrowOnFetch = false
     var shouldThrowOnDelete = false
+    
+    func getCachedThenRefreshPosts(limit: Int?, onRefresh: @escaping @MainActor ([Post]) -> Void) async throws -> [Post] {
+        fetchedPosts
+    }
     
     func loadCachedPosts() -> [Post] {
         cachedPosts
