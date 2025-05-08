@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-protocol PhoneLoginAuthServicing {
+protocol PhoneLoginAuthService {
     func requestOTP(for phone: String) async throws
     func verifyOTP(for phone: String, otp: String) async throws -> String
 }
 
-final class PhoneLoginAuthService: PhoneLoginAuthServicing {
+final class DefaultPhoneLoginAuthService: PhoneLoginAuthService {
     private let networkService: NetworkService
 
-    init(networkService: NetworkService = DefaultNetworkService()) {
+    init(networkService: NetworkService) {
         self.networkService = networkService
     }
 

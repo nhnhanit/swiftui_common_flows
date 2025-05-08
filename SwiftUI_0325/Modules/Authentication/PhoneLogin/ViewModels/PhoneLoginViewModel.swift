@@ -13,9 +13,9 @@ final class PhoneLoginViewModel: ObservableObject {
     @Published var error: String?
 
     private let authenCoordinator: AuthenCoordinator
-    private let service: PhoneLoginAuthServicing
+    private let service: PhoneLoginAuthService
 
-    init(authenCoordinator: AuthenCoordinator, service: PhoneLoginAuthServicing = PhoneLoginAuthService()) {
+    init(authenCoordinator: AuthenCoordinator, service: PhoneLoginAuthService) {
         self.authenCoordinator = authenCoordinator
         self.service = service
 

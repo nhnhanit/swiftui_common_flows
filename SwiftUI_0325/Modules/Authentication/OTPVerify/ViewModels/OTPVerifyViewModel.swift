@@ -13,10 +13,10 @@ final class OTPVerifyViewModel: ObservableObject {
     @Published var error: String?
 
     private let authenCoordinator: AuthenCoordinator
-    private let service: PhoneLoginAuthServicing
+    private let service: PhoneLoginAuthService
     let phone: String
     
-    init(phone: String, authenCoordinator: AuthenCoordinator, service: PhoneLoginAuthServicing = PhoneLoginAuthService()) {
+    init(phone: String, authenCoordinator: AuthenCoordinator, service: PhoneLoginAuthService) {
         self.authenCoordinator = authenCoordinator
         self.service = service
         self.phone = phone
