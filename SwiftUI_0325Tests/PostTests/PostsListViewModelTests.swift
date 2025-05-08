@@ -14,12 +14,14 @@ struct PostsListViewModelTests {
     
     @Test("Fetch posts from network - failure")
     func testFetchPostsFromNetwork_NetworkFailure() async throws {
-        let mockNetwork = MockNetworkService()
-        mockNetwork.shouldFail = true
-
-        let postRepository = DefaultPostRepository(network: mockNetwork,
-                                                   postLocalStore: DefaultPostLocalStore())
+        let mockNetworkService = MockNetworkService()
         
+        // Given
+        mockNetworkService.shouldFail = true
+        
+        let postLocalDataSource = DefaultPostLocalDataSource()
+        let postRepository = DefaultPostRepository(networkService: mockNetworkService,
+                                                   postLocalDataSource: postLocalDataSource)
         let viewModel = PostsListViewModel(postRepository: postRepository, postCoordinator: PostCoordinator())
 
         // When
@@ -32,10 +34,13 @@ struct PostsListViewModelTests {
     
     @Test("Fetch posts from network - success")
     func testFetchPostsFromNetwork_Success() async throws {
-        let mockNetwork = MockNetworkService()
-        mockNetwork.jsonFileName = "MockDataPosts"
+        let mockNetworkService = MockNetworkService()
+        
+        // Given
+        mockNetworkService.jsonFileName = "MockDataPosts"
 
-        let postRepository = DefaultPostRepository(network: mockNetwork, postLocalStore: DefaultPostLocalStore())
+        let postLocalDataSource = DefaultPostLocalDataSource()
+        let postRepository = DefaultPostRepository(networkService: mockNetworkService, postLocalDataSource: postLocalDataSource)
         let viewModel = PostsListViewModel(postRepository: postRepository, postCoordinator: PostCoordinator())
 
         // When

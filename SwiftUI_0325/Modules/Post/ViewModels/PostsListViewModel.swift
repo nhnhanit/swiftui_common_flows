@@ -23,8 +23,6 @@ protocol PostsListViewModeling: ObservableObject {
 @MainActor
 final class PostsListViewModel: PostsListViewModeling {
     private let postRepository: PostRepository
-    private let defaultPostRepository = DefaultPostRepository(network: DefaultNetworkService(),
-                                                              postLocalStore: DefaultPostLocalStore())
     private let postCoordinator: PostCoordinator
     @Published var postCells: [PostCellViewModel] = []
     @Published var isLoading = false

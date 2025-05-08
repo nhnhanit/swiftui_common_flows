@@ -33,7 +33,7 @@ struct MainTabView: View {
     var body: some View {
         VStack(spacing: 0) {
             TabView(selection: $selectedTab) {
-                PostsListModule.build(postCoordinator: PostCoordinator())
+                PostsListModule.build()
                     .tabItem {
                         Label("Posts", systemImage: "list.bullet")
                     }
