@@ -13,18 +13,18 @@ final class OTPVerifyViewModel: ObservableObject {
     @Published var error: String?
 
     private let authenCoordinator: AuthenCoordinator
-    private let service: PhoneLoginAuthService
+    private let phoneLoginRepository: PhoneLoginRepository
     let phone: String
     
-    init(phone: String, authenCoordinator: AuthenCoordinator, service: PhoneLoginAuthService) {
-        self.authenCoordinator = authenCoordinator
-        self.service = service
+    init(phone: String, authenCoordinator: AuthenCoordinator, phoneLoginRepository: PhoneLoginRepository) {
         self.phone = phone
+        self.authenCoordinator = authenCoordinator
+        self.phoneLoginRepository = phoneLoginRepository
     }
     
     func verifyOTP() async {
         do {
-            let token = try await service.verifyOTP(for: phone, otp: otp)
+            let token = try await phoneLoginRepository.verifyOTP(for: phone, otp: otp)
             SessionManager.shared.logIn(with: token)
         } catch {
             self.error = error.localizedDescription

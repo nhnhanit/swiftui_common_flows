@@ -10,10 +10,10 @@ final class PhoneLoginModule {
     @MainActor
     static func build() -> PhoneLoginView {
         let networkService = DefaultNetworkService()
-        let phoneLoginAuthService = DefaultPhoneLoginAuthService(networkService: networkService)
+        let phoneLoginRepository = DefaultPhoneLoginRepository(networkService: networkService)
         let authenCoordinator = DefaultAuthenCoordinator()
         
-        let viewModel = PhoneLoginViewModel(authenCoordinator: authenCoordinator, service: phoneLoginAuthService)
+        let viewModel = PhoneLoginViewModel(authenCoordinator: authenCoordinator, phoneLoginRepository: phoneLoginRepository)
         
         return PhoneLoginView(viewModel: viewModel)
     }

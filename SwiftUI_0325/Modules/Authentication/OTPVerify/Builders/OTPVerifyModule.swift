@@ -11,9 +11,9 @@ final class OTPVerifyModule {
     static func build(phone: String) -> OTPVerifyView {
         let networkService = DefaultNetworkService()
         let authenCoordinator = DefaultAuthenCoordinator()
-        let phoneLoginAuthService = DefaultPhoneLoginAuthService(networkService: networkService)
+        let phoneLoginRepository = DefaultPhoneLoginRepository(networkService: networkService)
         
-        let viewModel = OTPVerifyViewModel(phone: phone, authenCoordinator: authenCoordinator, service: phoneLoginAuthService)
+        let viewModel = OTPVerifyViewModel(phone: phone, authenCoordinator: authenCoordinator, phoneLoginRepository: phoneLoginRepository)
         
         return OTPVerifyView(viewModel: viewModel)
     }

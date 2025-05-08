@@ -13,19 +13,19 @@ final class PhoneLoginViewModel: ObservableObject {
     @Published var error: String?
 
     private let authenCoordinator: AuthenCoordinator
-    private let service: PhoneLoginAuthService
+    private let phoneLoginRepository: PhoneLoginRepository
 
-    init(authenCoordinator: AuthenCoordinator, service: PhoneLoginAuthService) {
+    init(authenCoordinator: AuthenCoordinator, phoneLoginRepository: PhoneLoginRepository) {
         self.authenCoordinator = authenCoordinator
-        self.service = service
+        self.phoneLoginRepository = phoneLoginRepository
 
-#warning("hardcode phone")
+#warning("fake_phone")
         phone = "1-770-736-8031 x56442"
     }
 
     func requestOTP() async {
         do {
-            try await service.requestOTP(for: phone)
+            try await phoneLoginRepository.requestOTP(for: phone)
             authenCoordinator.goToOTPVerify(phone: phone)
         } catch {
             self.error = error.localizedDescription

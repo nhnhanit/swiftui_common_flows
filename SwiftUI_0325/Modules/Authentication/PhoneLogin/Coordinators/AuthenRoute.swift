@@ -5,7 +5,6 @@
 //  Created by hongnhan on 29/4/25.
 //
 
-
 enum AuthenRoute: Hashable {
     case OTPVerity(phone: String)
 }

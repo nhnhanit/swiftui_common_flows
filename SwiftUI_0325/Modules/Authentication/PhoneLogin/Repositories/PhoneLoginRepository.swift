@@ -1,5 +1,5 @@
 //
-//  PhoneAuthService.swift
+//  PhoneLoginRepository.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 18/4/25.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-protocol PhoneLoginAuthService {
+protocol PhoneLoginRepository {
     func requestOTP(for phone: String) async throws
     func verifyOTP(for phone: String, otp: String) async throws -> String
 }
 
-final class DefaultPhoneLoginAuthService: PhoneLoginAuthService {
+final class DefaultPhoneLoginRepository: PhoneLoginRepository {
     private let networkService: NetworkService
 
     init(networkService: NetworkService) {
@@ -20,13 +20,13 @@ final class DefaultPhoneLoginAuthService: PhoneLoginAuthService {
     }
 
     func requestOTP(for phone: String) async throws {
-        let _: FakeResponse = try await networkService.request(PhoneLoginAuthAPI.requestOTP(phone: phone))
+        let _: FakeResponse = try await networkService.request(PhoneLoginAPI.requestOTP(phone: phone))
     }
 
     func verifyOTP(for phone: String, otp: String) async throws -> String {
-        let _: FakeResponse = try await networkService.request(PhoneLoginAuthAPI.verifyOTP(phone: phone, otp: otp))
-
-        // 🔐 Tạo token giả
+        let _: FakeResponse = try await networkService.request(PhoneLoginAPI.verifyOTP(phone: phone, otp: otp))
+        
+#warning("fake_token")
         return UUID().uuidString
     }
     

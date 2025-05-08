@@ -1,5 +1,5 @@
 //
-//  PhoneLoginAuthAPI.swift
+//  PhoneLoginAPI.swift
 //  SwiftUI_0325
 //
 //  Created by hongnhan on 18/4/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum PhoneLoginAuthAPI: APIRequest {
+enum PhoneLoginAPI: APIRequest {
     case requestOTP(phone: String)
     case verifyOTP(phone: String, otp: String)
     
