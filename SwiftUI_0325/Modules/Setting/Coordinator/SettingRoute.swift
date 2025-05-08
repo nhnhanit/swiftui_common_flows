@@ -5,11 +5,10 @@
 //  Created by hongnhan on 29/4/25.
 //
 
-
 enum SettingRoute: Hashable {
     case userProfile(user: UserProfile, onSaveUser: ((UserProfile) -> Void)?)
     
-    // Để enum này conform Hashable, cần bỏ closure/delegate khi so sánh
+    // Let enum conform Hashable, must remove out closure/delegate as compare
     static func == (lhs: SettingRoute, rhs: SettingRoute) -> Bool {
         switch (lhs, rhs) {
         case let (.userProfile(p1, _), .userProfile(p2, _)):

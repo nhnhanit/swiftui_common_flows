@@ -7,7 +7,12 @@
 
 import SwiftUI
 
-final class SettingCoordinator: ObservableObject {
+protocol SettingCoordinator {
+    func goToUserProfile(user: UserProfile, onSaveUser: ((UserProfile) -> Void)?)
+    func popTopSplash()
+}
+
+final class DefaultSettingCoordinator: SettingCoordinator {
     
     func goToUserProfile(user: UserProfile, onSaveUser: ((UserProfile) -> Void)?) {
         EnvironmentContainer.appCoordinator.push(to: .settingRoute(.userProfile(user: user, onSaveUser: onSaveUser)))

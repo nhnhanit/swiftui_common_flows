@@ -8,7 +8,7 @@
 final class SettingsModule {
     
     static func build() -> SettingsView {
-        let settingCoordinator = SettingCoordinator()
+        let settingCoordinator = DefaultSettingCoordinator()
         let viewModel = SettingsViewModel(settingCoordinator: settingCoordinator)
         
         return SettingsView(viewModel: viewModel)

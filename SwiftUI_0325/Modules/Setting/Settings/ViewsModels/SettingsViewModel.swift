@@ -9,7 +9,6 @@ import Foundation
 
 final class SettingsViewModel: ObservableObject {
     @Published var user: UserProfile?
-    
     let settingCoordinator: SettingCoordinator
 
     init(settingCoordinator: SettingCoordinator) {
