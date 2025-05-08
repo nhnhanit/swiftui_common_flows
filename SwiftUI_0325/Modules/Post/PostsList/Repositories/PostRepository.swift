@@ -8,7 +8,14 @@
 import SwiftUI
 
 protocol PostRepository {
-    func getCachedThenRefreshPosts(limit: Int?, onRefresh: @MainActor @escaping ([Post]) -> Void) async throws -> [Post] // this is an example of business logic
+    
+    // this is an example of business logic
+    func getCachedThenRefreshPosts(
+        limit: Int?,
+        onRefresh: @MainActor @escaping ([Post]) -> Void,
+        onError: @escaping (Error) -> Void
+    ) async throws -> [Post]
+    
     func loadCachedPosts() -> [Post]
     func fetchPosts() async throws -> [Post]
     func fetchUser(by postId: Int) async throws -> UserInfo
@@ -26,21 +33,26 @@ final class DefaultPostRepository: PostRepository {
         self.postLocalDataSource = postLocalDataSource
     }
     
-    func getCachedThenRefreshPosts(limit: Int?, onRefresh: @MainActor @escaping ([Post]) -> Void) async throws -> [Post] {
+    func getCachedThenRefreshPosts(
+        limit: Int?,
+        onRefresh: @MainActor @escaping ([Post]) -> Void,
+        onError: @escaping (Error) -> Void
+    ) async throws -> [Post] {
+        
         // 1️⃣ Return cached first
         let cached = postLocalDataSource.loadCachedPosts()
         let limitedCached = Array(cached.prefix(limit ?? Int.max))
-        
-        // 2️⃣ In background, refresh and notify
+
+        // 2️⃣ In background, refresh and callback
         Task {
             do {
                 let fresh = try await fetchPosts()
                 await onRefresh(fresh)
             } catch {
-                print("🔁 Failed to refresh posts: \(error)")
+                onError(error) // 👈 propagate error to ViewModel
             }
         }
-        
+
         return limitedCached
     }
     

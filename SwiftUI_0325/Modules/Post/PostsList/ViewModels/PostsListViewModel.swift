@@ -26,7 +26,8 @@ final class PostsListViewModel: PostsListViewModeling {
     private let postCoordinator: PostCoordinator
     @Published var postCells: [PostCellViewModel] = []
     @Published var isLoading = false
-    @Published var errorMessage: String?
+    var errorTitle: String?
+    var errorMessage: String?
     var hasLoaded = false
     
     private var currentTask: Task<Void, Never>?
@@ -42,12 +43,15 @@ final class PostsListViewModel: PostsListViewModeling {
         print("❌ DEINIT PostsListViewModel")
     }
     
+    func cancelLoading() {
+        currentTask?.cancel()
+    }
+    
     func loadPostsIfNeeded()  {
         guard !hasLoaded else { return }
         hasLoaded = true
         loadPosts()
     }
-    
     
     func loadPosts() {
         guard currentTask == nil else { return }
@@ -58,25 +62,27 @@ final class PostsListViewModel: PostsListViewModeling {
             defer { isLoading = false; currentTask = nil }
 
             do {
-                let cached = try await postRepository.getCachedThenRefreshPosts(limit: 3) { [weak self] fresh in
-                    guard let self else { return }
-                    
-                    self.postCells = fresh.map {
-                        PostCellViewModel(post: $0, postRepository: self.postRepository)
+                let cached = try await postRepository.getCachedThenRefreshPosts(
+                    limit: 3,
+                    onRefresh: { [weak self] fresh in
+                        guard let self else { return }
+                        self.postCells = fresh.map {
+                            PostCellViewModel(post: $0, postRepository: self.postRepository)
+                        }
+                    },
+                    onError: { [weak self] error in
+                        self?.errorTitle = "Failed to refresh posts"
+                        self?.showErrorAlert(title: self?.errorTitle ?? "", message: error.localizedDescription)
                     }
-                }
-
+                )
                 postCells = cached.map {
                     PostCellViewModel(post: $0, postRepository: self.postRepository)
                 }
             } catch {
-                showErrorAlert(title: "Failed to load posts", message: error.localizedDescription)
+                self.errorTitle = "Failed to load posts!"
+                showErrorAlert(title: "Error!", message: error.localizedDescription)
             }
         }
-    }
-    
-    func cancelLoading() {
-        currentTask?.cancel()
     }
     
     private func showErrorAlert(title: String, message: String) {
