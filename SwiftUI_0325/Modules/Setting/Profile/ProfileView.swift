@@ -35,3 +35,9 @@ struct ProfileView: View {
         .padding()
     }
 }
+
+#Preview {
+    let mockUserProfile = UserProfile(id: "1", name: "ABC", email: "acb@123.com")
+    
+    ProfileModule.build(user: mockUserProfile, onSaveUser: nil)
+}

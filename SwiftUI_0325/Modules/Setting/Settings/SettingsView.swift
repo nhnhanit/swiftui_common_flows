@@ -60,7 +60,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    let settingCoordinator = SettingCoordinator()
-    let viewModel = SettingsViewModel(settingCoordinator: settingCoordinator)
-    SettingsView(viewModel: viewModel)
+    SettingsModule.build()
 }

@@ -5,11 +5,9 @@
 //  Created by hongnhan on 28/3/25.
 //
 
-import SwiftUICore
-
 final class SettingsModule {
+    
     static func build() -> SettingsView {
-        
         let settingCoordinator = SettingCoordinator()
         let viewModel = SettingsViewModel(settingCoordinator: settingCoordinator)
         

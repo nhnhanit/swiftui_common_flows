@@ -25,7 +25,6 @@ struct SplashView: View {
 }
 
 #Preview {
-    
-    return SplashModule.build()
+    SplashModule.build()
 }
 

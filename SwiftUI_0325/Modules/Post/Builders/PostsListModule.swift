@@ -23,6 +23,6 @@ struct PostsListModule {
             postCoordinator: postCoordinator
         )
         
-        return PostsListView(viewModel: viewModel)
+        PostsListView(viewModel: viewModel)
     }
 }

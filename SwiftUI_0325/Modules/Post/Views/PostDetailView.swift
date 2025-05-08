@@ -74,3 +74,9 @@ struct PostDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
+#Preview {
+    let previewPostRepository = PreviewPostRepository()
+    let previewPost = Post(userId: 1, id: 11, title: "title-1", body: "body-1", isFavorite: true)
+    let viewModel = PostDetailViewModel(post: previewPost, postRepository: previewPostRepository)
+    PostDetailModule.build(viewModel: viewModel)
+}

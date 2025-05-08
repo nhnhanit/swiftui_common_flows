@@ -39,7 +39,7 @@ struct RootView: View {
     @Previewable let appCoordinator = AppCoordinator()
     @Previewable let appAlertManager = AppAlertManager()
     
-    return RootView()
+    RootView()
         .environmentObject(appCoordinator)
         .environmentObject(appAlertManager)
 }
