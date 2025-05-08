@@ -13,18 +13,18 @@ protocol PhoneLoginAuthServicing {
 }
 
 final class PhoneLoginAuthService: PhoneLoginAuthServicing {
-    private let network: NetworkService
+    private let networkService: NetworkService
 
-    init(network: NetworkService = DefaultNetworkService()) {
-        self.network = network
+    init(networkService: NetworkService = DefaultNetworkService()) {
+        self.networkService = networkService
     }
 
     func requestOTP(for phone: String) async throws {
-        let _: FakeResponse = try await network.request(PhoneLoginAuthAPI.requestOTP(phone: phone))
+        let _: FakeResponse = try await networkService.request(PhoneLoginAuthAPI.requestOTP(phone: phone))
     }
 
     func verifyOTP(for phone: String, otp: String) async throws -> String {
-        let _: FakeResponse = try await network.request(PhoneLoginAuthAPI.verifyOTP(phone: phone, otp: otp))
+        let _: FakeResponse = try await networkService.request(PhoneLoginAuthAPI.verifyOTP(phone: phone, otp: otp))
 
         // 🔐 Tạo token giả
         return UUID().uuidString

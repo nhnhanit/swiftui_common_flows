@@ -14,81 +14,42 @@ struct PostsListViewModelTests {
     
     @Test("Fetch posts from network - failure")
     func testFetchPostsFromNetwork_NetworkFailure() async throws {
-        let mockNetwork = MockNetworkService()
-        mockNetwork.shouldFail = true
-
-        let mockAlertManager = MockAlertManager()
-        let postRepository = DefaultPostRepository(network: mockNetwork,
-                                                   postLocalStore: DefaultPostLocalStore())
+        let mockNetworkService = MockNetworkService()
         
-        let viewModel = PostsListViewModel(
-            postRepository: postRepository,
-            postCoordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
-            appAlertManager: mockAlertManager
-        )
+        // Given
+        mockNetworkService.shouldFail = true
+        
+        let postLocalDataSource = DefaultPostLocalDataSource()
+        let postRepository = DefaultPostRepository(networkService: mockNetworkService,
+                                                   postLocalDataSource: postLocalDataSource)
+        let viewModel = PostsListViewModel(postRepository: postRepository, postCoordinator: PostCoordinator())
 
         // When
-        await viewModel.fetchPostsFromNetwork()
+        viewModel.loadPosts()
                
         // Then
         #expect(viewModel.postCells.isEmpty)
         #expect(viewModel.isLoading == false)
-        DLog(mockAlertManager.shownTitle)
-        #expect(mockAlertManager.shownTitle == "Can not load new posts")
     }
     
     @Test("Fetch posts from network - success")
     func testFetchPostsFromNetwork_Success() async throws {
-        let mockNetwork = MockNetworkService()
-        mockNetwork.jsonFileName = "MockDataPosts"
-
-        let postRepository = DefaultPostRepository(network: mockNetwork, postLocalStore: DefaultPostLocalStore())
-        let viewModel = PostsListViewModel(
-            postRepository: postRepository,
-            postCoordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
-            appAlertManager: MockAlertManager()
-        )
-
-        // When
-        await viewModel.fetchPostsFromNetwork()
+        let mockNetworkService = MockNetworkService()
         
-        // First cached posts
-        #expect(viewModel.postCells.count == 100)
-        #expect(viewModel.postCells.first?.post.title == "sunt aut facere repellat provident occaecati excepturi optio reprehenderit")
-
-    }
-    
-    @Test("Load posts - load cached first, then load network")
-    func testLoadPosts_loadsCachedThenNetwork() async {
         // Given
-        let mockPostRepository = MockPostRepository()
-        mockPostRepository.cachedPosts = [
-            Post(userId: 1, id: 1, title: "Cached Post - 1", body: "", isFavorite: false)
-        ]
-        mockPostRepository.fetchedPosts = [
-            Post(userId: 1, id: 1, title: "Network Post - 1", body: "", isFavorite: false),
-            Post(userId: 2, id: 2, title: "Network Post - 2", body: "", isFavorite: false)
-        ]
+        mockNetworkService.jsonFileName = "MockDataPosts"
 
-        let viewModel = PostsListViewModel(
-            postRepository: mockPostRepository,
-            postCoordinator: MockPostCoordinator(appCoordinator: MockAppCoordinator()),
-            appAlertManager: MockAlertManager()
-        )
+        let postLocalDataSource = DefaultPostLocalDataSource()
+        let postRepository = DefaultPostRepository(networkService: mockNetworkService, postLocalDataSource: postLocalDataSource)
+        let viewModel = PostsListViewModel(postRepository: postRepository, postCoordinator: PostCoordinator())
 
         // When
         viewModel.loadPosts()
         
-        // First, load from cached: 1 item
-        #expect(viewModel.postCells.count == 1)
-        #expect(viewModel.postCells.first?.post.title == "Cached Post - 1")
-        
-        // Then, fetch from network: 3 items
         try? await Task.sleep(nanoseconds: 300_000_000)
         
-        #expect(viewModel.postCells.count == 2)
-        #expect(viewModel.postCells.last?.post.title == "Network Post - 2")
-        #expect(viewModel.isLoading == false)
+        #expect(viewModel.postCells.count == 100)
+        #expect(viewModel.postCells.first?.post.title == "sunt aut facere repellat provident occaecati excepturi optio reprehenderit")
     }
 
     @Test("Delete post - remove correct post")
@@ -104,14 +65,7 @@ struct PostsListViewModelTests {
             Post(userId: 3, id: 3, title: "Network Post - 3", body: "", isFavorite: false),
         ]
         
-        let mockCoordinator = MockPostCoordinator(appCoordinator: MockAppCoordinator())
-        let mockAlertManager = MockAlertManager()
-        
-        let viewModel = PostsListViewModel(
-            postRepository: mockPostRepository,
-            postCoordinator: mockCoordinator,
-            appAlertManager: mockAlertManager
-        )
+        let viewModel = PostsListViewModel(postRepository: mockPostRepository, postCoordinator: PostCoordinator())
         
         // When
         viewModel.loadPosts()

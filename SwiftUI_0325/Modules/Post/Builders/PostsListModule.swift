@@ -10,10 +10,13 @@ import SwiftUI
 struct PostsListModule {
     
     @MainActor
-    static func build(postCoordinator: PostCoordinator) -> some View {
-        let network = DefaultNetworkService()
-        let postRepository = DefaultPostRepository(network: network,
-                                                   postLocalStore: DefaultPostLocalStore())
+    static func build() -> some View {
+        let networkService = DefaultNetworkService()
+        let postLocalDataSource = DefaultPostLocalDataSource()
+        let postRepository = DefaultPostRepository(networkService: networkService,
+                                                   postLocalDataSource: postLocalDataSource)
+        let postCoordinator = PostCoordinator()
+        
         let viewModel = PostsListViewModel(
             postRepository: postRepository,
             postCoordinator: postCoordinator
