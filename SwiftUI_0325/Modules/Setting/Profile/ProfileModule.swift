@@ -6,8 +6,12 @@
 //
 
 final class ProfileModule {
-    static func build(user: UserProfile, onSaveUser: ((UserProfile) -> Void)?) -> ProfileView {        
-        return ProfileView(user: user, onSaveUser: onSaveUser)
+    
+    @MainActor
+    static func build(user: UserProfile, onSaveUser: ((UserProfile) -> Void)?) -> ProfileView {
+        let viewModel = ProfileViewModel(user: user, onSaveUser: onSaveUser)
+        
+        return ProfileView(viewModel: viewModel)
     }
 }
 

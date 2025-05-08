@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 final class ProfileViewModel: ObservableObject {
     @Published var user: UserProfile
     var onSaveUser: ((UserProfile) -> Void)?

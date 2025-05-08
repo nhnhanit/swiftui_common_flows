@@ -9,12 +9,13 @@
 import SwiftUI
 
 struct AuthenRouteViewBuilder {
+    
+    @MainActor
+    @ViewBuilder
     static func view(for route: AuthenRoute) -> some View {
         switch route {
         case .OTPVerity(let phone):
-            OTPVerifyModule.build(
-                phone: phone,
-                authenCoordinator: AuthenCoordinator())
+            OTPVerifyModule.build(phone: phone)
         }
     }
 }

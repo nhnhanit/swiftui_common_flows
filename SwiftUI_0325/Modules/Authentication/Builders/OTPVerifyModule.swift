@@ -6,7 +6,12 @@
 //
 
 final class OTPVerifyModule {
-    static func build(phone: String, authenCoordinator: AuthenCoordinator) -> OTPVerifyView {
-        return OTPVerifyView(phone: phone, authenCoordinator: authenCoordinator)
+    
+    @MainActor
+    static func build(phone: String) -> OTPVerifyView {
+        let authenCoordinator = DefaultAuthenCoordinator()
+        let viewModel = OTPVerifyViewModel(phone: phone, authenCoordinator: authenCoordinator)
+        
+        return OTPVerifyView(viewModel: viewModel)
     }
 }

@@ -8,8 +8,11 @@
 import SwiftUICore
 
 final class SettingsModule {
-    static func build(settingCoordinator: SettingCoordinator) -> SettingsView {
+    static func build() -> SettingsView {
         
-        return SettingsView(settingCoordinator: settingCoordinator)
+        let settingCoordinator = SettingCoordinator()
+        let viewModel = SettingsViewModel(settingCoordinator: settingCoordinator)
+        
+        return SettingsView(viewModel: viewModel)
     }
 }

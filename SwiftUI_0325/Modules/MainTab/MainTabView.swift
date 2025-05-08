@@ -39,7 +39,7 @@ struct MainTabView: View {
                     }
                     .tag(MainTab.postList)
                 
-                SettingsModule.build(settingCoordinator: SettingCoordinator())
+                SettingsModule.build()
                     .tabItem {
                         Label("Settings", systemImage: "gearshape")
                     }

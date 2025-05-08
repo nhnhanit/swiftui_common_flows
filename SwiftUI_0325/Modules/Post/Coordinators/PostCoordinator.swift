@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-protocol PostCoordinator: ObservableObject {
+protocol PostCoordinator {
     func goToPostDetail(postId: Int, detailVM: PostDetailViewModel)
 }
 

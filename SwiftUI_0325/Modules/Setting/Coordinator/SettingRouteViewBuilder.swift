@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct SettingRouteViewBuilder {
-    @ViewBuilder
+    
+    @MainActor @ViewBuilder
     static func view(for route: SettingRoute) -> some View {
         switch route {
         case .userProfile(let user, let onSaveUser):

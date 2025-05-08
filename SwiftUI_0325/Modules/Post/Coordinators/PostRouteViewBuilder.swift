@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct PostRouteViewBuilder {
+    
     @ViewBuilder
     static func view(for route: PostRoute) -> some View {
         switch route {
-        case .postDetail(_, let vm):
-            PostDetailView(viewModel: vm)
+        case .postDetail(_, let viewModel):
+            PostDetailModule.build(viewModel: viewModel)
         }
     }
 }

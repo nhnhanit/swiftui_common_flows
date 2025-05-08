@@ -7,7 +7,11 @@
 
 import SwiftUI
 
-final class AuthenCoordinator: ObservableObject {
+protocol AuthenCoordinator {
+    func goToOTPVerify(phone: String)
+}
+
+final class DefaultAuthenCoordinator: AuthenCoordinator {
     
     func goToOTPVerify(phone: String) {
         EnvironmentContainer.appCoordinator.push(to: .authenRoute(.OTPVerity(phone: phone)))

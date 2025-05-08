@@ -10,8 +10,8 @@ import SwiftUI
 struct SettingsView: View {
     @StateObject var viewModel: SettingsViewModel
     
-    init(settingCoordinator: SettingCoordinator) {
-        _viewModel = StateObject(wrappedValue: SettingsViewModel(settingCoordinator: settingCoordinator))
+    init(viewModel: SettingsViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
@@ -61,6 +61,6 @@ struct SettingsView: View {
 
 #Preview {
     let settingCoordinator = SettingCoordinator()
-    
-    SettingsView(settingCoordinator: settingCoordinator)
+    let viewModel = SettingsViewModel(settingCoordinator: settingCoordinator)
+    SettingsView(viewModel: viewModel)
 }

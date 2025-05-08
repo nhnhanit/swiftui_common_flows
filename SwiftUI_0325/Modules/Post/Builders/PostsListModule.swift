@@ -10,6 +10,7 @@ import SwiftUI
 struct PostsListModule {
     
     @MainActor
+    @ViewBuilder
     static func build() -> some View {
         let networkService = DefaultNetworkService()
         let postLocalDataSource = DefaultPostLocalDataSource()
