@@ -8,9 +8,9 @@
 @testable import SwiftUI_0325
 
 final class MockPostCoordinator: PostCoordinator {
-    var navigatedToPostId: Int?
+    private(set) var navigatedToPostId: Int?
     
-    override func goToPostDetail(postId: Int, detailVM: PostDetailViewModel) {
+    func goToPostDetail(postId: Int, detailVM: PostDetailViewModel) {
         navigatedToPostId = postId
     }
 }

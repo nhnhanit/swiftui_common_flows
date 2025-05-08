@@ -7,7 +7,11 @@
 
 import SwiftUI
 
-class PostCoordinator: ObservableObject {
+protocol PostCoordinator: ObservableObject {
+    func goToPostDetail(postId: Int, detailVM: PostDetailViewModel)
+}
+
+class DefaultPostCoordinator: PostCoordinator {
     func goToPostDetail(postId: Int, detailVM: PostDetailViewModel) {
         EnvironmentContainer.appCoordinator.push(to: .postRoute(.postDetail(postId: postId, detailVM: detailVM)))
     }

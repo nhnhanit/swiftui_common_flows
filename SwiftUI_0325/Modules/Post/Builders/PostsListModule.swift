@@ -15,7 +15,7 @@ struct PostsListModule {
         let postLocalDataSource = DefaultPostLocalDataSource()
         let postRepository = DefaultPostRepository(networkService: networkService,
                                                    postLocalDataSource: postLocalDataSource)
-        let postCoordinator = PostCoordinator()
+        let postCoordinator = DefaultPostCoordinator()
         
         let viewModel = PostsListViewModel(
             postRepository: postRepository,

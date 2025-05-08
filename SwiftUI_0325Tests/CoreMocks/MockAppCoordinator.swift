@@ -12,11 +12,11 @@ final class MockAppCoordinator: Navigatable {
     
     var lastNavigatedRoute: AppRoute?
     
-    func push(to route: SwiftUI_0325.AppRoute) {
+    func push(to route: AppRoute) {
         lastNavigatedRoute = route
     }
     
-    func resetAndPush(to route: SwiftUI_0325.AppRoute) {
+    func resetAndPush(to route: AppRoute) {
         lastNavigatedRoute = route
     }
     

@@ -73,10 +73,11 @@ struct PostsListView<ViewModel: PostsListViewModeling>: View {
 struct PostsListView_Previews: PreviewProvider {
     static var previews: some View {
         let previewPostRepository = PreviewPostRepository()
+        let postCoordinator = DefaultPostCoordinator()
         
         let viewModel = PostsListViewModel(
             postRepository: previewPostRepository,
-            postCoordinator: PostCoordinator()
+            postCoordinator: postCoordinator
         )
         
         return PostsListView(viewModel: viewModel)
