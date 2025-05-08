@@ -6,7 +6,11 @@
 //
 
 final class PhoneLoginModule {
+    
+    @MainActor
     static func build(authenCoordinator: AuthenCoordinator) -> PhoneLoginView {
-        return PhoneLoginView(authenCoordinator: authenCoordinator)
+        let viewModel = PhoneLoginViewModel(authenCoordinator: authenCoordinator)
+        
+        return PhoneLoginView(viewModel: viewModel)
     }
 }

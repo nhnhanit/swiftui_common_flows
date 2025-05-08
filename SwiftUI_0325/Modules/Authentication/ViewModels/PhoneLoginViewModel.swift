@@ -18,12 +18,13 @@ final class PhoneLoginViewModel: ObservableObject {
     init(authenCoordinator: AuthenCoordinator, service: PhoneLoginAuthServicing = PhoneLoginAuthService()) {
         self.authenCoordinator = authenCoordinator
         self.service = service
+
+#warning("hardcode phone")
+        phone = "1-770-736-8031 x56442"
     }
 
     func requestOTP() async {
         do {
-#warning("hardcode phone")
-            phone = "1-770-736-8031 x56442"
             try await service.requestOTP(for: phone)
             authenCoordinator.goToOTPVerify(phone: phone)
         } catch {

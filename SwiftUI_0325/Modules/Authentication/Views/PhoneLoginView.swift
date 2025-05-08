@@ -10,8 +10,8 @@ import SwiftUI
 struct PhoneLoginView: View {
     @StateObject var viewModel: PhoneLoginViewModel
 
-    init(authenCoordinator: AuthenCoordinator) {
-        _viewModel = StateObject(wrappedValue: PhoneLoginViewModel(authenCoordinator: authenCoordinator))
+    init(viewModel: PhoneLoginViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
@@ -23,16 +23,6 @@ struct PhoneLoginView: View {
             if let error = viewModel.error {
                 Text(error).foregroundColor(.red)
             }
-
-//            Button("Send OTP") {
-//                Task { await viewModel.requestOTP() }
-//            }
-//
-//            NavigationLink(
-//                destination: OTPVerifyView(viewModel: OTPVerifyViewModel(phone: viewModel.phone)),
-//                isActive: $viewModel.isOTPSent,
-//                label: { EmptyView() }
-//            )
             
             Button(action: {
                 Task { await viewModel.requestOTP() }
