@@ -62,25 +62,19 @@ final class PostsListViewModel: PostsListViewModeling {
             defer { isLoading = false; currentTask = nil }
 
             do {
-                let cached = try await postRepository.getCachedThenRefreshPosts(
-                    limit: 3,
-                    onRefresh: { [weak self] fresh in
-                        guard let self else { return }
-                        self.postCells = fresh.map {
-                            PostCellViewModel(post: $0, postRepository: self.postRepository)
-                        }
-                    },
-                    onError: { [weak self] error in
-                        self?.errorTitle = "Failed to refresh posts"
-                        self?.showErrorAlert(title: self?.errorTitle ?? "", message: error.localizedDescription)
-                    }
-                )
-                postCells = cached.map {
+                let CachedPosts = postRepository.loadCachedPosts(limit: 3)
+                postCells = CachedPosts.map {
                     PostCellViewModel(post: $0, postRepository: self.postRepository)
                 }
+                
+                let fetchPosts = try await postRepository.fetchPosts()
+                postCells = fetchPosts.map {
+                    PostCellViewModel(post: $0, postRepository: self.postRepository)
+                }
+
             } catch {
                 self.errorTitle = "Failed to load posts!"
-                showErrorAlert(title: "Error!", message: error.localizedDescription)
+                showErrorAlert(title: self.errorTitle ?? "", message: error.localizedDescription)
             }
         }
     }

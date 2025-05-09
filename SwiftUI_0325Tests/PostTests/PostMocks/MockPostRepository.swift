@@ -18,12 +18,7 @@ final class MockPostRepository: PostRepository {
     var shouldThrowOnDelete = false
     var loadCount: Int = 0
     
-    func getCachedThenRefreshPosts(limit: Int?, onRefresh: @escaping @MainActor ([Post]) -> Void, onError: @escaping (any Error) -> Void) async throws -> [Post] {
-        loadCount += 1
-        return fetchedPosts
-    }
-    
-    func loadCachedPosts() -> [Post] {
+    func loadCachedPosts(limit: Int?) -> [Post] {
         cachedPosts
     }
     

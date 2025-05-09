@@ -10,15 +10,11 @@
 import Foundation
 
 final class PreviewPostRepository: PostRepository {
-    func getCachedThenRefreshPosts(limit: Int?, onRefresh: @escaping @MainActor ([Post]) -> Void, onError: @escaping (any Error) -> Void) async throws -> [Post] {
-        SamplePosts.posts
-    }
-    
     func fetchPostsFromNetwork() async throws -> [Post] {
         SamplePosts.posts
     }
 
-    func loadCachedPosts() -> [Post] {
+    func loadCachedPosts(limit: Int?) -> [Post] {
         SamplePosts.posts
     }
 

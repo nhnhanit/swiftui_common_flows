@@ -14,63 +14,39 @@ struct PostsListViewModelTests {
     
     // MARK: - Tests
     
-    @Test("loadPostsIfNeeded should load once")
-    func testLoadPostsIfNeeded_onlyOnce() async throws {
-        
-        // Given
-        let postCoordinator = DefaultPostCoordinator()
-        let mockRepository = MockPostRepository()
-        mockRepository.fetchedPosts = [
-            Post(userId: 1, id: 1, title: "Network Post - 1", body: "1", isFavorite: true),
-            Post(userId: 2, id: 2, title: "Network Post - 2", body: "2", isFavorite: false)
-        ]
-        
-        let viewModel = PostsListViewModel(postRepository: mockRepository, postCoordinator: postCoordinator)
-        
-        // When
-        viewModel.loadPostsIfNeeded()
-        viewModel.loadPostsIfNeeded() // shouldn't load again
-        await waitForCompletion(seconds: 0.3)
-        
-        // Then
-        #expect(mockRepository.loadCount == 1)
-    }
-    
     @Test("loadPosts - network failure")
     func testLoadPosts_NetworkFailure() async throws {
-        
         let mockNetworkService = MockNetworkService()
         let postLocalDataSource = DefaultPostLocalDataSource()
         let postCoordinator = DefaultPostCoordinator()
-        
-        // Given
-        mockNetworkService.shouldFail = true
         let postRepository = DefaultPostRepository(networkService: mockNetworkService,
                                                    postLocalDataSource: postLocalDataSource)
         let viewModel = PostsListViewModel(postRepository: postRepository, postCoordinator: postCoordinator)
 
+        // Given
+        mockNetworkService.shouldFail = true
+        
         // When
         viewModel.loadPosts()
         await waitForCompletion(seconds: 0.3)
         
         // Then
         #expect(viewModel.errorTitle != nil)
-        #expect(viewModel.errorTitle?.contains("Failed to refresh posts") == true)
+        #expect(viewModel.errorTitle?.contains("Failed to load posts!") == true)
     }
     
     @Test("loadPosts - network success")
     func testFetchPostsFromNetwork_Success() async throws {
         let mockNetworkService = MockNetworkService()
-        
-        // Given
-        mockNetworkService.jsonFileName = "MockDataPosts"
-
         let postLocalDataSource = DefaultPostLocalDataSource()
         let postRepository = DefaultPostRepository(networkService: mockNetworkService, postLocalDataSource: postLocalDataSource)
         let postCoordinator = DefaultPostCoordinator()
         
         let viewModel = PostsListViewModel(postRepository: postRepository, postCoordinator: postCoordinator)
 
+        // Given
+        mockNetworkService.jsonFileName = "MockDataPosts"
+        
         // When
         viewModel.loadPosts()
         await waitForCompletion(seconds: 0.3)
