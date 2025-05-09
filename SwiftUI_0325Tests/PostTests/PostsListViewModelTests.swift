@@ -30,15 +30,14 @@ struct PostsListViewModelTests {
         // When
         viewModel.loadPostsIfNeeded()
         viewModel.loadPostsIfNeeded() // shouldn't load again
-        
         await waitForCompletion(seconds: 0.3)
         
         // Then
         #expect(mockRepository.loadCount == 1)
     }
     
-    @Test("Fetch posts from network - failure")
-    func testFetchPostsFromNetwork_NetworkFailure() async throws {
+    @Test("loadPosts - network failure")
+    func testLoadPosts_NetworkFailure() async throws {
         
         let mockNetworkService = MockNetworkService()
         let postLocalDataSource = DefaultPostLocalDataSource()
@@ -52,7 +51,6 @@ struct PostsListViewModelTests {
 
         // When
         viewModel.loadPosts()
-               
         await waitForCompletion(seconds: 0.3)
         
         // Then
@@ -60,7 +58,7 @@ struct PostsListViewModelTests {
         #expect(viewModel.errorTitle?.contains("Failed to refresh posts") == true)
     }
     
-    @Test("Fetch posts from network - success")
+    @Test("loadPosts - network success")
     func testFetchPostsFromNetwork_Success() async throws {
         let mockNetworkService = MockNetworkService()
         
@@ -75,14 +73,13 @@ struct PostsListViewModelTests {
 
         // When
         viewModel.loadPosts()
-        
-        try? await Task.sleep(nanoseconds: 300_000_000)
+        await waitForCompletion(seconds: 0.3)
         
         #expect(viewModel.postCells.count == 100)
         #expect(viewModel.postCells.first?.post.title == "sunt aut facere repellat provident occaecati excepturi optio reprehenderit")
     }
 
-    @Test("Delete post - remove correct post")
+    @Test("deletePost - remove correct post")
     func testDeletePost_removesCorrectPost() async {
         // Given
         let mockPostRepository = MockPostRepository()
@@ -97,7 +94,7 @@ struct PostsListViewModelTests {
         
         // When
         viewModel.loadPosts()
-        try? await Task.sleep(nanoseconds: 300_000_000)
+        await waitForCompletion(seconds: 0.3)
         
         // delete item "Network Post - 2"
         await viewModel.deletePost(at: IndexSet(integer: 1))
@@ -107,7 +104,7 @@ struct PostsListViewModelTests {
         #expect(viewModel.postCells.last?.post.title == "Network Post - 3")
     }
     
-    @Test("Select post - navigate correct post")
+    @Test("selectPost - navigate correct post")
     func testSelectPost_NavigateCorrectPost() async {
         // Given
         let mockPost = Post(userId: 3, id: 3, title: "Network Post - 3", body: "", isFavorite: false)
@@ -120,6 +117,7 @@ struct PostsListViewModelTests {
         viewModel.selectPost(mockPost)
         
         #expect(mockPostCoordinator.navigatedToPostId == 3)
+        #expect(mockPostCoordinator.passedViewModel?.post.id == 3)
     }
 
 }

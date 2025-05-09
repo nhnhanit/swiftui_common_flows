@@ -18,14 +18,20 @@ class AppAlertManager: ObservableObject {
                                 message: message,
                                 primaryAction: primary,
                                 secondaryAction: secondary)
-        withAnimation {
-            currentAlert = alert
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            withAnimation {
+                self.currentAlert = alert
+            }
         }
     }
 
     func dismiss() {
-        withAnimation {
-            currentAlert = nil
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            withAnimation {
+                self.currentAlert = nil
+            }
         }
     }
 }
