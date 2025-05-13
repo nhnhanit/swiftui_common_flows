@@ -9,17 +9,21 @@ import SwiftUI
 
 @main
 struct SwiftUI_0325App: App {
-    @StateObject private var coordinator = AppCoordinator()
-    @StateObject private var alertManager = GlobalAlertManager()
-
+    @StateObject private var appCoordinator = AppCoordinator()
+    @StateObject private var appAlertManager = AppAlertManager()
+    
     var body: some Scene {
         WindowGroup {
             ZStack {
                 RootView()
-                GlobalAlertView()
+                AppAlertView()
             }
-            .environmentObject(coordinator)
-            .environmentObject(alertManager)
+            .onAppear {
+                EnvironmentContainer.shared.appCoordinator = appCoordinator
+                EnvironmentContainer.shared.appAlertManager = appAlertManager
+            }
+            .environmentObject(appCoordinator)
+            .environmentObject(appAlertManager)
         }
     }
 }

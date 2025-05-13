@@ -12,6 +12,7 @@ import Combine
 protocol Navigatable: AnyObject {
     func push(to route: AppRoute)
     func resetAndPush(to route: AppRoute)
+    func popToRoot()
 }
 
 final class AppCoordinator: ObservableObject, Navigatable {
@@ -58,7 +59,7 @@ final class AppCoordinator: ObservableObject, Navigatable {
 enum AppRoute: Hashable {
     case phoneLogin
     case main
-    case settingsRoute(SettingsRoute)
+    case settingRoute(SettingRoute)
     case authenRoute(AuthenRoute)
     case postRoute(PostRoute)
 }

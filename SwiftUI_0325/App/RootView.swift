@@ -8,24 +8,24 @@
 import SwiftUI
 
 struct RootView: View {
-    @EnvironmentObject var coordinator: AppCoordinator
-    @EnvironmentObject var alertManager: GlobalAlertManager
+    @EnvironmentObject var appCoordinator: AppCoordinator
+    @EnvironmentObject var appAlertManager: AppAlertManager
         
     var body: some View {
-        NavigationStack(path: $coordinator.path) {
-            SplashModule.build(coordinator: coordinator, alertManager: alertManager)
+        NavigationStack(path: $appCoordinator.path) {
+            SplashModule.build()
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .phoneLogin:
-                        PhoneLoginModule.build(coordinator: AuthenCoordinator(appCoordinator: coordinator), alertManager: alertManager)
+                        PhoneLoginModule.build()
                     case .authenRoute(let authenRoute):
-                        handleAuthenRoute(authenRoute)
+                        AuthenRouteViewBuilder.view(for: authenRoute)
                     case .main:
-                        MainTabModule.build(coordinator: coordinator, alertManager: alertManager)
+                        MainTabModule.build()
                     case .postRoute(let postRoute):
-                        handlePostRoute(postRoute)
-                    case .settingsRoute(let settingsRoute):
-                        handleSettingsRoute(settingsRoute)
+                        PostRouteViewBuilder.view(for: postRoute)
+                    case .settingRoute(let settingRoute):
+                        SettingRouteViewBuilder.view(for: settingRoute)
                     @unknown default:
                         EmptyView()
                     }
@@ -37,9 +37,9 @@ struct RootView: View {
 
 #Preview {
     @Previewable let appCoordinator = AppCoordinator()
-    @Previewable let alertManager = GlobalAlertManager()
+    @Previewable let appAlertManager = AppAlertManager()
     
-    return RootView()
+    RootView()
         .environmentObject(appCoordinator)
-        .environmentObject(alertManager)
+        .environmentObject(appAlertManager)
 }
