@@ -37,7 +37,6 @@ struct AppAlertView: View {
                     HStack(spacing: 12) {
                         if let secondary = alert.secondaryAction {
                             Button(secondary.title) {
-                                appAlertManager.dismiss()
                                 secondary.action()
                             }
                             .padding()
@@ -47,7 +46,6 @@ struct AppAlertView: View {
                         }
 
                         Button(alert.primaryAction.title) {
-                            appAlertManager.dismiss()
                             alert.primaryAction.action()
                         }
                         .padding()

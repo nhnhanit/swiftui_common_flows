@@ -12,7 +12,6 @@ struct AppAlert: Identifiable {
     
     let title: String
     let message: String?
-    
     let primaryAction: AlertAction
     let secondaryAction: AlertAction?
 
