@@ -5,7 +5,7 @@
 //  Created by hongnhan on 18/4/25.
 //
 
-import SwiftUI
+import Foundation
 
 protocol PhoneLoginRepository {
     func requestOTP(for phone: String) async throws

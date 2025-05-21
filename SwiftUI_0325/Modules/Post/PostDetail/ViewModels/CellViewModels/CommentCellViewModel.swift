@@ -5,7 +5,7 @@
 //  Created by hongnhan on 11/4/25.
 //
 
-import SwiftUI
+import Foundation
 
 @MainActor
 struct CommentCellViewModel: Identifiable {

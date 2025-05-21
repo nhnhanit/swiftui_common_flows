@@ -5,7 +5,7 @@
 //  Created by hongnhan on 18/4/25.
 //
 
-import SwiftUI
+import Foundation
 
 enum PhoneLoginAPI: APIRequest {
     case requestOTP(phone: String)

@@ -5,7 +5,7 @@
 //  Created by hongnhan on 8/4/25.
 //
 
-import SwiftUI
+import Foundation
 
 enum AppAlertPolicy {
     case replaceExisting

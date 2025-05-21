@@ -5,7 +5,6 @@
 //  Created by hongnhan on 5/5/25.
 //
 
-import SwiftUI
 
 final class PreviewAppCoordinator: Navigatable {
     var lastNavigatedRoute: AppRoute?

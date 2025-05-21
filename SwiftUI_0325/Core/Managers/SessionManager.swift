@@ -5,7 +5,7 @@
 //  Created by hongnhan on 18/4/25.
 //
 
-import SwiftUI
+import Foundation
 
 final class SessionManager: ObservableObject {
     static let shared = SessionManager()

@@ -7,7 +7,6 @@
 
 // MockPostRepository.swift
 
-import Foundation
 
 final class PreviewPostRepository: PostRepository {
     func fetchPostsFromNetwork() async throws -> [Post] {

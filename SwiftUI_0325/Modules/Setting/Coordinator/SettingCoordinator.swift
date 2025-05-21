@@ -5,7 +5,6 @@
 //  Created by hongnhan on 2/4/25.
 //
 
-import SwiftUI
 
 protocol SettingCoordinator {
     func goToUserProfile(user: UserProfile, onSaveUser: ((UserProfile) -> Void)?)

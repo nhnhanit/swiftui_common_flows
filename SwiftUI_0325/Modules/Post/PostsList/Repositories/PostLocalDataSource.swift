@@ -5,7 +5,6 @@
 //  Created by hongnhan on 22/4/25.
 //
 
-import SwiftUI
 import RealmSwift
 
 protocol PostLocalDataSource {

@@ -5,8 +5,6 @@
 //  Created by hongnhan on 22/4/25.
 //
 
-import SwiftUI
-
 protocol PostCoordinator {
     func goToPostDetail(postId: Int, detailVM: PostDetailViewModel)
 }

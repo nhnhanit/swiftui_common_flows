@@ -6,8 +6,8 @@
 //
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 protocol Navigatable: AnyObject {
     func push(to route: AppRoute)

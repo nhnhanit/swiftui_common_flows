@@ -6,8 +6,6 @@
 //
 
 
-import Foundation
-
 enum SamplePosts {
     static let posts: [Post] = [
         Post(userId: 1, id: 1, title: "Sample Post 1", body: "Lorem ipsum", isFavorite: false),

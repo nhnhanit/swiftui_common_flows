@@ -5,8 +5,6 @@
 //  Created by hongnhan on 22/4/25.
 //
 
-import SwiftUI
-
 protocol PostRepository {
     func loadCachedPosts(limit: Int?) -> [Post]
     func fetchPosts() async throws -> [Post]

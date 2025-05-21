@@ -5,7 +5,7 @@
 //  Created by hongnhan on 14/4/25.
 //
 
-import SwiftUI
+import Foundation
 
 enum NetworkError: Error, LocalizedError {
     case invalidURL

@@ -5,7 +5,7 @@
 //  Created by hongnhan on 18/4/25.
 //
 
-import SwiftUI
+import Foundation
 
 @MainActor
 final class PhoneLoginViewModel: ObservableObject {

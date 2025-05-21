@@ -5,7 +5,6 @@
 //  Created by hongnhan on 1/4/25.
 //
 
-import SwiftUI
 
 protocol AuthenCoordinator {
     func goToOTPVerify(phone: String)
